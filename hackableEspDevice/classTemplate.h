@@ -12,10 +12,10 @@
 
 class name
 {
-  public:
-    name();
-    void test();
+    public:
+        name();
+        void test();
     
-  private:
+    private:
 };
 #endif

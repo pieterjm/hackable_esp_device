@@ -1,0 +1,143 @@
+html {
+    align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+body {
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	-webkit-animation: gradient 15s ease infinite;
+            animation: gradient 15s ease infinite;
+    
+    font-family: 'Josefin Sans', sans-serif !important;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/*Background*/
+@-webkit-keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.page {
+	position: relative;
+    left: 10%;
+    width: 80%;
+	z-index: 1;
+}
+
+.container-form {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+  
+.wrap-form {
+    width: 790px;
+    background-color: rgba(192, 192, 192, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 72px 55px 90px 55px;
+    margin-bottom: 50px;
+    margin-top: 0;
+}
+
+.form-title {
+    display: block;
+    color: #333333;
+    text-align: center;
+    padding-bottom: 30px;
+    font-weight: bold;
+}
+
+.form {
+    width: 100%;
+}
+
+.button {
+    color: #494949 !important;
+    text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border: 2px solid #494949 !important;
+    border-radius: 20px;
+    display: inline-block;
+    transition: all 0.3s ease 0s;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.button:hover, .button_sel:hover {
+    color: #494949 !important;
+    border-radius: 50px;
+    border-color: #494949 !important;
+    transition: all 0.3s ease 0s;
+}
+
+input[type=number], input[type=text], input[type=password], select {
+    width: 50%;
+    padding: 12px 10px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 2px solid rgb(139, 139, 139);
+    border-radius: 8px;
+    box-sizing: border-box;
+    text-align: center;
+    background: transparent;
+    -moz-appearance: textfield;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+p {
+    margin-bottom: 10px;
+    color: #353535;
+}
+
+h1 {
+    margin: 3%;
+    Text-indent: 10px;
+    Padding: 0px 10px 0px 10px;
+    text-align: center;
+}
+
+h2, h3 {
+    margin: 3%;
+    Text-indent: 10px;
+    Padding: 0px 10px 0px 10px;
+    text-align: center;
+}
