@@ -1,5 +1,5 @@
 # Hackable ESP8266 device
-Firmware for ESP8266 based device (D1 Mini board) with designed vunerabilities to practice with ethical hacking. The software is tested on the following boards:
+Firmware for ESP8266 based device (D1 Mini board) with designed vunerabilities to practice ethical hacking. The software is tested on the following boards:
 
 * D1 Mini
 
@@ -9,25 +9,35 @@ These instructions will get you a copy of the project up and running on your D1 
 
 ### Prerequisites
 
-The software is written, compiled and uploaded using the Arduino IDE (v1.8.13). You could use the online Arduino IDE or other software, but it is recommended using the version you can download on [this page](https://www.arduino.cc/en/software).
+The software is written, compiled and uploaded using Platformio and Visual Studio Code. You can use the [Arduino IDE](https://www.arduino.cc/en/software).
 
 ### Dependecies
 
-Libraries etc.
+No dependecies yet.
 
 ### Installing
 
-Clone the repository, navigate to the "Code" map, open "hackableEspDevice.ino" and upload to connected device.
-(SPIFF instructions)
+There are multiple ways to upload the program files to the board. First instructions for the Arduino IDE are described. Then instructions for Visual Studio Code are described.
+
+<b>Arduino IDE</b>
+1. Clone the repository.
+2. Follow [this](https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide) tutorial about the SPIFFS.
+3. Navigate to the "hackableEspDevice" folder and open "hackableEspDevice.ino".
+4. Upload the files in the "data" folder (see the tutorial).
+5. Upload the program to the device.
+
+<b>Visual Studio Code</b>
+1. Install the [Platformio](https://platformio.org/install/ide?install=vscode) plugin.
+2. ??
 
 ## Hardware
 
-1x D1 Mini Board
+1x D1 Mini Board<br>
 1x USB to USB-mini cable
 
 ## Questions or feedback?
 
-You can submit an issue if you have questions or feedback for this repository.
+You can open an issue if you have questions or feedback for this repository.
 
 ## Authors
 
