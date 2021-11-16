@@ -7,8 +7,6 @@
  * For more information, go to: https://gitlab.fdmci.hva.nl/munkl/hackable_esp_device
  * 
  */
-
- 
 #define DEBUG 0                                                             //For defining serial debugging
 
 /*
