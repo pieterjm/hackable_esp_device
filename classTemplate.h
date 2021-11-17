@@ -8,7 +8,7 @@
  */
 #ifndef name_H
 #define name_H
-#include <Arduino.h>
+//#include <Arduino.h>
 
 class name
 {
