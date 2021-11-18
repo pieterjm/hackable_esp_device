@@ -9,7 +9,7 @@ These instructions will get you a copy of the project up and running on your D1 
 
 ### Prerequisites
 
-The software is written, compiled and uploaded using Platformio and Visual Studio Code. You can use the [Arduino IDE](https://www.arduino.cc/en/software).
+The software is written, compiled and uploaded using Platformio and Visual Studio Code. You can also use the [Arduino IDE](https://www.arduino.cc/en/software).
 
 ### Dependecies
 
@@ -22,9 +22,11 @@ There are multiple ways to upload the program files to the board. First instruct
 <b>Arduino IDE</b>
 1. Clone the repository.
 2. Follow [this](https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide) tutorial about the SPIFFS.
-3. Navigate to the "hackableEspDevice" folder and open "hackableEspDevice.ino".
-4. Upload the files in the "data" folder (see the tutorial).
-5. Upload the program to the device.
+3. Navigate to the `hackableEspDevice` folder.
+4. Copy `config_template.h` and rename to `config.h`. `config.h` is in the .gitignore list and won't be pushed, so you can put your credentials in.
+5. Open `hackableEspDevice.ino`.
+6. Upload the files in the `data` folder (see the tutorial).
+7. Upload the program to the device.
 
 <b>Visual Studio Code</b>
 1. Install the [Platformio](https://platformio.org/install/ide?install=vscode) plugin.
@@ -32,8 +34,8 @@ There are multiple ways to upload the program files to the board. First instruct
 
 ## Hardware
 
-1x D1 Mini Board<br>
-1x USB to USB-mini cable
+* 1x D1 Mini Board
+* 1x USB to USB-mini cable
 
 ## Questions or feedback?
 
