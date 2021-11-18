@@ -9,26 +9,7 @@
  */
 #include "ESPAsyncWebServer.h"                                              //For running the webserver
 #include <FS.h>                                                             //For SPIFFS
-
-#define DEBUG 0                                                             //For defining serial debugging
-
-/*
- * This precompiler functions are there for switching on and off the serial debugger
- */
-#if DEBUG == 1
-    #define debug(x) Serial.print(x)
-    #define debugln(x) Serial.println(x)
-#else
-    #define debug(x)
-    #define debugln(x)
-#endif
-
-//Network credentials
-#define WIFI_SSID       "ssid"
-#define WIFI_PASSWORD   "password"
-
-#define HTTP_USERNAME   "admin"
-#define HTTP_PASSWORD   "admin"
+#include "config.h"                                                         //For the configuration, if not exists: copy "config_template.h", add your configuration and rename to "config.h"
 
 AsyncWebServer server(80);                                                  //Create AsyncWebServer object on port 80
 
