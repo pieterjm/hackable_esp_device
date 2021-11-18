@@ -8,11 +8,11 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-//Network credentials
+/* Network credentials */
 #define WIFI_SSID       "ssid"
 #define WIFI_PASSWORD   "password"
 
-//Login credentials
+/* Login credentials */
 #define HTTP_USERNAME   "admin"
 #define HTTP_PASSWORD   "admin"
 
