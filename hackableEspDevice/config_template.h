@@ -9,15 +9,13 @@
 #define CONFIG_H
 
 /* Network credentials */
-#define WIFI_SSID       "ssid"
-#define WIFI_PASSWORD   "password"
+#define WIFI_SSID               "ssid"
+#define WIFI_PASSWORD           "password"
 
 /* Hostname */
-#define HOSTNAME      "smartlight"
+#define HOSTNAME                "smartlight"
 
-/* Login credentials */
-#define HTTP_USERNAME   "admin"
-#define HTTP_PASSWORD   "admin"
+#define HTTP_CONFIG_LOCATION    "/conf.txt"
 
 #define DEBUG 0                                                             //For defining serial debugging
 
