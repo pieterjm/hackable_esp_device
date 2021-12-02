@@ -12,6 +12,9 @@
 #define WIFI_SSID       "ssid"
 #define WIFI_PASSWORD   "password"
 
+/* Hostname */
+#define HOSTNAME      "smartlight"
+
 /* Login credentials */
 #define HTTP_USERNAME   "admin"
 #define HTTP_PASSWORD   "admin"
