@@ -184,8 +184,7 @@ void initializeServer() {
     );
     /* Route for file upload request */
     server.on("/download", HTTP_POST, []() {
-        server.send(200);                                                   //HTTP code 200 == OK
-        debugln("Wait, something got downloaded");
+        debugln("File download request");
       }, handleFileDownload                                                 //Receive and save the file
     );
     /*
@@ -285,18 +284,16 @@ void handleFileRequest(String path, uint8_t permissionLevel) {
 void handleFileUpload() {
     HTTPUpload& upload = server.upload();
     
-    debugln(upload.status);
-    
     if(upload.status == UPLOAD_FILE_START) {
         String filename = upload.filename;
+        
         if(!filename.startsWith("/")) {
-            filename = "/"+filename;//Really needed????
+            filename = "/" + filename;
         }
+        
         debugln(String("Upload file named: ") + filename);
         
-        fsUploadFile = SPIFFS.open(filename, "w");                              //Open the file for writing in SPIFFS (create if it doesn't exist)
-        filename = String(); //can be removed?
-        
+        fsUploadFile = SPIFFS.open(filename, "w");                              //Open the file for writing in SPIFFS (create if it doesn't exist)        
     } else if (upload.status == UPLOAD_FILE_WRITE && fsUploadFile ) {
         fsUploadFile.write(upload.buf, upload.currentSize);                   //Write the received bytes to the file
     } else if(upload.status == UPLOAD_FILE_END){
@@ -318,19 +315,25 @@ void handleFileUpload() {
 */
 /**************************************************************************/
 void handleFileDownload() {
-    String filename = "conf.txt";                                           //Get user input for filename
-
-    File download = SPIFFS.open("/conf.txt", "r");
+    String filename = server.arg("filekey");                                //Get user input for filename
     
-    if (!download) {
-      server.send(404, "text/plain", "404: file not found!");
-      return;
+    if(!filename.startsWith("/")) {
+        filename = "/" + filename;
+    }
+        
+    if (!SPIFFS.exists(filename)) {
+        server.send(404, "text/plain", "404: file not found!");
+        return;
     }
     
-    debugln("Start writing file");
+    File download = SPIFFS.open(filename, "r");
+
+    debugln("Start sending file");
+    
     server.sendHeader("Content-Type", "text/text");
     server.sendHeader("Content-Disposition", "attachment; filename="+filename);
     server.sendHeader("Connection", "close");
     server.streamFile(download, "application/octet-stream");
     download.close();
+    server.send(200);                                                   //HTTP code 200 == OK
 }
