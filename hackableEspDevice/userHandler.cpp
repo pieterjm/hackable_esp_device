@@ -1,10 +1,10 @@
 /*
- * File:      name.cpp
- * Author:    Luke de Munk
- * Class:     name
+ * File:      UserHandler.cpp
+ * Author:    Luke de Munk & Twenne Elffers
+ * Class:     UserHandler
  * Version:   0.1
  * 
- * Description
+ * Class for the authentication process.
  */
 #include "UserHandler.h"
 
@@ -82,7 +82,6 @@ bool UserHandler::checkPermission(uint8_t permissionLevel, ESP8266WebServer *ser
     }
     return false;
 }
-
 
 /**************************************************************************/
 /*!

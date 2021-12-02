@@ -1,24 +1,24 @@
 /*
- * File:      name.h
+ * File:      UserHandler.h
  * Author:    Luke de Munk
- * Class:     name
+ * Class:     UserHandler
  * Version:   0.1
  * 
- * Description
+ * Class for the authentication process.
  */
 #ifndef USER_HANDLER
 #define USER_HANDLER
-//#include <Arduino.h>
 #include <stdint.h>
-#include "config.h"     //For debugln
 #include <ESP8266WebServer.h>                                               //For running the webserver
 #include <FS.h>                                                             //For SPIFFS
+#include "config.h"                                                         //For the configuration
 
 /* Permission levels */
 #define PERMISSION_LVL_ALL      0
 #define PERMISSION_LVL_USER     1
 #define PERMISSION_LVL_ADMIN    2
-#define USER_INFO_LENGTH        3
+
+#define USER_INFO_LENGTH        3                                           //Username, password and permission level
 #define MAX_NUMBER_USERS        10
 
 class UserHandler
