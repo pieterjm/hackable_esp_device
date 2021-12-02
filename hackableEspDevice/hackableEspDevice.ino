@@ -13,6 +13,7 @@
 #include <neotimer.h>                                                       //For non-blocking timers (used for code execution in intervals)
 #include "config.h"                                                         //For the configuration. If not exists: copy "config_template.h", add your configuration and rename to "config.h"
 #include "UserHandler.h"
+#include "SerialCommandExecuter.h"
 
 /* On and off are inverted because the built-in led is active low */
 #define ON                      LOW
@@ -30,6 +31,7 @@ Neotimer timer = Neotimer(30000);                                           //Se
 uint8_t ledState = OFF;                                                     //Declare led state variable
 
 UserHandler userHandler(&server);                                           //For handling the authentication
+SerialCommandExecuter cliExecuter;
 
 File fsUploadFile;                                                          //A File object to temporarily store the received file
 
@@ -39,9 +41,9 @@ File fsUploadFile;                                                          //A 
 */
 /**************************************************************************/
 void setup() {
-    if (DEBUG) {
+    //if (DEBUG) {
         Serial.begin(115200);                                               //Serial port for debugging purposes
-    }
+    //}
 
     /* Initialize SPIFFS */
     if(!SPIFFS.begin()) {
@@ -209,6 +211,10 @@ void loop() {
   if(timer.repeat()){
       debugln(WIFI_PASSWORD);
   }
+
+  if(Serial.available()) {
+    cliExecuter.executeCommand();
+  }
 }
 
 /**************************************************************************/
@@ -232,7 +238,7 @@ String processor(const String& var){
   @returns  String          MIME type of the file
 */
 /**************************************************************************/
-String getContentType(String filename) { // 
+String getContentType(String filename) {
   if (filename.endsWith(".html")) return "text/html";
   else if (filename.endsWith(".css")) return "text/css";
   else if (filename.endsWith(".js")) return "application/javascript";
