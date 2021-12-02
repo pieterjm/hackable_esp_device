@@ -12,6 +12,7 @@
 #include <stdint.h>                                                         //For defining bits per integer
 #include <neotimer.h>                                                       //For non-blocking timers (used for code execution in intervals)
 #include "config.h"                                                         //For the configuration. If not exists: copy "config_template.h", add your configuration and rename to "config.h"
+#include "UserHandler.h"
 
 /* On and off are inverted because the built-in led is active low */
 #define ON                      LOW
@@ -24,15 +25,13 @@
 #define USER_INFO_LENGTH        3
 #define MAX_NUMBER_USERS        10
 
-#define HTTP_CONFIG_LOCATION    "/conf.txt"
-
 ESP8266WebServer server(80);                                                //Object that listens for HTTP requests on port 80
 Neotimer timer = Neotimer(30000);                                           //Setup a 30 second timer, to execute code with a 30 interval
 uint8_t ledState = OFF;                                                     //Declare led state variable
 
+UserHandler userHandler(&server);                                           //For handling the authentication
+
 File fsUploadFile;                                                          //A File object to temporarily store the received file
-String users[MAX_NUMBER_USERS*USER_INFO_LENGTH];
-uint8_t numberUsers = 0;
 
 /**************************************************************************/
 /*!
@@ -53,8 +52,8 @@ void setup() {
     digitalWrite(LED_BUILTIN, ledState);
     
     connectWifi();
-    updateUsers();
     initializeServer();
+    userHandler.updateUsers();
 }
 
 /**************************************************************************/
@@ -117,37 +116,37 @@ void initializeServer() {
     
     /* Load style_desktop.css file, styling for desktop version */
     server.on("/style_desktop.css", HTTP_GET, []() {
-      handleFileRequest("/style_desktop.css", PERMISSION_LVL_ALL);
+        handleFileRequest("/style_desktop.css", PERMISSION_LVL_ALL);
     });
     
     /* Load style_mobile.css file, styling for mobile version */
     server.on("/style_mobile.css", HTTP_GET, []() {
-      handleFileRequest("/style_mobile.css", PERMISSION_LVL_ALL);
+        handleFileRequest("/style_mobile.css", PERMISSION_LVL_ALL);
     });
 
     /* Load style_switch.css file, styling for the on/off switch */
     server.on("/style_switch.css", HTTP_GET, []() {
-      handleFileRequest("/style_switch.css", PERMISSION_LVL_ALL);
+        handleFileRequest("/style_switch.css", PERMISSION_LVL_ALL);
     });
 
     /* Load favicon.ico file, site icon */
     server.on("/favicon.ico", HTTP_GET, []() {
-      handleFileRequest("/favicon.ico", PERMISSION_LVL_ALL);
+        handleFileRequest("/favicon.ico", PERMISSION_LVL_ALL);
     });
 
     /* Load jquery.min.js file, for ajax */
     server.on("/jquery.min.js", HTTP_GET, []() {
-    handleFileRequest("/jquery.min.js", PERMISSION_LVL_ALL);
+        handleFileRequest("/jquery.min.js", PERMISSION_LVL_ALL);
     });
 
     /* Load base.js file, JavaScript for site */
     server.on("/base.js", HTTP_GET, []() {
-      handleFileRequest("/base.js", PERMISSION_LVL_ALL);
+        handleFileRequest("/base.js", PERMISSION_LVL_ALL);
     });
 
     /* Load switch.js file, JavaScript for on/off switch */
     server.on("/switch.js", HTTP_GET, []() {
-      handleFileRequest("/switch.js", PERMISSION_LVL_ALL);
+        handleFileRequest("/switch.js", PERMISSION_LVL_ALL);
     });
     /*
     * End of file loading
@@ -253,11 +252,13 @@ String getContentType(String filename) { //
 */
 /**************************************************************************/
 void handleFileRequest(String path, uint8_t permissionLevel) {
-  if(!checkPermission(permissionLevel)) {
+  if(!userHandler.checkPermission(permissionLevel, &server)) {
       server.requestAuthentication();
       return;
   }
+  
   debugln(String("Requested file: ") + path);
+  
   String contentType = getContentType(path);                                //Get the MIME type
   String pathWithGz = path + ".gz";
   
@@ -265,7 +266,7 @@ void handleFileRequest(String path, uint8_t permissionLevel) {
     path += ".gz";                                                          //Use the compressed verion
   }
   
-  if (SPIFFS.exists(path)) { // If the file exists
+  if (SPIFFS.exists(path)) {
     File file = SPIFFS.open(path, "r");                                     //Open the file
     size_t sent = server.streamFile(file, contentType);                     //Send it to the client
     file.close();                                                           //Close the file again
@@ -275,35 +276,6 @@ void handleFileRequest(String path, uint8_t permissionLevel) {
   
   debugln(String("File Not Found: ") + path);                               //If the file doesn't exist, return false
   server.send(404, "text/plain", "404: Not Found");                         //otherwise, respond with a 404 (Not Found) error
-}
-
-/**************************************************************************/
-/*!
-  @brief    Checks if user has permission.
-  @param    permissionLevel 0 = not logged in, 1 = user, 2 = admin
-  @returns  bool            If user has permission
-*/
-/**************************************************************************/
-bool checkPermission(uint8_t permissionLevel) {
-  bool isLoggedIn = false;
-  bool hasPermission = false;
-  uint8_t userIndex = 0;
-  
-  if (permissionLevel == PERMISSION_LVL_ALL) {
-    return true;
-  } else {
-    for (uint8_t i = 0; i < numberUsers; i += 3) {
-      if (server.authenticate(users[i].c_str(), users[i+1].c_str())) {
-        userIndex = i;
-        isLoggedIn = true;
-        break;
-      }
-    }
-    if (isLoggedIn && atoi(users[userIndex+2].c_str()) >= permissionLevel) {
-      return true;
-    }
-  }
-  return false;
 }
 
 /**************************************************************************/
@@ -334,7 +306,7 @@ void handleFileUpload() {
       debugln(String("handleFileUpload Size: ") + upload.totalSize);
       server.sendHeader("Location","/success.html");                        //Redirect the client to the success page
       server.send(303);
-      updateUsers();
+      userHandler.updateUsers();
     } else {
       server.send(500, "text/plain", "500: couldn't create file");
     }
@@ -362,57 +334,4 @@ void handleFileDownload() {
     server.sendHeader("Connection", "close");
     server.streamFile(download, "application/octet-stream");
     download.close();
-}
-
-/**************************************************************************/
-/*!
-  @brief    Updates the users from the config file in global memory.
-*/
-/**************************************************************************/
-void updateUsers() {
-  /* If there is no file, return 0 users */
-  if (!SPIFFS.exists(HTTP_CONFIG_LOCATION)) {
-    numberUsers = 0;
-    return;
-  }
-
-  File configFile = SPIFFS.open(HTTP_CONFIG_LOCATION, "r");
-  String line;
-  String* user;
-  
-  /* Extract user information line by line */
-  for(uint8_t i = 0; i < MAX_NUMBER_USERS*USER_INFO_LENGTH; i+=USER_INFO_LENGTH) {
-      line = configFile.readStringUntil('\n');                              //Read a line from the file
-      if (line != "" && line.indexOf(":") != -1) {
-          user = parseLine(line);
-          users[i] = user[0].c_str();
-          users[i+1] = user[1].c_str();
-          users[i+2] = user[2].c_str();
-      } else {
-        numberUsers = i-1;
-        break;
-      }
-      numberUsers = i-1;
-  }
-  debugln(numberUsers);
-  configFile.close();
-}
-
-/**************************************************************************/
-/*!
-  @brief    Parses config file line to user information array.
-  @param    line          The string to parse
-  @returns  String*       Array of user information
-*/
-/**************************************************************************/
-String* parseLine(String line) {
-  static String userInfo[3];
-
-  uint8_t indexForUsername = line.indexOf(":");                             //gets loc of first ":"
-  uint8_t indexForPassword = line.indexOf(":", indexForUsername+1);         //gets loc of second ":"
-
-  userInfo[0] = line.substring(0, indexForUsername);                        //Selects xxxx from xxxx:yyyy:zzzz, username
-  userInfo[1] = line.substring(indexForUsername+1, indexForPassword);       //Selects yyyy from xxxx:yyyy:zzzz, password
-  userInfo[2] = line.substring(indexForPassword+1);                         //Selects zzzz from xxxx:yyyy:zzzz, usertype
-  return userInfo;
 }
