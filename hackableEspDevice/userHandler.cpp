@@ -11,8 +11,7 @@
 /**************************************************************************/
 /*!
   @brief    Constructor.
-  @param    var           desc
-  @return   var           desc
+  @param    server          Webserver object
 */
 /**************************************************************************/
 UserHandler::UserHandler(ESP8266WebServer *server) {
@@ -37,7 +36,7 @@ void UserHandler::updateUsers() {
 
     /* Extract user information line by line */
     for(uint8_t i = 0; i < MAX_NUMBER_USERS*USER_INFO_LENGTH; i+=USER_INFO_LENGTH) {
-        line = configFile.readStringUntil('\n');                              //Read a line from the file
+        line = configFile.readStringUntil('\n');                            //Read a line from the file
         if (line != "" && line.indexOf(":") != -1) {
             user = _parseLine(line);
             _users[i] = user[0].c_str();
@@ -57,6 +56,7 @@ void UserHandler::updateUsers() {
 /*!
   @brief    Checks if user has permission.
   @param    permissionLevel 0 = not logged in, 1 = user, 2 = admin
+  @param    server          Webserver object
   @return   bool            If user has permission
 */
 /**************************************************************************/
