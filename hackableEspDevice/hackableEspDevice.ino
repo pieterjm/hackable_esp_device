@@ -48,6 +48,7 @@ void setup() {
         debugln("An Error has occurred while mounting SPIFFS");
         return;
     }
+    
     pinMode(LED_BUILTIN, OUTPUT);
     digitalWrite(LED_BUILTIN, ledState);
     
@@ -172,7 +173,6 @@ void initializeServer() {
     /*
     * End of JavaScript data receiving
     */
-
     /*
     * Routes for file management
     */
@@ -191,11 +191,10 @@ void initializeServer() {
     /*
     * End of routes for file management
     */
-
     /* Not found */
     server.onNotFound([]() {                                                //If the client requests any URI
         handleFileRequest(server.uri(), PERMISSION_LVL_ALL);                //send it if it exists
-        Serial.printf("NOT_FOUND?");
+        debugln("NOT_FOUND?");
     });
 
     server.begin();                                                         //Start server
@@ -284,33 +283,33 @@ void handleFileRequest(String path, uint8_t permissionLevel) {
 */
 /**************************************************************************/
 void handleFileUpload() {
-  HTTPUpload& upload = server.upload();
-  
-  debugln(upload.status);
-  
-  if(upload.status == UPLOAD_FILE_START){
-    String filename = upload.filename;
-    if(!filename.startsWith("/")) {
-      filename = "/"+filename;//Really needed????
-    }
-    debugln(String("Upload file named: ") + filename);
+    HTTPUpload& upload = server.upload();
     
-    fsUploadFile = SPIFFS.open(filename, "w");                              //Open the file for writing in SPIFFS (create if it doesn't exist)
-    filename = String(); //can be removed?
+    debugln(upload.status);
     
-  } else if (upload.status == UPLOAD_FILE_WRITE && fsUploadFile ){
-      fsUploadFile.write(upload.buf, upload.currentSize);                   //Write the received bytes to the file
-  } else if(upload.status == UPLOAD_FILE_END){
-    if(fsUploadFile) {                                                      //If the file was successfully created
-      fsUploadFile.close();                                                 //Close the file again
-      debugln(String("handleFileUpload Size: ") + upload.totalSize);
-      server.sendHeader("Location","/success.html");                        //Redirect the client to the success page
-      server.send(303);
-      userHandler.updateUsers();
-    } else {
-      server.send(500, "text/plain", "500: couldn't create file");
+    if(upload.status == UPLOAD_FILE_START) {
+        String filename = upload.filename;
+        if(!filename.startsWith("/")) {
+            filename = "/"+filename;//Really needed????
+        }
+        debugln(String("Upload file named: ") + filename);
+        
+        fsUploadFile = SPIFFS.open(filename, "w");                              //Open the file for writing in SPIFFS (create if it doesn't exist)
+        filename = String(); //can be removed?
+        
+    } else if (upload.status == UPLOAD_FILE_WRITE && fsUploadFile ) {
+        fsUploadFile.write(upload.buf, upload.currentSize);                   //Write the received bytes to the file
+    } else if(upload.status == UPLOAD_FILE_END){
+        if(fsUploadFile) {                                                      //If the file was successfully created
+            fsUploadFile.close();                                                 //Close the file again
+            debugln(String("handleFileUpload Size: ") + upload.totalSize);
+            server.sendHeader("Location","/success.html");                        //Redirect the client to the success page
+            server.send(303);
+            userHandler.updateUsers();
+        } else {
+            server.send(500, "text/plain", "500: couldn't create file");
+        }
     }
-  }
 }
 
 /**************************************************************************/
