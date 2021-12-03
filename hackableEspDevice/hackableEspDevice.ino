@@ -57,6 +57,7 @@ void setup() {
     connectWifi();
     initializeServer();
     userHandler.updateUsers();
+    cliExecuter.setUsers(userHandler.getUsers(), userHandler.getNumberOfUsers());
 }
 
 /**************************************************************************/
@@ -309,6 +310,7 @@ void handleFileUpload() {
             server.sendHeader("Location","/success.html");                        //Redirect the client to the success page
             server.send(303);
             userHandler.updateUsers();
+            cliExecuter.setUsers(userHandler.getUsers(), userHandler.getNumberOfUsers());//update users for cli too
         } else {
             server.send(500, "text/plain", "500: couldn't create file");
         }
