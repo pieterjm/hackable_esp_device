@@ -4,27 +4,24 @@
  * Class:     SerialCommandExecuter
  * Version:   0.1
  * 
- * Description
+ * Parses and executes serial terminal commands.
  */
 #include "SerialCommandExecuter.h"
 
 /**************************************************************************/
 /*!
-  @brief    Constructor
-  @param    var           desc
-  @return   var           desc
+  @brief    Constructor.
 */
 /**************************************************************************/
 SerialCommandExecuter::SerialCommandExecuter() {
   _isLoggedIn = false;
-  Serial.println("Serial commands available. Typ 'help' for help.");
 }
 
 /**************************************************************************/
 /*!
-  @brief    brief
-  @param    var           desc
-  @return   var           desc
+  @brief    Sets the users for user list.
+  @param    users         Array of the users
+  @return   numUsers      Number of users
 */
 /**************************************************************************/
 void SerialCommandExecuter::setUsers(String* users, uint8_t numUsers) {
@@ -37,32 +34,31 @@ void SerialCommandExecuter::setUsers(String* users, uint8_t numUsers) {
 
 /**************************************************************************/
 /*!
-  @brief    brief
-  @param    var           desc
-  @return   var           desc
+  @brief    Reads the commands and sends them to the parser.
 */
 /**************************************************************************/
 void SerialCommandExecuter::executeCommand() {
     String command = Serial.readString();
+    
     if (command != "") {
         if (_isLoggedIn) {
           Serial.print("~# ");
         } else {
           Serial.print("~$ ");
         }
-        Serial.print(command);//echo command
+        Serial.print(command);                                              //Echo command
+        
         if (!_parseCommand(command)) {
-            //debugln("Parse error");
+            debugln("Parse error");
         }
     }
 }
 
-
 /**************************************************************************/
 /*!
-  @brief    brief Example command 'enableDebug -1'
-  @param    var           desc
-  @return   var           desc
+  @brief    Looks at the command and parameters and executes when valid.
+  @param    commandString String with command and parameters
+  @return   bool          true == success, false == error
 */
 /**************************************************************************/
 bool SerialCommandExecuter::_parseCommand(String commandString) {
@@ -72,16 +68,17 @@ bool SerialCommandExecuter::_parseCommand(String commandString) {
     uint8_t numParams = 0;
     
     while (numParams < MAX_NUMBER_PARAMS) {
-      if (trimmedCmdLine[numParams+1] == "") {                              //+1 because the command counts as well
+      if (trimmedCmdLine[numParams+1] == "") {                              //+1, because the command is in the first cell
         break;
       }
       numParams++;
     }
 
-    for (uint8_t i = 1; i-1 < numParams; i++){                              //+1 because the command counts as well
+    for (uint8_t i = 1; i-1 < numParams; i++){                              //+1, because the command is in the first cell
         params[i-1] = trimmedCmdLine[i].c_str();
     }
 
+    /* Check which command is given */
     if (command == COMMAND_1) {
       _printHelp();
     } else if (command == COMMAND_2) {
@@ -111,16 +108,16 @@ bool SerialCommandExecuter::_parseCommand(String commandString) {
 
 /**************************************************************************/
 /*!
-  @brief    Returns function and params
-  @param    var           desc
-  @return   var           desc
+  @brief    Divides the commandstring to command and parameters.
+  @param    commandString String with command and parameters
+  @return   String array  Array with first element the command and then params
 */
 /**************************************************************************/
 String* SerialCommandExecuter::_trimCommand(String commandString) {
-    static String commandItems[1+MAX_NUMBER_PARAMS] = "";
+    static String commandItems[1+MAX_NUMBER_PARAMS] = "";                   //To save command and parameters, each in own cell
     uint16_t i = 0;
-    String item = "";
-    uint8_t numParams = 1;                        //1 because the command counts as well
+    String item = "";                                                       //Can be a command or parameter
+    uint8_t numParams = 1;                                                  //1, because the command counts as well
     uint8_t paramCounter = 0;
     uint16_t c = 0;
     
@@ -137,7 +134,6 @@ String* SerialCommandExecuter::_trimCommand(String commandString) {
     }
     
     if (numParams-1 > MAX_NUMBER_PARAMS) {
-      //Serial.println(ERROR_1_TEXT);
       numParams == MAX_NUMBER_PARAMS;
     }
 
@@ -150,143 +146,151 @@ String* SerialCommandExecuter::_trimCommand(String commandString) {
               break;
             }
         }
-        
-        while (commandString[c] != ' ' && commandString[c] != '-' && commandString[c] != '\n'/* && c < commandString.length()*/) {
+        while (commandString[c] != ' ' && commandString[c] != '-' && commandString[c] != '\n') {
           item += commandString[c];
           c++;
         }
-
-        commandItems[paramCounter] = item; //Save param
-        item = "";                       //Reset param
+        commandItems[paramCounter] = item;                                  //Save param to items list
+        item = "";                                                          //Reset param
         paramCounter++;
     }
     return commandItems;
 }
 
+/**************************************************************************/
+/*!
+  @brief    Checks if parameters are valid.
+  @param    numParams     Number of given parameters
+  @param    checkValue    Number of needed parameters
+  @return   bool          true == valid, false == error
+*/
+/**************************************************************************/
 bool SerialCommandExecuter::_checkParams(uint8_t numParams, uint8_t checkValue) {
   if (numParams < checkValue) {
       Serial.println(ERROR_4_TEXT);
       return false;
   } else if (numParams > checkValue) {
-    Serial.println(ERROR_1_TEXT);
-    return false;
+      Serial.println(ERROR_1_TEXT);
+      return false;
   }
   return true;
 }
 
 /**************************************************************************/
 /*!
-  @brief    brief Example command 'enableDebug -1'
-  @param    var           desc
+  @brief    Prints help page to serial terminal.
 */
 /**************************************************************************/
 void SerialCommandExecuter::_printHelp() {
-  Serial.println("|---------------------------HELP---------------------------|");
-  Serial.println("A command consists of the command and sometimes arguments.");
-  Serial.println("Arguments can be given with a '-' prefix, like");
-  Serial.println("'enableDebug -x'.");
-  Serial.println("");
-  Serial.println("Available commands:");
-  Serial.println("help");
-  Serial.println("enableDebug -x -> x = 0 = off, x = 1 = on");
-  Serial.println("su -password");
-  Serial.println("viewKey");
+    Serial.println("|---------------------------HELP---------------------------|");
+    Serial.println("A command consists of the command and sometimes arguments.");
+    Serial.println("Arguments can be given with a '-' prefix, like");
+    Serial.println("'enableDebug -x'.");
+    Serial.println("");
+    Serial.println("Available commands:");
+    Serial.println("help");
+    Serial.println("enableDebug -x -> x = 0 = off, x = 1 = on");
+    Serial.println("su -password");
+    Serial.println("viewKey");
 }
 
 /**************************************************************************/
 /*!
-  @brief    brief Example command 'enableDebug -1'
-  @param    var           desc
+  @brief    Executes 'debugEnable -x' command, enables or disables debug info.
+  @param    enable        If the debug is enabled
+  @return   bool          true == success, false == error
 */
 /**************************************************************************/
 bool SerialCommandExecuter::_enableDebug(String enable) {
-  if (enable == "1") {
-    //debug = true;
-    debugln("debug = true");
-  } else if (enable == "0") {
-    //debug = false;
-    debugln("debug = false");
-  } else {
-    Serial.println(ERROR_3_TEXT);
-    return false;
-  }
-  return true;
+    if (enable == "1") {
+        setDebugEnabled(true);
+        Serial.println("debug = true");
+    } else if (enable == "0") {
+        setDebugEnabled(false);
+    } else {
+        Serial.println(ERROR_3_TEXT);
+        return false;
+    }
+    return true;
 }
 
 /**************************************************************************/
 /*!
-  @brief    brief Example command 'enableDebug -1'
-  @param    var           desc
+  @brief    Executes 'su -password' command, checks authentication.
+  @param    password      Password for the superuser
+  @return   bool          true == success, false == error
 */
 /**************************************************************************/
 bool SerialCommandExecuter::_superUserLogin(String password) {
-  if (password == "pw") {
-    _isLoggedIn = true;
-    debugln("You are now super user.");
-  } else {
-    Serial.println(ERROR_5_TEXT);
-    return false;
-  }
-  return true;
+    if (password == ROOT_PASSWORD) {
+        _isLoggedIn = true;
+        Serial.println("You are now super user.");
+    } else {
+        Serial.println(ERROR_5_TEXT);
+        return false;
+    }
+    return true;
 }
 
 /**************************************************************************/
 /*!
-  @brief    brief Example command 'enableDebug -1'
-  @param    var           desc
+  @brief    Executes 'viewKey' command, prints encryption keys.
+  @return   bool          true == success, false == error
 */
 /**************************************************************************/
 bool SerialCommandExecuter::_viewKey() {
-  if (!_isLoggedIn) {
-      Serial.println(ERROR_6_TEXT);
-      return false;
-  }
-  Serial.println("Encryption key for config.conf");
-  return true;
+    if (!_isLoggedIn) {
+        Serial.println(ERROR_6_TEXT);
+        return false;
+    }
+    Serial.println("Encryption key for config.conf");
+    return true;
 }
 
 /**************************************************************************/
 /*!
-  @brief    brief Example command 'enableDebug -1'
+  @brief    Executes 'restart' command, restarts the ESP.
   @param    var           desc
 */
 /**************************************************************************/
 void SerialCommandExecuter::_restart() {
-  Serial.print("Restarting in ");
-  for (uint8_t s = 3; s > 0; s--) {
-    Serial.print(s);
-    Serial.print(" ");
-    delay(1000);
-  }
-  ESP.restart();
+    Serial.print("Restarting in ");
+
+    /* Wait 3 seconds */
+    for (uint8_t s = 3; s > 0; s--) {
+        Serial.print(s);
+        Serial.print(" ");
+        delay(1000);
+    }
+    ESP.restart();
 }
 
 /**************************************************************************/
 /*!
-  @brief    brief Example command 'enableDebug -1'
-  @param    var           desc
+  @brief    Executes 'viewUsers' command, prints userlist of webpage.
+  @return   bool          true == success, false == error
 */
 /**************************************************************************/
 bool SerialCommandExecuter::_viewUsers() {
-  String userPrints[USER_INFO_LENGTH] = "";
+    String userPrints[USER_INFO_LENGTH] = "";
+      
+    if (!_isLoggedIn) {
+        Serial.println(ERROR_6_TEXT);
+        return false;
+    }
     
-  if (!_isLoggedIn) {
-      Serial.println(ERROR_6_TEXT);
-      return false;
-  }
+    Serial.println("|-USERNAME------|-PASSWORD------|-ROLE--|");
   
-  Serial.println("|-USERNAME------|-PASSWORD------|-ROLE--|");
-
-  for (uint8_t i = 0; i < _numberUsers; i += 3) {
-      userPrints[0] = _users[i].c_str();                      //username
-      if(atoi(_users[i+2].c_str()) == PERMISSION_LVL_USER) {
-          userPrints[1] = _users[i+1].c_str();                //password
-          userPrints[2] = "User";
-      } else if (atoi(_users[i+2].c_str()) == PERMISSION_LVL_ADMIN) {
-          userPrints[1] = "******";
-          userPrints[2] = "Admin";
-      }
-      Serial.printf("| %s\t| %s\t| %s\t|\n", userPrints[0].c_str(), userPrints[1].c_str(), userPrints[2].c_str());
-  }
-  return true;
+    for (uint8_t i = 0; i < _numberUsers; i += 3) {
+        userPrints[0] = _users[i].c_str();                                  //Username
+        if(atoi(_users[i+2].c_str()) == PERMISSION_LVL_USER) {
+            userPrints[1] = _users[i+1].c_str();                            //Password
+            userPrints[2] = "User";                                         //Permission level/role
+        } else if (atoi(_users[i+2].c_str()) == PERMISSION_LVL_ADMIN) {
+            userPrints[1] = "******";                                       //Password, not printed
+            userPrints[2] = "Admin";                                        //Permission level/role
+        }
+        Serial.printf("| %s\t| %s\t| %s\t|\n", userPrints[0].c_str(), userPrints[1].c_str(), userPrints[2].c_str());
+    }
+    return true;
 }

@@ -4,7 +4,7 @@
  * Class:     UserHandler
  * Version:   0.1
  * 
- * Class for the authentication process.
+ * Class for the http authentication process.
  */
 #include "UserHandler.h"
 
@@ -48,7 +48,6 @@ void UserHandler::updateUsers() {
         }
         _numberUsers = i-1;
     }
-    debugln(_numberUsers);
     configFile.close();
 }
 

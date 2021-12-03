@@ -4,7 +4,7 @@
  * Class:     UserHandler
  * Version:   0.1
  * 
- * Class for the authentication process.
+ * Class for the http authentication process.
  */
 #ifndef USER_HANDLER
 #define USER_HANDLER
@@ -12,10 +12,6 @@
 #include <ESP8266WebServer.h>                                               //For running the webserver
 #include <FS.h>                                                             //For SPIFFS
 #include "config.h"                                                         //For the configuration
-
-
-
-
 
 class UserHandler
 {
