@@ -14,17 +14,11 @@
 #include "config.h"                                                         //For the configuration. If not exists: copy "config_template.h", add your configuration and rename to "config.h"
 #include "UserHandler.h"
 #include "SerialCommandExecuter.h"
+#include "Debugger.h"
 
 /* On and off are inverted because the built-in led is active low */
 #define ON                      LOW
 #define OFF                     HIGH
-
-/* Permission levels */
-#define PERMISSION_LVL_ALL      0
-#define PERMISSION_LVL_USER     1
-#define PERMISSION_LVL_ADMIN    2
-#define USER_INFO_LENGTH        3
-#define MAX_NUMBER_USERS        10
 
 ESP8266WebServer server(80);                                                //Object that listens for HTTP requests on port 80
 Neotimer timer = Neotimer(30000);                                           //Setup a 30 second timer, to execute code with a 30 interval
@@ -41,9 +35,7 @@ File fsUploadFile;                                                          //A 
 */
 /**************************************************************************/
 void setup() {
-    //if (DEBUG) {
-        Serial.begin(115200);                                               //Serial port for debugging purposes
-    //}
+    Serial.begin(115200);                                                   //Serial port for debugging purposes
 
     /* Initialize SPIFFS */
     if(!SPIFFS.begin()) {
@@ -58,6 +50,7 @@ void setup() {
     initializeServer();
     userHandler.updateUsers();
     cliExecuter.setUsers(userHandler.getUsers(), userHandler.getNumberOfUsers());
+    debugln("Serial commands available. Typ 'help' for help.");
 }
 
 /**************************************************************************/
@@ -66,6 +59,12 @@ void setup() {
 */
 /**************************************************************************/
 void connectWifi() {
+    if (HOSTNAME != "") {
+      WiFi.hostname(HOSTNAME);
+      //debug("Hostname: ");
+      //debugln(hostname);
+    }
+  
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
     
     debug("Connecting to WiFi");
@@ -78,10 +77,10 @@ void connectWifi() {
 
     debugln("");
     debug("IP: ");
-    debugln(WiFi.localIP());                                                //Print ESP32 Local IP Address
+    debugln(WiFi.localIP().toString().c_str());                          //Print local IP Address
 
     debug("Copy and paste the following URL: http://");
-    debugln(WiFi.localIP());
+    debugln(WiFi.localIP().toString().c_str());
 }
 
 /**************************************************************************/
@@ -257,30 +256,30 @@ String getContentType(String filename) {
 */
 /**************************************************************************/
 void handleFileRequest(String path, uint8_t permissionLevel) {
-  if(!userHandler.checkPermission(permissionLevel, &server)) {
-      server.requestAuthentication();
-      return;
-  }
-  
-  debugln(String("Requested file: ") + path);
-  
-  String contentType = getContentType(path);                                //Get the MIME type
-  String pathWithGz = path + ".gz";
-  
-  if (SPIFFS.exists(pathWithGz)) {                                          //If there's a compressed version available
-    path += ".gz";                                                          //Use the compressed verion
-  }
-  
-  if (SPIFFS.exists(path)) {
-    File file = SPIFFS.open(path, "r");                                     //Open the file
-    size_t sent = server.streamFile(file, contentType);                     //Send it to the client
-    file.close();                                                           //Close the file again
-    debugln(String("Sent file: ") + path);
-    return;
-  }
-  
-  debugln(String("File Not Found: ") + path);                               //If the file doesn't exist, return false
-  server.send(404, "text/plain", "404: Not Found");                         //otherwise, respond with a 404 (Not Found) error
+    if(!userHandler.checkPermission(permissionLevel, &server)) {
+        server.requestAuthentication();
+        return;
+    }
+    
+    debugln(String("Requested file: ") + path);
+    
+    String contentType = getContentType(path);                              //Get the MIME type
+    String pathWithGz = path + ".gz";
+    
+    if (SPIFFS.exists(pathWithGz)) {                                        //If there's a compressed version available
+        path += ".gz";                                                      //Use the compressed verion
+    }
+    
+    if (SPIFFS.exists(path)) {
+        File file = SPIFFS.open(path, "r");                                 //Open the file
+        size_t sent = server.streamFile(file, contentType);                 //Send it to the client
+        file.close();                                                       //Close the file again
+        debugln(String("Sent file: ") + path);
+        return;
+    }
+    
+    debugln(String("File Not Found: ") + path);                          //If the file doesn't exist, return false
+    server.send(404, "text/plain", "404: Not Found");                       //otherwise, respond with a 404 (Not Found) error
 }
 
 /**************************************************************************/
@@ -291,26 +290,27 @@ void handleFileRequest(String path, uint8_t permissionLevel) {
 void handleFileUpload() {
     HTTPUpload& upload = server.upload();
     
-    if(upload.status == UPLOAD_FILE_START) {
+    if (upload.status == UPLOAD_FILE_START) {
         String filename = upload.filename;
         
-        if(!filename.startsWith("/")) {
+        if (!filename.startsWith("/")) {
             filename = "/" + filename;
         }
         
         debugln(String("Upload file named: ") + filename);
         
-        fsUploadFile = SPIFFS.open(filename, "w");                              //Open the file for writing in SPIFFS (create if it doesn't exist)        
+        fsUploadFile = SPIFFS.open(filename, "w");                          //Open the file for writing in SPIFFS (create if it doesn't exist)
+
     } else if (upload.status == UPLOAD_FILE_WRITE && fsUploadFile ) {
-        fsUploadFile.write(upload.buf, upload.currentSize);                   //Write the received bytes to the file
-    } else if(upload.status == UPLOAD_FILE_END){
-        if(fsUploadFile) {                                                      //If the file was successfully created
-            fsUploadFile.close();                                                 //Close the file again
+        fsUploadFile.write(upload.buf, upload.currentSize);                 //Write the received bytes to the file
+    } else if (upload.status == UPLOAD_FILE_END) {
+        if (fsUploadFile) {                                                  //If the file was successfully created
+            fsUploadFile.close();                                           //Close the file again
             debugln(String("handleFileUpload Size: ") + upload.totalSize);
-            server.sendHeader("Location","/success.html");                        //Redirect the client to the success page
+            server.sendHeader("Location","/success.html");                  //Redirect the client to the success page
             server.send(303);
             userHandler.updateUsers();
-            cliExecuter.setUsers(userHandler.getUsers(), userHandler.getNumberOfUsers());//update users for cli too
+            cliExecuter.setUsers(userHandler.getUsers(), userHandler.getNumberOfUsers()); //update users for cli too
         } else {
             server.send(500, "text/plain", "500: couldn't create file");
         }
@@ -343,5 +343,5 @@ void handleFileDownload() {
     server.sendHeader("Connection", "close");
     server.streamFile(download, "application/octet-stream");
     download.close();
-    server.send(200);                                                   //HTTP code 200 == OK
+    server.send(200);                                                       //HTTP code 200 == OK
 }
