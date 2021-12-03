@@ -1,4 +1,5 @@
 # Hackable ESP8266 device
+# yo
 Firmware for ESP8266 based device (D1 Mini board) with designed vunerabilities to practice ethical hacking. The software is tested on the following boards:
 
 * D1 Mini
