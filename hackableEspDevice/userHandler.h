@@ -13,19 +13,17 @@
 #include <FS.h>                                                             //For SPIFFS
 #include "config.h"                                                         //For the configuration
 
-/* Permission levels */
-#define PERMISSION_LVL_ALL      0
-#define PERMISSION_LVL_USER     1
-#define PERMISSION_LVL_ADMIN    2
 
-#define USER_INFO_LENGTH        3                                           //Username, password and permission level
-#define MAX_NUMBER_USERS        10
+
+
 
 class UserHandler
 {
     public:
         UserHandler(ESP8266WebServer *server);
         void updateUsers();
+        String* getUsers();
+        uint8_t getNumberOfUsers();
         bool checkPermission(uint8_t permissionLevel, ESP8266WebServer *server);
     
     private:

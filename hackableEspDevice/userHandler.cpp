@@ -54,6 +54,24 @@ void UserHandler::updateUsers() {
 
 /**************************************************************************/
 /*!
+  @brief    Gets users
+*/
+/**************************************************************************/
+String* UserHandler::getUsers() {
+    return _users;
+}
+
+/**************************************************************************/
+/*!
+  @brief    Gets number users
+*/
+/**************************************************************************/
+uint8_t UserHandler::getNumberOfUsers() {
+    return _numberUsers;
+}
+
+/**************************************************************************/
+/*!
   @brief    Checks if user has permission.
   @param    permissionLevel 0 = not logged in, 1 = user, 2 = admin
   @param    server          Webserver object
