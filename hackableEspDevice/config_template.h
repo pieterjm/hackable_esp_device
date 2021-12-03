@@ -17,17 +17,13 @@
 
 #define HTTP_CONFIG_LOCATION    "/conf.txt"
 
-#define DEBUG 0                                                             //For defining serial debugging
+/* Permission levels */
+#define PERMISSION_LVL_ALL      0
+#define PERMISSION_LVL_USER     1
+#define PERMISSION_LVL_ADMIN    2
 
-/*
- * This precompiler functions are there for switching on and off the serial debugger
- */
-#if DEBUG == 1
-    #define debug(x) Serial.print(x)
-    #define debugln(x) Serial.println(x)
-#else
-    #define debug(x)
-    #define debugln(x)
-#endif
+#define USER_INFO_LENGTH        3                                           //Username, password and permission level
+#define MAX_NUMBER_USERS        10
 
+#define ROOT_PASSWORD           "p@$Sw0rd"                                  //For serial debug
 #endif
