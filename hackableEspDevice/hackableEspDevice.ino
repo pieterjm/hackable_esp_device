@@ -81,7 +81,7 @@ void connectWifi() {
 
     debug("Copy and paste the following URL: http://");
     if (HOSTNAME != "") {
-      debugln(HOSTNAME);
+      debugln(WiFi.hostname().c_str());
     } else {
       debugln(WiFi.localIP().toString().c_str());
     }
