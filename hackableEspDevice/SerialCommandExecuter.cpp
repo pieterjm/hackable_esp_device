@@ -64,7 +64,7 @@ void SerialCommandExecuter::executeCommand() {
 bool SerialCommandExecuter::_parseCommand(String commandString) {
     String* trimmedCmdLine = _trimCommand(commandString);
     String command = trimmedCmdLine[0].c_str();
-    String params[MAX_NUMBER_PARAMS] = "";
+    String params[MAX_NUMBER_PARAMS] = {""};
     uint8_t numParams = 0;
     
     while (numParams < MAX_NUMBER_PARAMS) {
@@ -114,8 +114,7 @@ bool SerialCommandExecuter::_parseCommand(String commandString) {
 */
 /**************************************************************************/
 String* SerialCommandExecuter::_trimCommand(String commandString) {
-    static String commandItems[1+MAX_NUMBER_PARAMS] = "";                   //To save command and parameters, each in own cell
-    uint16_t i = 0;
+    static String commandItems[1+MAX_NUMBER_PARAMS] = {""};                   //To save command and parameters, each in own cell
     String item = "";                                                       //Can be a command or parameter
     uint8_t numParams = 1;                                                  //1, because the command counts as well
     uint8_t paramCounter = 0;
@@ -272,7 +271,7 @@ void SerialCommandExecuter::_restart() {
 */
 /**************************************************************************/
 bool SerialCommandExecuter::_viewUsers() {
-    String userPrints[USER_INFO_LENGTH] = "";
+    String userPrints[USER_INFO_LENGTH] = {""};
       
     if (!_isLoggedIn) {
         Serial.println(ERROR_6_TEXT);
