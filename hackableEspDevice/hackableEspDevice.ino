@@ -80,7 +80,11 @@ void connectWifi() {
     debugln(WiFi.localIP().toString().c_str());                          //Print local IP Address
 
     debug("Copy and paste the following URL: http://");
-    debugln(WiFi.localIP().toString().c_str());
+    if (HOSTNAME != "") {
+      debugln(HOSTNAME);
+    } else {
+      debugln(WiFi.localIP().toString().c_str());
+    }
 }
 
 /**************************************************************************/
