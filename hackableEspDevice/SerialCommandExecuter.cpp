@@ -63,8 +63,9 @@ void SerialCommandExecuter::executeCommand() {
 /**************************************************************************/
 bool SerialCommandExecuter::_parseCommand(String commandString) {
     String* trimmedCmdLine = _trimCommand(commandString);
+    String* trimmedLessCmdLine =_trimLessCommand(commandString);
     String command = trimmedCmdLine[0].c_str();
-    String params[MAX_NUMBER_PARAMS] = "";
+    String params[MAX_NUMBER_PARAMS] = {""};
     uint8_t numParams = 0;
     
     while (numParams < MAX_NUMBER_PARAMS) {
@@ -81,7 +82,7 @@ bool SerialCommandExecuter::_parseCommand(String commandString) {
     /* Check which command is given */
     if (command == COMMAND_1) {
       _printHelp();
-    } else if (command == COMMAND_2) {
+    } else if (command == COMMAND_2) { //enableDebug
         if (!_checkParams(numParams, 1) || !_enableDebug(params[0])) {
             return false;
         }
@@ -99,7 +100,12 @@ bool SerialCommandExecuter::_parseCommand(String commandString) {
         if (!_viewUsers()) {
           return false;
         }
-    } else {
+    }else if (command == COMMAND_7) {//hostname
+        if (!_hostname(trimmedLessCmdLine)) {
+          return false;
+        }
+    }
+     else {
         Serial.println(ERROR_2_TEXT);
         return false;
     }
@@ -114,8 +120,7 @@ bool SerialCommandExecuter::_parseCommand(String commandString) {
 */
 /**************************************************************************/
 String* SerialCommandExecuter::_trimCommand(String commandString) {
-    static String commandItems[1+MAX_NUMBER_PARAMS] = "";                   //To save command and parameters, each in own cell
-    uint16_t i = 0;
+    static String commandItems[1+MAX_NUMBER_PARAMS] = {""};                   //To save command and parameters, each in own cell
     String item = "";                                                       //Can be a command or parameter
     uint8_t numParams = 1;                                                  //1, because the command counts as well
     uint8_t paramCounter = 0;
@@ -134,7 +139,7 @@ String* SerialCommandExecuter::_trimCommand(String commandString) {
     }
     
     if (numParams-1 > MAX_NUMBER_PARAMS) {
-      numParams == MAX_NUMBER_PARAMS;
+      numParams = MAX_NUMBER_PARAMS;
     }
 
     while (paramCounter < numParams) {
@@ -272,7 +277,7 @@ void SerialCommandExecuter::_restart() {
 */
 /**************************************************************************/
 bool SerialCommandExecuter::_viewUsers() {
-    String userPrints[USER_INFO_LENGTH] = "";
+    String userPrints[USER_INFO_LENGTH] = {""};
       
     if (!_isLoggedIn) {
         Serial.println(ERROR_6_TEXT);
@@ -395,4 +400,28 @@ String* SerialCommandExecuter::_trimLessCommand(String commandString) {
     }
     
     return commandItems;
+}
+/**************************************************************************/
+/*!
+  @brief    Gives help based on command put in
+  @param    command       contains the command that help is given about
+*/
+/**************************************************************************/
+void SerialCommandExecuter::_giveHelp(String command) {
+    const int commandCount = 6;
+    String commandsList[commandCount] = {"help","enableDebug","su", "viewKey", "hostname", "restart" }; 
+    if (command == ""){
+          Serial.println("|---------------------------HELP---------------------------|");
+          Serial.println("This is a commandline interface that allows access to the smartlight config");
+          Serial.println("Available commands:");
+          for (int i=0; i<commandCount;i++){ // loops through commands
+            Serial.println(commandsList[i]);
+          }
+    }
+    if (command = "hostname"){
+        Serial.println("Usage: hostname [--set] {newhostname}   set new hostname for next boot");
+        Serial.println("       hostname [--null]                reset hostname to null");
+        Serial.println("       hostname                         gives the current hostname");
+        Serial.println("       hostname [-i]                    gives the current ipaddr");
+    }
 }
