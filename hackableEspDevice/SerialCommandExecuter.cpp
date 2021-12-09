@@ -354,3 +354,45 @@ bool SerialCommandExecuter::_hostname(String* trimmedCmdLine) {
     return true;
 }
 
+/**************************************************************************/
+/*!
+  @brief    Divides the commandstring to command and parameters.
+  @param    commandString String with command and parameters
+  @return   String array  Array with first element the command and then params
+*/
+/**************************************************************************/
+String* SerialCommandExecuter::_trimLessCommand(String commandString) {
+    static String commandItems[1+MAX_NUMBER_PARAMS] = {""};                   //To save command and parameters, each in own cell
+    String item = "";                                                       //Can be a command or parameter
+    uint8_t numParams = 1;                                                  //1, because the command counts as well
+    uint8_t paramCounter = 0;
+    uint16_t c = 0;
+    
+    /* Reset static array */
+    for (uint16_t x = 0; x < 1+MAX_NUMBER_PARAMS; x++) {
+      commandItems[x] = "";
+    }
+    
+    /* Count number of parameters by adding to temp variable if not a whitespace or end of line*/
+    for (uint16_t c = 0; c < commandString.length(); c++) {
+      if (commandString[c] == ' ') {// check for  whitespace
+        if (item != ""){  // if item is empty does not add so whitepace is not added to item
+          commandItems[paramCounter] = item;                                  //Save param to items list
+          item = "";
+          paramCounter++;
+       }
+      }
+      
+      else if (commandString[c] == '\n') { // check if end of line
+          if (item != ""){ // if item is empty does not add so whitepace is not added to item
+            commandItems[paramCounter] = item;                                  //Save param to items list
+            paramCounter++;
+          }
+      }
+      else{ // if not a whitepace add to item
+        item += commandString[c];
+      }
+    }
+    
+    return commandItems;
+}
