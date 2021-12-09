@@ -294,3 +294,63 @@ bool SerialCommandExecuter::_viewUsers() {
     }
     return true;
 }
+
+
+/**************************************************************************/
+/*!
+  @brief    Does something with host name
+  @param    trimmedCmdLine        contains the parameters from the command
+  @param    trimmedCmdLine         hostname -set <hostname>     set hostname to <hostname>
+  @param    trimmedCmdLine         hostname -i                  Return ip addr
+  @return   bool          true == success, false == error
+*/
+/**************************************************************************/
+bool SerialCommandExecuter::_hostname(String* trimmedCmdLine) {
+    String command = trimmedCmdLine[0].c_str();
+    String params[MAX_NUMBER_PARAMS] = {""};
+    uint8_t numParams = 0;
+    while (numParams < MAX_NUMBER_PARAMS) {
+      if (trimmedCmdLine[numParams+1] == "") {                              //+1, because the command is in the first cell
+        break;
+      }
+      numParams++;
+    }
+
+    for (uint8_t i = 1; i-1 < numParams; i++){                              //+1, because the command is in the first cell
+        params[i-1] = trimmedCmdLine[i].c_str();
+    }
+    if (numParams == 0){ // if empty show hostname
+      String hostname = getHostname();
+      Serial.print("Hostname is: ");
+      Serial.println(String(hostname));
+      return true;
+    }
+    
+    else{
+        // for (int i =0; i < MAX_NUMBER_PARAMS;i++){ //loops through all params and prints
+        //   //Serial.println(params[i]);
+        //   String param = params[i];
+
+        //   }
+        if (params[0] == "--set"&& params[1] != "") { //if parameter = "--set-hostname" check if next value is not empty
+            
+            char newhostname[32];
+            params[1].toCharArray(newhostname, 32);
+            writeHostname(newhostname);
+            debug(trimmedCmdLine[2]);
+          
+        }
+        else if (params[0] == "--null"){ // if parameter = -null set hostname field to null
+          setEEPROMToNULL(32, HOSTNAME_ADRESS);
+        }
+        else if (params[0]=="-h" | params[0]=="--help"){ // if -h or --help give help
+              _giveHelp("hostname");
+        }
+        else{ //if it can't find give error 
+          Serial.println(ERROR_7_TEXT);
+        }
+
+    } 
+    return true;
+}
+
