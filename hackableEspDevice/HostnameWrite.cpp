@@ -22,11 +22,8 @@ String getHostname(){
     String hostnameString;
     for (int i = 0; i< 32; i++){
         EEPROM.get(HOSTNAME_ADRESS+i,hostname[i]);
-        //Serial.println(hostname[i]);
     }
     EEPROM.end();
-    //debug("Stored hostname:");
-    //debugln(hostname);
     hostnameString = String(hostname);
     return hostnameString;
 };
@@ -39,29 +36,11 @@ String getHostname(){
 /**************************************************************************/
 void writeHostname(char hostname[32]){
     EEPROM.begin(32);
-    // for (int i = 0; i< 32; i++){
-    //     EEPROM.write(HOSTNAME_ADRESS+i, hostname[i]);
-    //     Serial.print(EEPROM.read(HOSTNAME_ADRESS+i));
-    //     delay(100);
-    // }
     for (int i = 0; i< 32; i++){
         EEPROM.write(HOSTNAME_ADRESS+i, hostname[i]);
         yield();
     }
     checkEepromCommit();
-
-    // Serial.println(" Done Writing");
-    // debug("Hostname writen: ");
-    // debugln(String(hostname));
-    // if (EEPROM.commit()){
-    //   Serial.print("I can still read this: ");
-    //   EEPROM.begin(32);
-    //   for (int i = 0; i< 32; i++){
-    //       Serial.print(EEPROM.read(HOSTNAME_ADRESS+i));
-    //       //Serial.println(hostname[i]);
-    //   }
-    // }
-    // Serial.print("\n");
     EEPROM.end();
   };
 
@@ -85,7 +64,6 @@ void setEEPROMToNULL(int writeLenth, int startAdress){
     debug(" till ");
     debugln(String(startAdress+writeLenth));
     EEPROM.end();
-    getHostname();
 };
 
 /**************************************************************************/
@@ -95,8 +73,8 @@ void setEEPROMToNULL(int writeLenth, int startAdress){
 /**************************************************************************/
 void checkEepromCommit() {
   if (EEPROM.commit()) {
-    debugln("EEPROM successfully committed!");
+    debugln("Data writen!");
   } else {
-    debugln("ERROR! EEPROM commit failed!");
+    debugln("ERROR! Data NOT writen!");
   }
 }
