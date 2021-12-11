@@ -15,6 +15,7 @@
 #include "UserHandler.h"
 #include "SerialCommandExecuter.h"
 #include "Debugger.h"
+#include <algorithm>                                                        //For the replace functions used to replace characters in a string to a specific character
 
 /* On and off are inverted because the built-in led is active low */
 #define ON                      LOW
@@ -77,7 +78,11 @@ void connectWifi() {
 
     debugln("");
     debug("IP: ");
-    debugln(WiFi.localIP().toString().c_str());                          //Print local IP Address
+    debugln(WiFi.localIP().toString().c_str());                             //Print local IP Address
+
+ 
+    debug("WiFi Password: ");
+    debugln(WIFI_PASSWORD);                                                 //Print WiFi password one time in plain text when debugger is anabled
 
     debug("Copy and paste the following URL: http://");
     if (HOSTNAME != "") {
@@ -212,8 +217,15 @@ void initializeServer() {
 /**************************************************************************/
 void loop() {
   server.handleClient();
-  if(timer.repeat()){
-      debugln(WIFI_PASSWORD);
+  if(timer.repeat()){                                                        //Prints WiFi password every 30 second on serial in the form of stars: "*****", so it is not readable, it's a hint
+      Serial.print("Wifi Password: ");
+      String wifipass = WIFI_PASSWORD;
+      int charCount;
+      charCount = wifipass.length();                                         //Count how many characters the WiFi password contains
+      for (int i=0; i<charCount; i++) {
+        Serial.print("*");                                                   //Print a "*" for each password character
+      }
+      Serial.println("");                                            
   }
 
   if(Serial.available()) {
