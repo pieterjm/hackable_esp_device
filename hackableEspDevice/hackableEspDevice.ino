@@ -105,7 +105,11 @@ void connectWifi() {
     debugln(WiFi.localIP().toString().c_str());                          //Print local IP Address
 
     debug("Copy and paste the following URL: http://");
-    debugln(WiFi.localIP().toString().c_str());
+    if (HOSTNAME != "") {
+      debugln(WiFi.hostname().c_str());
+    } else {
+      debugln(WiFi.localIP().toString().c_str());
+    }
 }
 
 /**************************************************************************/
@@ -303,7 +307,7 @@ void handleFileRequest(String path, uint8_t permissionLevel) {
         return;
     }
     
-    debugln(String("File Not Found: ") + path);                          //If the file doesn't exist, return false
+    debugln(String("File Not Found: ") + path);                             //If the file doesn't exist, return false
     server.send(404, "text/plain", "404: Not Found");                       //otherwise, respond with a 404 (Not Found) error
 }
 
@@ -349,20 +353,20 @@ void handleFileUpload() {
 /**************************************************************************/
 void handleFileDownload() {
     String filename = server.arg("filekey");                                //Get user input for filename
-    
+
     if(!filename.startsWith("/")) {
         filename = "/" + filename;
     }
-        
+
     if (!SPIFFS.exists(filename)) {
         server.send(404, "text/plain", "404: file not found!");
         return;
     }
-    
+
     File download = SPIFFS.open(filename, "r");
 
     debugln("Start sending file");
-    
+
     server.sendHeader("Content-Type", "text/text");
     server.sendHeader("Content-Disposition", "attachment; filename="+filename);
     server.sendHeader("Connection", "close");
