@@ -19,7 +19,7 @@
 #define COMMAND_2       "enableDebug"
 #define COMMAND_3       "su"
 #define COMMAND_4       "viewKey"
-#define COMMAND_5       "restart"
+#define COMMAND_5       "reboot"
 #define COMMAND_6       "viewUsers"
 #define COMMAND_7       "hostname"    //to change hostname???
 
@@ -43,15 +43,15 @@ class SerialCommandExecuter
         String* _trimCommand(String commandString);
         String* _trimLessCommand(String commandString);
         bool _checkParams(uint8_t numParams, uint8_t checkValue);
-        void _giveHelp(String command);
 
-        void _printHelp();
+        void _printHelp(String command);
         bool _enableDebug(String enable);
         bool _superUserLogin(String password);
         bool _viewKey();
         void _restart();
         bool _viewUsers();
         bool _hostname(String* trimmedCmdLine);
+        bool _checkHelp(String param,String command);
          
         bool _isLoggedIn;
         String _users[MAX_NUMBER_USERS*USER_INFO_LENGTH];

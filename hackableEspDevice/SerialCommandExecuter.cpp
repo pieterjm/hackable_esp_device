@@ -63,7 +63,7 @@ void SerialCommandExecuter::executeCommand() {
 /**************************************************************************/
 bool SerialCommandExecuter::_parseCommand(String commandString) {
     String* trimmedCmdLine = _trimCommand(commandString);
-    String* trimmedLessCmdLine =_trimLessCommand(commandString);
+    //String* trimmedLessCmdLine =_trimLessCommand(commandString);
     String command = trimmedCmdLine[0].c_str();
     String params[MAX_NUMBER_PARAMS] = {""};
     uint8_t numParams = 0;
@@ -81,27 +81,27 @@ bool SerialCommandExecuter::_parseCommand(String commandString) {
 
     /* Check which command is given */
     if (command == COMMAND_1) {
-      _printHelp();
+      _printHelp(COMMAND_1);
     } else if (command == COMMAND_2) {
-        if (!_checkParams(numParams, 1) || !_enableDebug(params[0])) {
-            return false;
-        }
+          if (_checkHelp(params[0],COMMAND_2) &&(!_checkParams(numParams, 1) || !_enableDebug(params[0]))) { //enableDebug
+              return false;
+          }
     } else if (command == COMMAND_3) {
-        if (!_checkParams(numParams, 1) || !_superUserLogin(params[0])) {
+          if (_checkHelp(params[0],COMMAND_2) &&(!_checkParams(numParams, 1) || !_superUserLogin(params[0]))) { //su
+              return false;
+          }
+    } else if (command == COMMAND_4) { //viewKey
+        if (_checkHelp(params[0],COMMAND_4) &&(!_viewKey())) {
             return false;
-        }
-    } else if (command == COMMAND_4) {
-        if (!_viewKey()) {
-          return false;
-        }
-    } else if (command == COMMAND_5) {
+          }
+    } else if (_checkHelp(params[0],COMMAND_5) && (command == COMMAND_5)) {//reboot
         _restart();
-    } else if (command == COMMAND_6) {
+    } else if ((_checkHelp(params[0],COMMAND_6) && command == COMMAND_6)) {//viewUsers
         if (!_viewUsers()) {
           return false;
         }
-    } else if (command == COMMAND_7) {
-        if (!_hostname(trimmedLessCmdLine)) {
+    } else if (_checkHelp(params[0],COMMAND_7) && (command == COMMAND_7)) { //hostname
+        if (!_hostname(trimmedCmdLine)) {
           return false;
         }
     } else {
@@ -121,6 +121,43 @@ bool SerialCommandExecuter::_parseCommand(String commandString) {
 String* SerialCommandExecuter::_trimCommand(String commandString) {
     static String commandItems[1+MAX_NUMBER_PARAMS] = {""};                   //To save command and parameters, each in own cell
     String item = "";                                                       //Can be a command or parameter
+    uint8_t paramCounter = 0;
+    
+    /* Reset static array */
+    for (uint16_t x = 0; x < 1+MAX_NUMBER_PARAMS; x++) {
+      commandItems[x] = "";
+    }
+    
+    /* Count number of parameters by adding to temp variable if not a whitespace or end of line*/
+    for (uint16_t c = 0; c < commandString.length(); c++) {
+      if (commandString[c] == ' ') {// check for  whitespace
+        if (item != ""){  // if item is empty does not add so whitepace is not added to item
+          commandItems[paramCounter] = item;                                  //Save param to items list
+          item = "";
+          paramCounter++;
+       }
+      } else if (commandString[c] == '\n') { // check if end of line
+          if (item != ""){ // if item is empty does not add so whitepace is not added to item
+            commandItems[paramCounter] = item;                                  //Save param to items list
+            paramCounter++;
+          }
+      } else { // if not a whitepace add to item
+        item += commandString[c];
+      }
+    }
+    
+    return commandItems;
+}
+/**************************************************************************/
+/*!
+  @brief    Divides the commandstring to command and parameters.
+  @param    commandString String with command and parameters
+  @return   String array  Array with first element the command and then params
+*/
+/**************************************************************************/
+String* SerialCommandExecuter::_trimLessCommand(String commandString) {
+    static String commandItems[1+MAX_NUMBER_PARAMS] = {""};                   //To save command and parameters, each in own cell
+    String item = "";                                                       //Can be a command or parameter
     uint8_t numParams = 1;                                                  //1, because the command counts as well
     uint8_t paramCounter = 0;
     uint16_t c = 0;
@@ -130,37 +167,26 @@ String* SerialCommandExecuter::_trimCommand(String commandString) {
       commandItems[x] = "";
     }
     
-    /* Count number of parameters */
+    /* Count number of parameters by adding to temp variable if not a whitespace or end of line*/
     for (uint16_t c = 0; c < commandString.length(); c++) {
-      if (commandString[c] == '-') {
-        numParams++;
+      if (commandString[c] == ' ') {// check for  whitespace
+        if (item != ""){  // if item is empty does not add so whitepace is not added to item
+          commandItems[paramCounter] = item;                                  //Save param to items list
+          item = "";
+          paramCounter++;
+       }
+      } else if (commandString[c] == '\n') { // check if end of line
+          if (item != ""){ // if item is empty does not add so whitepace is not added to item
+            commandItems[paramCounter] = item;                                  //Save param to items list
+            paramCounter++;
+          }
+      } else { // if not a whitepace add to item
+        item += commandString[c];
       }
     }
     
-    if (numParams-1 > MAX_NUMBER_PARAMS) {
-      numParams = MAX_NUMBER_PARAMS;
-    }
-
-    while (paramCounter < numParams) {
-        /* If c == 0, the command is extracted */
-        if (c != 0) {
-            if (commandString.indexOf('-', c) != -1) {
-                c = commandString.indexOf('-', c) + 1;
-            } else {
-              break;
-            }
-        }
-        while (commandString[c] != ' ' && commandString[c] != '-' && commandString[c] != '\n') {
-          item += commandString[c];
-          c++;
-        }
-        commandItems[paramCounter] = item;                                  //Save param to items list
-        item = "";                                                          //Reset param
-        paramCounter++;
-    }
     return commandItems;
 }
-
 /**************************************************************************/
 /*!
   @brief    Checks if parameters are valid.
@@ -171,48 +197,87 @@ String* SerialCommandExecuter::_trimCommand(String commandString) {
 /**************************************************************************/
 bool SerialCommandExecuter::_checkParams(uint8_t numParams, uint8_t checkValue) {
   if (numParams < checkValue) {
-      Serial.println(ERROR_4_TEXT);
+      Serial.println(ERROR_7_TEXT);
       return false;
   } else if (numParams > checkValue) {
-      Serial.println(ERROR_1_TEXT);
+      Serial.println(ERROR_7_TEXT);
       return false;
   }
   return true;
 }
 
-/**************************************************************************/
-/*!
-  @brief    Prints help page to serial terminal.
-*/
-/**************************************************************************/
-void SerialCommandExecuter::_printHelp() {
-    Serial.println("|---------------------------HELP---------------------------|");
-    Serial.println("A command consists of the command and sometimes arguments.");
-    Serial.println("Arguments can be given with a '-' prefix, like");
-    Serial.println("'enableDebug -x'.");
-    Serial.println("");
-    Serial.println("Available commands:");
-    Serial.println("help");
-    Serial.println("enableDebug -x -> x = 0 = off, x = 1 = on");
-    Serial.println("su -password");
-    Serial.println("viewKey");
-}
 
 /**************************************************************************/
 /*!
-  @brief    Executes 'debugEnable -x' command, enables or disables debug info.
+  @brief    Gives help based on command put in
+  @param    command       contains the command that help is given about
+  TODO:    add rest of commands
+*/
+/**************************************************************************/
+void SerialCommandExecuter::_printHelp(String command) {
+    const int commandCount = 6;
+    String commandsList[commandCount] = {"help","enableDebug","su", "viewKey", "hostname", "reboot" }; 
+    if (command == ""| command == COMMAND_1){//default help
+          Serial.println("|---------------------------HELP---------------------------|");
+          Serial.println("This is a commandline interface that allows access to the smartlight config");
+          Serial.println("Available commands:");
+          for (int i=0; i<commandCount;i++){ // loops through commands
+            Serial.println(commandsList[i]);
+          }
+    }
+    else if (command == COMMAND_7){ //hostname
+        Serial.println("Usage: hostname [--set] {newhostname}   set new hostname for next boot");
+        Serial.println("       hostname                         gives the current hostname");
+        Serial.println("       hostname [--null]                reset hostname to null");
+        Serial.println("       hostname [-i]                    gives the current ipaddr");
+        Serial.println("       hostname [--default]             Sets the hostname to the default hostname");
+    }
+    else if (command == COMMAND_2){ //enableDebug
+        Serial.println("Usage: enableDebug [--off]              Turns the debug off");
+        Serial.println("       enableDebug [--on]               Turns the debug on");
+    }
+    else if (command == COMMAND_3){//su
+      Serial.println('Usage: su {passwd}                      does y');
+    }
+    else if (command == COMMAND_4){
+      Serial.println('Usage: command_x [--parm]               does y');
+      Serial.println('       command_x [--parm2]              does x ');
+    }
+    else if (command == COMMAND_5){
+      Serial.println('Usage: command_x [--parm]               does y');
+      Serial.println('       command_x [--parm2]              does x ');
+    }
+    else if (command == COMMAND_6){
+      Serial.println('Usage: command_x [--parm]               does y');
+      Serial.println('       command_x [--parm2]              does x ');
+    }
+    else{
+          Serial.println("|---------------------------HELP---------------------------|");
+          Serial.println("Commands not found");
+          Serial.println("Available commands:");
+          for (int i=0; i<commandCount;i++){ // loops through commands
+            Serial.println(commandsList[i]);
+          }
+    }
+}
+
+
+/**************************************************************************/
+/*!
+  @brief    Executes 'debugEnable [--off|--on]' command, enables or disables debug info.
   @param    enable        If the debug is enabled
   @return   bool          true == success, false == error
 */
 /**************************************************************************/
 bool SerialCommandExecuter::_enableDebug(String enable) {
-    if (enable == "1") {
+    if (enable == "--on") {
         setDebugEnabled(true);
         Serial.println("debug = true");
-    } else if (enable == "0") {
+    } else if (enable == "--off") {
         setDebugEnabled(false);
-    } else {
-        Serial.println(ERROR_3_TEXT);
+        Serial.println("debug = false");
+    }else {
+        Serial.println(ERROR_7_TEXT);
         return false;
     }
     return true;
@@ -307,6 +372,7 @@ bool SerialCommandExecuter::_viewUsers() {
   @param    trimmedCmdLine         hostname -set <hostname>     set hostname to <hostname>
   @param    trimmedCmdLine         hostname -i                  Return ip addr
   @return   bool          true == success, false == error
+  TODO:     add -i as option to obtain ip addr
 */
 /**************************************************************************/
 bool SerialCommandExecuter::_hostname(String* trimmedCmdLine) {
@@ -340,14 +406,14 @@ bool SerialCommandExecuter::_hostname(String* trimmedCmdLine) {
             char newhostname[32];
             params[1].toCharArray(newhostname, 32);
             writeHostname(newhostname);
-            debug(trimmedCmdLine[2]);
           
         }
         else if (params[0] == "--null"){ // if parameter = -null set hostname field to null
           setEEPROMToNULL(32, HOSTNAME_ADRESS);
         }
-        else if (params[0]=="-h" | params[0]=="--help"){ // if -h or --help give help
-              _giveHelp("hostname");
+        else if (params[0] == "--default"){
+          Serial.println("setting hostname to default");
+          writeHostname(DEFAULT_HOSTNAME);
         }
         else{ //if it can't find give error 
           Serial.println(ERROR_7_TEXT);
@@ -359,64 +425,18 @@ bool SerialCommandExecuter::_hostname(String* trimmedCmdLine) {
 
 /**************************************************************************/
 /*!
-  @brief    Divides the commandstring to command and parameters.
-  @param    commandString String with command and parameters
-  @return   String array  Array with first element the command and then params
+  @brief    checks if the -h or --help is used in a command and sends to printHelp for the command
+  @param    param                  String contains the parameter that needs to be cecked
+  @param    command                String Contains the command that help might be needed for
+  @return   bool                   returns a false if help is found returns true if no help is found
 */
 /**************************************************************************/
-String* SerialCommandExecuter::_trimLessCommand(String commandString) {
-    static String commandItems[1+MAX_NUMBER_PARAMS] = {""};                   //To save command and parameters, each in own cell
-    String item = "";                                                       //Can be a command or parameter
-    uint8_t numParams = 1;                                                  //1, because the command counts as well
-    uint8_t paramCounter = 0;
-    uint16_t c = 0;
-    
-    /* Reset static array */
-    for (uint16_t x = 0; x < 1+MAX_NUMBER_PARAMS; x++) {
-      commandItems[x] = "";
-    }
-    
-    /* Count number of parameters by adding to temp variable if not a whitespace or end of line*/
-    for (uint16_t c = 0; c < commandString.length(); c++) {
-      if (commandString[c] == ' ') {// check for  whitespace
-        if (item != ""){  // if item is empty does not add so whitepace is not added to item
-          commandItems[paramCounter] = item;                                  //Save param to items list
-          item = "";
-          paramCounter++;
-       }
-      } else if (commandString[c] == '\n') { // check if end of line
-          if (item != ""){ // if item is empty does not add so whitepace is not added to item
-            commandItems[paramCounter] = item;                                  //Save param to items list
-            paramCounter++;
+bool SerialCommandExecuter::_checkHelp(String param,String command){
+          if (param=="-h"|param=="--help"){
+            _printHelp(command);
+          return false;
           }
-      } else { // if not a whitepace add to item
-        item += commandString[c];
-      }
-    }
-    
-    return commandItems;
-}
-/**************************************************************************/
-/*!
-  @brief    Gives help based on command put in
-  @param    command       contains the command that help is given about
-*/
-/**************************************************************************/
-void SerialCommandExecuter::_giveHelp(String command) {
-    const int commandCount = 6;
-    String commandsList[commandCount] = {"help","enableDebug","su", "viewKey", "hostname", "restart" }; 
-    if (command == ""){
-          Serial.println("|---------------------------HELP---------------------------|");
-          Serial.println("This is a commandline interface that allows access to the smartlight config");
-          Serial.println("Available commands:");
-          for (int i=0; i<commandCount;i++){ // loops through commands
-            Serial.println(commandsList[i]);
+          else{
+            return true;
           }
-    }
-    if (command = "hostname"){
-        Serial.println("Usage: hostname [--set] {newhostname}   set new hostname for next boot");
-        Serial.println("       hostname [--null]                reset hostname to null");
-        Serial.println("       hostname                         gives the current hostname");
-        Serial.println("       hostname [-i]                    gives the current ipaddr");
-    }
 }
