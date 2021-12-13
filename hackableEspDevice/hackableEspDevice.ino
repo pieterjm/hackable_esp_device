@@ -15,7 +15,7 @@
 #include "UserHandler.h"
 #include "SerialCommandExecuter.h"
 #include "Debugger.h"
-#include <algorithm>                                                        //For the replace functions used to replace characters in a string to a specific character
+#include "HostnameWrite.h"
 
 /* On and off are inverted because the built-in led is active low */
 #define ON                      LOW
@@ -44,9 +44,11 @@ void setup() {
         return;
     }
     
+    debugln("Debug is enabled");
     pinMode(LED_BUILTIN, OUTPUT);
     digitalWrite(LED_BUILTIN, ledState);
-    
+
+    initializeHostname();
     connectWifi();
     initializeServer();
     userHandler.updateUsers();
@@ -56,16 +58,40 @@ void setup() {
 
 /**************************************************************************/
 /*!
+    @brief    Initializes hostname.
+*/
+/**************************************************************************/
+void initializeHostname() {
+    String customHostname = getHostname();
+    /* Check if custom hostname is set, otherwise use default */
+    if (customHostname != "") {
+        debugln("Custom hostname set");
+        /* Check if hostname can be set */
+        if (WiFi.hostname(customHostname)){
+            debug(customHostname);
+            debugln(" is now the hostname");
+        } else {
+            debug(" could not set '");
+            debug(customHostname);
+            debugln("' as hostname");
+        }
+    } else {
+        if (WiFi.hostname(DEFAULT_HOSTNAME)) {
+            debug(DEFAULT_HOSTNAME);
+            debugln(" is now the hostname");
+        } else {
+            debug("Could not set '");
+            debug(DEFAULT_HOSTNAME);
+            debugln("' as hostname");
+        }
+    }
+}
+/**************************************************************************/
+/*!
     @brief    Connects to Wi-Fi.
 */
 /**************************************************************************/
 void connectWifi() {
-    if (HOSTNAME != "") {
-      WiFi.hostname(HOSTNAME);
-      debug("Hostname: ");
-      debugln(HOSTNAME);
-    }
-  
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
     
     debug("Connecting to WiFi");
@@ -85,7 +111,7 @@ void connectWifi() {
     debugln(WIFI_PASSWORD);                                                 //Print WiFi password one time in plain text when debugger is anabled
 
     debug("Copy and paste the following URL: http://");
-    if (HOSTNAME != "") {
+    if (DEFAULT_HOSTNAME != "") {
       debugln(WiFi.hostname().c_str());
     } else {
       debugln(WiFi.localIP().toString().c_str());

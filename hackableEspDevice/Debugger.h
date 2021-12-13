@@ -5,9 +5,9 @@
  * 
  * Class for handling the debug prints.
  */
-#ifndef DEBUGGER
-#define DEBUGGER
-#include <stdint.h>
+#ifndef DEBUGGER_H
+#define DEBUGGER_H
+#include <stdint.h>                                                         //For defining bits per integer
 #include "Arduino.h"
 #include <EEPROM.h>                                                       //For reading from and writing to flash memory, used for resetting wifi
 
