@@ -4,10 +4,9 @@
  * Class:     HostnameWrite
  * Version:   0.1
  * 
- * Parses and executes serial terminal commands.
+ * Writes hostname to the EEPROM.
  */
 #include "HostnameWrite.h"
-
 
 /**************************************************************************/
 /*!
@@ -15,56 +14,60 @@
   @return   hostname       contains the hostname from eeprom (true == enabled)
 */
 /**************************************************************************/
-String getHostname(){
+String getHostname() {
     char hostname[32]; 
-    int lenHost = sizeof(hostname);
     EEPROM.begin(32);
-    String hostnameString;
-    for (int i = 0; i< 32; i++){
-        EEPROM.get(HOSTNAME_ADRESS+i,hostname[i]);
+
+    for (uint8_t i = 0; i < 32; i++){
+        EEPROM.get(HOSTNAME_ADRESS+i, hostname[i]);
     }
+    
     EEPROM.end();
-    hostnameString = String(hostname);
-    return hostnameString;
-};
+    return String(hostname);
+}
 
 /**************************************************************************/
 /*!
   @brief    Writes the new hostname to the EEPROM.
-  @param    hostname[32]    char that contains the hostname to be writen
+  @param    hostname[32]    char that contains the hostname to be written
 */
 /**************************************************************************/
-void writeHostname(char hostname[32]){
+void writeHostname(char hostname[32]) {
     EEPROM.begin(32);
+    
     for (int i = 0; i< 32; i++){
         EEPROM.write(HOSTNAME_ADRESS+i, hostname[i]);
         yield();
     }
+    
     checkEepromCommit();
     EEPROM.end();
-  };
-
+}
 
 /**************************************************************************/
 /*!
   @brief    Resets the EEPROM at the startAdress.
-  @param    writeLenth      int of total lenth to be writen
+  @param    writeLength      int of total lenth to be writen
   @param    startAdress     int of start adress
 */
 /**************************************************************************/
-void setEEPROMToNULL(int writeLenth, int startAdress){ 
-    EEPROM.begin(writeLenth);
-    for (int i = 0; i< writeLenth; i++){
+void setEEPROMToNULL(int writeLength, int startAdress){ 
+    EEPROM.begin(writeLength);
+    
+    for (int i = 0; i< writeLength; i++){
         EEPROM.write(startAdress+i, 0);
         yield();
     }
+    
     checkEepromCommit();
+    
     debug("Reset Value at: ");
     debug(String(startAdress));
     debug(" till ");
-    debugln(String(startAdress+writeLenth));
+    debugln(String(startAdress+writeLength));
+    
     EEPROM.end();
-};
+}
 
 /**************************************************************************/
 /*!
@@ -72,9 +75,9 @@ void setEEPROMToNULL(int writeLenth, int startAdress){
 */
 /**************************************************************************/
 void checkEepromCommit() {
-  if (EEPROM.commit()) {
-    debugln("Data writen!");
-  } else {
-    debugln("ERROR! Data NOT writen!");
-  }
+    if (EEPROM.commit()) {
+        debugln("Data written!");
+    } else {
+        debugln("ERROR! Data not written!");
+    }
 }

@@ -43,10 +43,12 @@ void setup() {
         debugln("An Error has occurred while mounting SPIFFS");
         return;
     }
+    
     debugln("Debug is enabled");
     pinMode(LED_BUILTIN, OUTPUT);
     digitalWrite(LED_BUILTIN, ledState);
-    
+
+    initializeHostname();
     connectWifi();
     initializeServer();
     userHandler.updateUsers();
@@ -56,40 +58,40 @@ void setup() {
 
 /**************************************************************************/
 /*!
+    @brief    Initializes hostname.
+*/
+/**************************************************************************/
+void initializeHostname() {
+    String customHostname = getHostname();
+    /* Check if custom hostname is set, otherwise use default */
+    if (customHostname != "") {
+        debugln("Custom hostname set");
+        /* Check if hostname can be set */
+        if (WiFi.hostname(customHostname)){
+            debug(customHostname);
+            debugln(" is now the hostname");
+        } else {
+            debug(" could not set '");
+            debug(customHostname);
+            debugln("' as hostname");
+        }
+    } else {
+        if (WiFi.hostname(DEFAULT_HOSTNAME)) {
+            debug(DEFAULT_HOSTNAME);
+            debugln(" is now the hostname");
+        } else {
+            debug("Could not set '");
+            debug(DEFAULT_HOSTNAME);
+            debugln("' as hostname");
+        }
+    }
+}
+/**************************************************************************/
+/*!
     @brief    Connects to Wi-Fi.
 */
 /**************************************************************************/
 void connectWifi() {
-    String gottenhostname;
-    gottenhostname = getHostname();
-
-    if (gottenhostname != "") {
-        debugln("Hostname not empty");
-        //WiFi.hostname(HOSTNAME);
-        if (WiFi.hostname(gottenhostname)==true){
-            debug(gottenhostname);
-            debugln(" is now the hostname");
-        }
-        if (WiFi.hostname(gottenhostname)==false){
-            debug(" could not set '");
-            debug(gottenhostname);
-            debugln("' as hostname");
-        }
-    }
-    else if (HOSTNAME != "") {
-        debugln("Hostname not empty");
-        //WiFi.hostname(HOSTNAME);
-        if (WiFi.hostname(HOSTNAME)==true){
-            debug(HOSTNAME);
-            debugln(" is now the hostname");
-        }
-        if (WiFi.hostname(HOSTNAME)==false){
-            debug(" could not set '");
-            debug(HOSTNAME);
-            debugln("' as hostname");
-        }
-    }
-  
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
     
     debug("Connecting to WiFi");
@@ -105,7 +107,7 @@ void connectWifi() {
     debugln(WiFi.localIP().toString().c_str());                          //Print local IP Address
 
     debug("Copy and paste the following URL: http://");
-    if (HOSTNAME != "") {
+    if (DEFAULT_HOSTNAME != "") {
       debugln(WiFi.hostname().c_str());
     } else {
       debugln(WiFi.localIP().toString().c_str());

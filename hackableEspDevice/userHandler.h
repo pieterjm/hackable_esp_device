@@ -6,8 +6,8 @@
  * 
  * Class for the http authentication process.
  */
-#ifndef USER_HANDLER
-#define USER_HANDLER
+#ifndef USER_HANDLER_H
+#define USER_HANDLER_H
 #include <stdint.h>
 #include <ESP8266WebServer.h>                                               //For running the webserver
 #include <FS.h>                                                             //For SPIFFS
