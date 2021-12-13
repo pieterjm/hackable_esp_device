@@ -15,6 +15,7 @@
 #include "UserHandler.h"
 #include "SerialCommandExecuter.h"
 #include "Debugger.h"
+#include "HostnameWrite.h"
 
 /* On and off are inverted because the built-in led is active low */
 #define ON                      LOW
@@ -43,9 +44,11 @@ void setup() {
         return;
     }
     
+    debugln("Debug is enabled");
     pinMode(LED_BUILTIN, OUTPUT);
     digitalWrite(LED_BUILTIN, ledState);
-    
+
+    initializeHostname();
     connectWifi();
     initializeServer();
     userHandler.updateUsers();
@@ -55,16 +58,40 @@ void setup() {
 
 /**************************************************************************/
 /*!
+    @brief    Initializes hostname.
+*/
+/**************************************************************************/
+void initializeHostname() {
+    String customHostname = getHostname();
+    /* Check if custom hostname is set, otherwise use default */
+    if (customHostname != "") {
+        debugln("Custom hostname set");
+        /* Check if hostname can be set */
+        if (WiFi.hostname(customHostname)){
+            debug(customHostname);
+            debugln(" is now the hostname");
+        } else {
+            debug(" could not set '");
+            debug(customHostname);
+            debugln("' as hostname");
+        }
+    } else {
+        if (WiFi.hostname(DEFAULT_HOSTNAME)) {
+            debug(DEFAULT_HOSTNAME);
+            debugln(" is now the hostname");
+        } else {
+            debug("Could not set '");
+            debug(DEFAULT_HOSTNAME);
+            debugln("' as hostname");
+        }
+    }
+}
+/**************************************************************************/
+/*!
     @brief    Connects to Wi-Fi.
 */
 /**************************************************************************/
 void connectWifi() {
-    if (HOSTNAME != "") {
-      WiFi.hostname(HOSTNAME);
-      debug("Hostname: ");
-      debugln(HOSTNAME);
-    }
-  
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
     
     debug("Connecting to WiFi");
@@ -77,10 +104,14 @@ void connectWifi() {
 
     debugln("");
     debug("IP: ");
-    debugln(WiFi.localIP().toString().c_str());                          //Print local IP Address
+    debugln(WiFi.localIP().toString().c_str());                             //Print local IP Address
+
+ 
+    debug("WiFi Password: ");
+    debugln(WIFI_PASSWORD);                                                 //Print WiFi password one time in plain text when debugger is anabled
 
     debug("Copy and paste the following URL: http://");
-    if (HOSTNAME != "") {
+    if (DEFAULT_HOSTNAME != "") {
       debugln(WiFi.hostname().c_str());
     } else {
       debugln(WiFi.localIP().toString().c_str());
@@ -212,8 +243,15 @@ void initializeServer() {
 /**************************************************************************/
 void loop() {
   server.handleClient();
-  if(timer.repeat()){
-      debugln(WIFI_PASSWORD);
+  if(timer.repeat()){                                                        //Prints WiFi password every 30 second on serial in the form of stars: "*****", so it is not readable, it's a hint
+      Serial.print("Wifi Password: ");
+      String wifipass = WIFI_PASSWORD;
+      int charCount;
+      charCount = wifipass.length();                                         //Count how many characters the WiFi password contains
+      for (int i=0; i<charCount; i++) {
+        Serial.print("*");                                                   //Print a "*" for each password character
+      }
+      Serial.println("");                                            
   }
 
   if(Serial.available()) {
