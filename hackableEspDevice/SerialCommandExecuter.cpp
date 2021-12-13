@@ -21,7 +21,7 @@ SerialCommandExecuter::SerialCommandExecuter() {
 /*!
   @brief    Sets the users for user list.
   @param    users         Array of the users
-  @return   numUsers      Number of users
+  @param    numUsers      Number of users
 */
 /**************************************************************************/
 void SerialCommandExecuter::setUsers(String* users, uint8_t numUsers) {

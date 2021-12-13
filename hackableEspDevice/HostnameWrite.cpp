@@ -29,7 +29,7 @@ String getHostname() {
 /**************************************************************************/
 /*!
   @brief    Writes the new hostname to the EEPROM.
-  @param    hostname[32]    char that contains the hostname to be written
+  @param    hostname    char[32] that contains the hostname to be written
 */
 /**************************************************************************/
 void writeHostname(char hostname[32]) {
