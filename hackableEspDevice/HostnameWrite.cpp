@@ -15,10 +15,10 @@
 */
 /**************************************************************************/
 String getHostname() {
-    char hostname[32]; 
-    EEPROM.begin(32);
+    char hostname[MAX_HOSTNAME_LENGTH]; 
+    EEPROM.begin(MAX_HOSTNAME_LENGTH);
 
-    for (uint8_t i = 0; i < 32; i++){
+    for (uint8_t i = 0; i < MAX_HOSTNAME_LENGTH; i++){
         EEPROM.get(HOSTNAME_ADRESS+i, hostname[i]);
     }
     
@@ -32,10 +32,10 @@ String getHostname() {
   @param    hostname[32]    char that contains the hostname to be written
 */
 /**************************************************************************/
-void writeHostname(char hostname[32]) {
-    EEPROM.begin(32);
+void writeHostname(char hostname[MAX_HOSTNAME_LENGTH]) {
+    EEPROM.begin(MAX_HOSTNAME_LENGTH);
     
-    for (int i = 0; i< 32; i++){
+    for (int i = 0; i< MAX_HOSTNAME_LENGTH; i++){
         EEPROM.write(HOSTNAME_ADRESS+i, hostname[i]);
         yield();
     }

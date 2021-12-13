@@ -13,7 +13,8 @@
 #define WIFI_PASSWORD           "password"
 
 /* Hostname */
-#define DEFAULT_HOSTNAME                "smartlight"
+#define DEFAULT_HOSTNAME        "smartlight"
+#define HOSTNAME_ADRESS         1
 
 #define HTTP_CONFIG_LOCATION    "/conf.txt"
 
