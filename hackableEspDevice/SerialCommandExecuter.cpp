@@ -342,14 +342,11 @@ bool SerialCommandExecuter::_hostname(String* trimmedCmdLine) {
             writeHostname(newhostname);
             debug(trimmedCmdLine[2]);
           
-        }
-        else if (params[0] == "--null"){ // if parameter = -null set hostname field to null
-          setEEPROMToNULL(32, HOSTNAME_ADRESS);
-        }
-        else if (params[0]=="-h" | params[0]=="--help"){ // if -h or --help give help
+        } else if (params[0] == "--null"){ // if parameter = -null set hostname field to null
+          setEEPROMToNULL(MAX_HOSTNAME_LENGTH, HOSTNAME_ADRESS);
+        } else if (params[0]=="-h" | params[0]=="--help"){ // if -h or --help give help
               _giveHelp("hostname");
-        }
-        else{ //if it can't find give error 
+        } else { //if it can't find give error 
           Serial.println(ERROR_7_TEXT);
         }
 
