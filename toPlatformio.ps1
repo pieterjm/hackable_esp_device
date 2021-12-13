@@ -128,8 +128,8 @@ function CreateSymLinkFile(){
             #write-host $file.fullName
                 Write-output ('mklink "'+$platfomrmioDirName+"\data\"+$file.name+'" "'+$file.fullName+'"') | Out-File $mklinkName -Append -Encoding "UTF8"
         }
-        elseif ($file.FullName -match ".*ino"){ #Check for the ino sketch file
-                Write-output ('mklink "'+$platfomrmioDirName+"\src\"+(($file.name).replace(".ino",".cpp"))+'" "'+$file.fullName+'"') | Out-File $mklinkName -Append -Encoding "UTF8"
+        elseif ($file.FullName -match ".*ino"){ #Check for the ino sketch file use main.cpp for easier identification
+                Write-output ('mklink "'+$platfomrmioDirName+"\src\main.cpp"+'" "'+$file.fullName+'"') | Out-File $mklinkName -Append -Encoding "UTF8"
         }
         else{
                 Write-output ('mklink "'+$platfomrmioDirName+'\src\'+$file.name+'" "'+$file.fullName+'"') | Out-File $mklinkName -Append -Encoding "UTF8"
@@ -150,8 +150,8 @@ Function CopyFiles(){
         if ($file.fullName -match ".*\\data\\.*"){ #check for all files in data folder
             copy-item $file.Fullname ($platfomrmioDirName+'\data\'+$file.name)
         }
-        elseif ($file.FullName -match ".*ino"){ #Check for the ino sketch file
-            copy-item $file.Fullname ($platfomrmioDirName+'\src\'+($file.name).replace(".ino",".cpp"))
+        elseif ($file.FullName -match ".*ino"){ #Check for the ino sketch file use main.cpp for easier identification
+            copy-item $file.Fullname ($platfomrmioDirName+'\src\main.cpp')
         }
         else{
             copy-item $file.Fullname ($platfomrmioDirName+'\src\'+$file.name)
