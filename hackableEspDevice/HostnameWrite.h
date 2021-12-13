@@ -9,11 +9,9 @@
 #ifndef HOSTNAME_WRITE_H
 #define HOSTNAME_WRITE_H
 #include <stdint.h>                                                         //For defining bits per integer
-//#include "Arduino.h"
-#include <EEPROM.h>                                                       //For reading from and writing to flash memory, used for resetting wifi
+#include <EEPROM.h>                                                         //For reading from and writing to flash memory, used for resetting wifi
 #include "Debugger.h"
-
-#define HOSTNAME_ADRESS   1
+#include "Config.h"
 
 String getHostname();
 void writeHostname(char hostname[32]);
