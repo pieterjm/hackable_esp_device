@@ -40,7 +40,6 @@ class SerialCommandExecuter
     private:
         bool _parseCommand(String command);
         String* _trimCommand(String commandString);
-        String* _trimLessCommand(String commandString);
         bool _checkParams(uint8_t numParams, uint8_t minNumberParams, uint8_t maxNumberParams);
 
         void _printHelp(String command);
