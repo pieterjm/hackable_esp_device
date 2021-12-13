@@ -82,7 +82,7 @@ bool SerialCommandExecuter::_parseCommand(String commandString) {
     /* Check which command is given */
     if (command == COMMAND_1) {
       _printHelp();
-    } else if (command == COMMAND_2) { //enableDebug
+    } else if (command == COMMAND_2) {
         if (!_checkParams(numParams, 1) || !_enableDebug(params[0])) {
             return false;
         }
@@ -100,12 +100,11 @@ bool SerialCommandExecuter::_parseCommand(String commandString) {
         if (!_viewUsers()) {
           return false;
         }
-    }else if (command == COMMAND_7) {//hostname
+    } else if (command == COMMAND_7) {
         if (!_hostname(trimmedLessCmdLine)) {
           return false;
         }
-    }
-     else {
+    } else {
         Serial.println(ERROR_2_TEXT);
         return false;
     }
@@ -324,14 +323,13 @@ bool SerialCommandExecuter::_hostname(String* trimmedCmdLine) {
     for (uint8_t i = 1; i-1 < numParams; i++){                              //+1, because the command is in the first cell
         params[i-1] = trimmedCmdLine[i].c_str();
     }
-    if (numParams == 0){ // if empty show hostname
+    
+    if (numParams == 0) { // if empty show hostname
       String hostname = getHostname();
       Serial.print("Hostname is: ");
       Serial.println(String(hostname));
       return true;
-    }
-    
-    else{
+    } else {
         // for (int i =0; i < MAX_NUMBER_PARAMS;i++){ //loops through all params and prints
         //   //Serial.println(params[i]);
         //   String param = params[i];
@@ -386,15 +384,12 @@ String* SerialCommandExecuter::_trimLessCommand(String commandString) {
           item = "";
           paramCounter++;
        }
-      }
-      
-      else if (commandString[c] == '\n') { // check if end of line
+      } else if (commandString[c] == '\n') { // check if end of line
           if (item != ""){ // if item is empty does not add so whitepace is not added to item
             commandItems[paramCounter] = item;                                  //Save param to items list
             paramCounter++;
           }
-      }
-      else{ // if not a whitepace add to item
+      } else { // if not a whitepace add to item
         item += commandString[c];
       }
     }
