@@ -11,6 +11,7 @@
 #include <Arduino.h>
 #include "config.h"                                                         //For the configuration.
 #include "Debugger.h"
+#include "HostnameWrite.h"
 
 #define MAX_NUMBER_PARAMS  2
 
@@ -28,6 +29,7 @@
 #define ERROR_4_TEXT    "Too few arguments. Typ 'help' for help."
 #define ERROR_5_TEXT    "Wrong password."
 #define ERROR_6_TEXT    "You are no super user. Use 'su -password' to log in."
+#define ERROR_7_TEXT    "Wrong argument(s) add '-h' or '--help' for help."
 
 class SerialCommandExecuter
 {
@@ -39,13 +41,17 @@ class SerialCommandExecuter
     private:
         bool _parseCommand(String command);
         String* _trimCommand(String commandString);
+        String* _trimLessCommand(String commandString);
         bool _checkParams(uint8_t numParams, uint8_t checkValue);
+        void _giveHelp(String command);
+
         void _printHelp();
         bool _enableDebug(String enable);
         bool _superUserLogin(String password);
         bool _viewKey();
         void _restart();
         bool _viewUsers();
+        bool _hostname(String* trimmedCmdLine);
          
         bool _isLoggedIn;
         String _users[MAX_NUMBER_USERS*USER_INFO_LENGTH];

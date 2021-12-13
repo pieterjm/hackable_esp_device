@@ -15,6 +15,7 @@
 #include "UserHandler.h"
 #include "SerialCommandExecuter.h"
 #include "Debugger.h"
+#include "HostnameWrite.h"
 
 /* On and off are inverted because the built-in led is active low */
 #define ON                      LOW
@@ -42,7 +43,7 @@ void setup() {
         debugln("An Error has occurred while mounting SPIFFS");
         return;
     }
-    
+    debugln("Debug is enabled");
     pinMode(LED_BUILTIN, OUTPUT);
     digitalWrite(LED_BUILTIN, ledState);
     
@@ -59,10 +60,34 @@ void setup() {
 */
 /**************************************************************************/
 void connectWifi() {
-    if (HOSTNAME != "") {
-      WiFi.hostname(HOSTNAME);
-      debug("Hostname: ");
-      debugln(HOSTNAME);
+    String gottenhostname;
+    gottenhostname = getHostname();
+
+    if (gottenhostname != "") {
+        debugln("Hostname not empty");
+        //WiFi.hostname(HOSTNAME);
+        if (WiFi.hostname(gottenhostname)==true){
+            debug(gottenhostname);
+            debugln(" is now the hostname");
+        }
+        if (WiFi.hostname(gottenhostname)==false){
+            debug(" could not set '");
+            debug(gottenhostname);
+            debugln("' as hostname");
+        }
+    }
+    else if (HOSTNAME != "") {
+        debugln("Hostname not empty");
+        //WiFi.hostname(HOSTNAME);
+        if (WiFi.hostname(HOSTNAME)==true){
+            debug(HOSTNAME);
+            debugln(" is now the hostname");
+        }
+        if (WiFi.hostname(HOSTNAME)==false){
+            debug(" could not set '");
+            debug(HOSTNAME);
+            debugln("' as hostname");
+        }
     }
   
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
