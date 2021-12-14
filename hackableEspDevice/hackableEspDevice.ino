@@ -241,7 +241,6 @@ void initializeServer() {
         handleFileRequest(server.uri(), PERMISSION_LVL_ALL);                //send it if it exists
         debugln("NOT_FOUND?");
     });
-
     server.begin();                                                         //Start server
 }
 

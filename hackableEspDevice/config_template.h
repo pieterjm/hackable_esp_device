@@ -15,6 +15,7 @@
 /* Hostname */
 #define DEFAULT_HOSTNAME        "smartlight"
 #define HOSTNAME_ADRESS         1
+#define MAX_HOSTNAME_LENGTH     32
 
 #define HTTP_CONFIG_LOCATION    "/conf.txt"
 
