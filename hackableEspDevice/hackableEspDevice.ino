@@ -120,10 +120,10 @@ void connectWifi() {
     debugln(WIFI_PASSWORD);                                                 //Print WiFi password one time in plain text when debugger is enabled
 
     debug("Copy and paste the following URL: http://");
-    if (DEFAULT_HOSTNAME != "") {
-      debugln(WiFi.hostname().c_str());
+    if (WiFi.hostname(DEFAULT_HOSTNAME)) {
+        debug(DEFAULT_HOSTNAME);
     } else {
-      debugln(WiFi.localIP().toString().c_str());
+        debugln(WiFi.hostname().c_str());
     }
 }
 
@@ -252,13 +252,13 @@ void initializeServer() {
 void loop() {
   server.handleClient();
   if(timer.repeat()){                                                       //Prints WiFi password every 30 second on serial in the form of stars: "*****", so it is not readable, it's a hint
-      debug("Wifi Password: ");
+      //debug("Wifi Password: ");
       String wifipass = WIFI_PASSWORD;
       uint8_t charCount = wifipass.length();                                //Count how many characters the WiFi password contains
       for (uint8_t i = 0; i < charCount; i++) {
-        debug("*");                                                  //Print a "*" for each password character
+        //debug("*");                                                  //Print a "*" for each password character
       }
-      debugln("");                                            
+      //debugln("");                                            
   }
 
   if(Serial.available()) {
