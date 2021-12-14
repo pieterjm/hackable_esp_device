@@ -46,6 +46,13 @@ void setup() {
     }
     
     debugln("Debug is enabled");
+    
+    /* If debug is enabled, the root password is printed in a big string of text */
+    if (getDebugEnabled()) {
+      String mess = "ROOT: " + String(ROOT_PASSWORD);
+      printStartupText(mess);
+    }
+    
     pinMode(LED_BUILTIN, OUTPUT);
     digitalWrite(LED_BUILTIN, ledState);
 
@@ -54,12 +61,6 @@ void setup() {
     initializeServer();
     userHandler.updateUsers();
     cliExecuter.setUsers(userHandler.getUsers(), userHandler.getNumberOfUsers());
-    
-    /* If debug is enabled, the root password is printed in a big string of text */
-    if (getDebugEnabled()) {
-      String mess = "ROOT: " + String(ROOT_PASSWORD);
-      printStartupText(mess);
-    }
     
     debugln("Serial commands available. Typ 'help' for help.");
 }
@@ -111,9 +112,9 @@ void connectWifi() {
         debug(".");
     }
 
-    debugln("");
+    Serial.println("");
     Serial.print("IP: ");
-    Serial.println(WiFi.localIP().toString().c_str());                             //Print local IP Address
+    Serial.println(WiFi.localIP().toString().c_str());                      //Print local IP Address
 
  
     debug("WiFi Password: ");
@@ -256,9 +257,9 @@ void loop() {
       String wifipass = WIFI_PASSWORD;
       uint8_t charCount = wifipass.length();                                //Count how many characters the WiFi password contains
       for (uint8_t i = 0; i < charCount; i++) {
-        //debug("*");                                                  //Print a "*" for each password character
+        Serial.print("*");                                                  //Print a "*" for each password character
       }
-      //debugln("");                                            
+      Serial.println("");                                            
   }
 
   if(Serial.available()) {
