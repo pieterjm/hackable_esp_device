@@ -12,10 +12,11 @@
 #include <stdint.h>                                                         //For defining bits per integer
 #include <neotimer.h>                                                       //For non-blocking timers (used for code execution in intervals)
 #include "config.h"                                                         //For the configuration. If not exists: copy "config_template.h", add your configuration and rename to "config.h"
-#include "UserHandler.h"
-#include "SerialCommandExecuter.h"
-#include "Debugger.h"
-#include "HostnameWrite.h"
+#include "UserHandler.h"                                                    //For handling the users from the config.conf
+#include "SerialCommandExecuter.h"                                          //For handling serial commands
+#include "Debugger.h"                                                       //For handling debug messages
+#include "HostnameWrite.h"                                                  //For handling the hostname changes
+#include "StartupText.h"                                                    //For printing startup log files.
 
 /* On and off are inverted because the built-in led is active low */
 #define ON                      LOW
@@ -53,6 +54,13 @@ void setup() {
     initializeServer();
     userHandler.updateUsers();
     cliExecuter.setUsers(userHandler.getUsers(), userHandler.getNumberOfUsers());
+    
+    /* If debug is enabled, the root password is printed in a big string of text */
+    if (getDebugEnabled()) {
+      String mess = "ROOT: " + String(ROOT_PASSWORD);
+      printStartupText(mess);
+    }
+    
     debugln("Serial commands available. Typ 'help' for help.");
 }
 
@@ -86,6 +94,7 @@ void initializeHostname() {
         }
     }
 }
+
 /**************************************************************************/
 /*!
     @brief    Connects to Wi-Fi.
@@ -103,12 +112,12 @@ void connectWifi() {
     }
 
     debugln("");
-    debug("IP: ");
-    debugln(WiFi.localIP().toString().c_str());                             //Print local IP Address
+    Serial.print("IP: ");
+    Serial.println(WiFi.localIP().toString().c_str());                             //Print local IP Address
 
  
     debug("WiFi Password: ");
-    debugln(WIFI_PASSWORD);                                                 //Print WiFi password one time in plain text when debugger is anabled
+    debugln(WIFI_PASSWORD);                                                 //Print WiFi password one time in plain text when debugger is enabled
 
     debug("Copy and paste the following URL: http://");
     if (DEFAULT_HOSTNAME != "") {
@@ -243,15 +252,14 @@ void initializeServer() {
 /**************************************************************************/
 void loop() {
   server.handleClient();
-  if(timer.repeat()){                                                        //Prints WiFi password every 30 second on serial in the form of stars: "*****", so it is not readable, it's a hint
-      Serial.print("Wifi Password: ");
+  if(timer.repeat()){                                                       //Prints WiFi password every 30 second on serial in the form of stars: "*****", so it is not readable, it's a hint
+      debug("Wifi Password: ");
       String wifipass = WIFI_PASSWORD;
-      int charCount;
-      charCount = wifipass.length();                                         //Count how many characters the WiFi password contains
-      for (int i=0; i<charCount; i++) {
-        Serial.print("*");                                                   //Print a "*" for each password character
+      uint8_t charCount = wifipass.length();                                //Count how many characters the WiFi password contains
+      for (uint8_t i = 0; i < charCount; i++) {
+        debug("*");                                                  //Print a "*" for each password character
       }
-      Serial.println("");                                            
+      debugln("");                                            
   }
 
   if(Serial.available()) {
