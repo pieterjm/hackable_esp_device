@@ -11,8 +11,7 @@
 #include <stdint.h>                                                         //For defining bits per integer
 #include <EEPROM.h>                                                         //For reading from and writing to EEPROM
 #include "Debugger.h"                                                       //For handling debug messages
-
-#define HOSTNAME_ADRESS   1
+#include "config.h"                                                         //For the configuration
 
 String getHostname();
 void writeHostname(char hostname[32]);
