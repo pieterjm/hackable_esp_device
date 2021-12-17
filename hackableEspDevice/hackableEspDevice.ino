@@ -11,12 +11,13 @@
 #include <FS.h>                                                             //For SPIFFS
 #include <stdint.h>                                                         //For defining bits per integer
 #include <neotimer.h>                                                       //For non-blocking timers (used for code execution in intervals)
+#include <WiFiManager.h>
 #include "config.h"                                                         //For the configuration. If not exists: copy "config_template.h", add your configuration and rename to "config.h"
 #include "UserHandler.h"                                                    //For handling the users from the config.conf
 #include "SerialCommandExecuter.h"                                          //For handling serial commands
 #include "Debugger.h"                                                       //For handling debug messages
 #include "HostnameWrite.h"                                                  //For handling the hostname changes
-#include "StartupText.h"                                                    //For printing startup log files.
+#include "StartupText.h"                                                    //For printing startup log files
 
 /* On and off are inverted because the built-in led is active low */
 #define ON                      LOW
@@ -30,6 +31,7 @@ UserHandler userHandler(&server);                                           //Fo
 SerialCommandExecuter cliExecuter;
 
 File fsUploadFile;                                                          //A File object to temporarily store the received file
+WiFiManager wifiManager;
 
 /**************************************************************************/
 /*!
@@ -38,7 +40,7 @@ File fsUploadFile;                                                          //A 
 /**************************************************************************/
 void setup() {
     Serial.begin(115200);                                                   //Serial port for debugging purposes
-
+    
     /* Initialize SPIFFS */
     if(!SPIFFS.begin()) {
         debugln("An Error has occurred while mounting SPIFFS");
@@ -57,7 +59,11 @@ void setup() {
     digitalWrite(LED_BUILTIN, ledState);
 
     initializeHostname();
-    connectWifi();
+    
+    if (!wifiManager.autoConnect(WIFI_CONF_AP_NAME)) {
+        connectWifi(); 
+    }
+    
     initializeServer();
     userHandler.updateUsers();
     cliExecuter.setUsers(userHandler.getUsers(), userHandler.getNumberOfUsers());
