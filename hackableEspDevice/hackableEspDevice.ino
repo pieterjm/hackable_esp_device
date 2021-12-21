@@ -11,12 +11,13 @@
 #include <FS.h>                                                             //For SPIFFS
 #include <stdint.h>                                                         //For defining bits per integer
 #include <neotimer.h>                                                       //For non-blocking timers (used for code execution in intervals)
+#include <WiFiManager.h>
 #include "config.h"                                                         //For the configuration. If not exists: copy "config_template.h", add your configuration and rename to "config.h"
 #include "UserHandler.h"                                                    //For handling the users from the config.conf
 #include "SerialCommandExecuter.h"                                          //For handling serial commands
 #include "Debugger.h"                                                       //For handling debug messages
 #include "HostnameWrite.h"                                                  //For handling the hostname changes
-#include "StartupText.h"                                                    //For printing startup log files.
+#include "StartupText.h"                                                    //For printing startup log files
 
 /* On and off are inverted because the built-in led is active low */
 #define ON                      LOW
@@ -38,7 +39,7 @@ File fsUploadFile;                                                          //A 
 /**************************************************************************/
 void setup() {
     Serial.begin(115200);                                                   //Serial port for debugging purposes
-
+    
     /* Initialize SPIFFS */
     if(!SPIFFS.begin()) {
         debugln("An Error has occurred while mounting SPIFFS");
@@ -53,11 +54,14 @@ void setup() {
       printStartupText(mess);
     }
     
+    //debug("WiFi Password: ");
+    //debugln(WIFI_PASSWORD);                                                   //Print WiFi password one time in plain text when debugger is enabled
+    
     pinMode(LED_BUILTIN, OUTPUT);
     digitalWrite(LED_BUILTIN, ledState);
 
     initializeHostname();
-    connectWifi();
+    setupWifi();    
     initializeServer();
     userHandler.updateUsers();
     cliExecuter.setUsers(userHandler.getUsers(), userHandler.getNumberOfUsers());
@@ -98,31 +102,29 @@ void initializeHostname() {
 
 /**************************************************************************/
 /*!
-    @brief    Connects to Wi-Fi.
+    @brief    Connects to WiFi if it can, otherwise starts as AP to
+              configure WiFI.
 */
 /**************************************************************************/
-void connectWifi() {
-    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+void setupWifi() {
+    WiFiManager wifiManager;
     
     debug("Connecting to WiFi");
-    delay(50);                                                              //Wait for setup, to prevent strange behaviour
 
-    while (WiFi.status() != WL_CONNECTED) {
-        delay(250);
-        debug(".");
+    if (wifiManager.autoConnect(WIFI_CONF_AP_NAME)) {
+        Serial.print("Connected to: ");
+        Serial.println(WiFi.SSID());
+        Serial.print("IP: ");
+        Serial.println(WiFi.localIP());
+    } else {
+        Serial.println("Failed to connect, connect with AP");
+        ESP.restart();
     }
 
-    Serial.println("");
-    Serial.print("IP: ");
-    Serial.println(WiFi.localIP().toString().c_str());                      //Print local IP Address
-
- 
-    debug("WiFi Password: ");
-    debugln(WIFI_PASSWORD);                                                 //Print WiFi password one time in plain text when debugger is enabled
-
     debug("Copy and paste the following URL: http://");
+    
     if (WiFi.hostname(DEFAULT_HOSTNAME)) {
-        debug(DEFAULT_HOSTNAME);
+        debugln(DEFAULT_HOSTNAME);
     } else {
         debugln(WiFi.hostname().c_str());
     }
@@ -253,8 +255,8 @@ void initializeServer() {
 void loop() {
   server.handleClient();
   if(timer.repeat()){                                                       //Prints WiFi password every 30 second on serial in the form of stars: "*****", so it is not readable, it's a hint
-      //debug("Wifi Password: ");
-      String wifipass = WIFI_PASSWORD;
+      debug("Wifi Password: ");
+      String wifipass = "WiFi.password()?";
       uint8_t charCount = wifipass.length();                                //Count how many characters the WiFi password contains
       for (uint8_t i = 0; i < charCount; i++) {
         Serial.print("*");                                                  //Print a "*" for each password character
