@@ -1,5 +1,4 @@
 # Hackable ESP8266 device
-# yo
 Firmware for ESP8266 based device (D1 Mini board) with designed vunerabilities to practice ethical hacking. The software is tested on the following boards:
 
 * D1 Mini
@@ -10,7 +9,7 @@ These instructions will get you a copy of the project up and running on your D1 
 
 ### Prerequisites
 
-The software is written, compiled and uploaded using Platformio and Visual Studio Code. You can also use the [Arduino IDE](https://www.arduino.cc/en/software).
+The software is written, compiled and uploaded using the [Arduino IDE](https://www.arduino.cc/en/software). Platform.io and Visual Studio Code can be used as well. Use the script to convert the project to a Platform.io.
 
 ### Dependecies
 
@@ -24,10 +23,10 @@ There are multiple ways to upload the program files to the board. First instruct
 1. Clone the repository.
 2. Follow [this](https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide) tutorial about the SPIFFS.
 3. Navigate to the `hackableEspDevice` folder.
-4. Copy `config_template.h` and rename to `config.h`. `config.h` is in the .gitignore list and won't be pushed, so you can put your credentials in.
-5. Open `hackableEspDevice.ino`.
-6. Upload the files in the `data` folder (see the tutorial).
-7. Upload the program to the device.
+4. Open `hackableEspDevice.ino`.
+5. Upload the files in the `data` folder (see the tutorial).
+6. Upload the program to the device.
+7. Connect to the `Configure Smartlight Wifi` AP to configure the wifi.
 
 <b>Visual Studio Code</b>
 1. Install the [Platformio](https://platformio.org/install/ide?install=vscode) plugin.
@@ -40,7 +39,7 @@ There are multiple ways to upload the program files to the board. First instruct
 
 ## Questions or feedback?
 
-You can open an issue if you have questions or feedback for this repository.
+There is technical documentation available if you want to contribute to this project. There is an user manual as well, contact us for information. You can open an issue if you have questions or feedback for this repository.
 
 ## Authors
 
