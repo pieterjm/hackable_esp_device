@@ -39,9 +39,5 @@
 ehthumbs.db
 Thumbs.db
 
-# Config file #
-###############
-config.h
-
 #platformio files#
 HackableEspDevicePlatformio
