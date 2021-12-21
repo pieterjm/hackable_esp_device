@@ -95,13 +95,12 @@ bool runCProgram(String arg) {
    * Else, check if buffer overflow attack
    * is correctly done.
    */
-    if (arg.length() < MAX_LEN) {
+    if (arg.length() < OVERFLOW_BEGIN) {
         Serial.println("You are now super user.");
         Serial.print("Hello ");
         Serial.println(arg);
         Serial.println("You are not longer super user.");
     } else {
-        Serial.println("Segmentation fault.");
         if (checkBufferOverflow(arg)) {
           return true;
         }
@@ -110,5 +109,98 @@ bool runCProgram(String arg) {
 }
 
 bool checkBufferOverflow(String input) {
-    return false;
+  if(input.substring(OVERFLOW_BEGIN) == RETURN_ADDRESS) { //???
+    return true;
+  }
+  printOverflowError(input);
+  return false;
+}
+
+void printOverflowError(String input) {
+  String overflowPortion = "";
+  uint8_t numberOfHex = 0;
+  
+  Serial.println("Program received signal SIGSEGV, Segmentation fault.");
+  Serial.print("0x");
+  
+  String formattedInput = formatInput(input, &numberOfHex);
+  Serial.println(formattedInput.length());
+  
+  Serial.println(formattedInput[formattedInput.length()-1], HEX);
+  if(formattedInput.length() < OVERFLOW_LENGTH) {
+      uint8_t numMissingBytes = OVERFLOW_LENGTH - formattedInput.length();
+      String randomBytes = generateRandomBytes(numMissingBytes);
+      
+      overflowPortion = formattedInput.substring(numMissingBytes, numMissingBytes-ADDRESS_LENGTH);
+      Serial.println(randomBytes);
+      Serial.println(overflowPortion);
+      for (uint8_t i = 0; i < ADDRESS_LENGTH-numMissingBytes; i++) {
+          Serial.print(overflowPortion[i], HEX);
+      }
+  } else {
+      //overflowPortion = input.substring(OVERFLOW_BEGIN, OVERFLOW_LENGTH);
+      for (uint8_t i = OVERFLOW_BEGIN; i < ADDRESS_LENGTH; i++) {
+          Serial.print(formattedInput[i], HEX);
+      }
+  }
+  Serial.println(" in ?? ()");
+}
+
+String formatInput(String input, uint8_t *numberOfHex) {
+    char tmp;
+    uint8_t lastIndex = 0;
+    uint8_t counter = 0;
+    String kanker;
+    while(input.indexOf("\\x", lastIndex) != -1) {
+      lastIndex = input.indexOf("\\x", lastIndex);
+      input[lastIndex] = ' ';
+      input[lastIndex+1] = ' ';
+      input[lastIndex+2] = ' ';
+      input[lastIndex+3] = char(char2int(input[lastIndex+3])*16 + char2int(input[lastIndex+2]));
+      kanker = char(char2int(input[lastIndex+3])*16 + char2int(input[lastIndex+2]));
+      Serial.println(kanker[0], HEX);
+      lastIndex += 4;
+      counter++;
+    }
+    *numberOfHex = counter;
+
+    String formattedInput = "                                ";//Fill with something, otherwise setCharAt() is not working...
+    uint8_t j = 0;
+    
+    for (uint8_t i = 0; i < input.length(); i++) {
+      if (input[i] != ' ') {
+        formattedInput.setCharAt(j, input.charAt(i));
+        j++;
+      }
+    }
+    
+    formattedInput = formattedInput.substring(0, formattedInput.indexOf(" "));
+  /*
+    for (uint8_t i = 0; i < formattedInput.length()/2-1; i++) {
+      tmp = formattedInput[i];
+      formattedInput[i] = formattedInput[formattedInput.length()-i-1];
+      formattedInput[formattedInput.length()-i-1] = tmp;
+    }*/
+    return formattedInput;
+}
+int char2int(char input)
+{
+  if(input >= '0' && input <= '9')
+    return input - '0';
+  if(input >= 'A' && input <= 'F')
+    return input - 'A' + 10;
+  if(input >= 'a' && input <= 'f')
+    return input - 'a' + 10;
+  return -1;
+}
+
+String generateRandomBytes(uint8_t numberOfBytes) {
+    String bytes = "";
+    randomSeed(numberOfBytes);
+    
+    for (uint8_t i = 0; i < numberOfBytes; i++) {
+      bytes += String(random(127), HEX);
+    }
+    
+    return bytes;
 }
