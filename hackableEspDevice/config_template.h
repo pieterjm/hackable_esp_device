@@ -8,10 +8,6 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-/* Network credentials */
-#define WIFI_SSID               "ssid"
-#define WIFI_PASSWORD           "password"
-
 /* Hostname */
 #define DEFAULT_HOSTNAME        "smartlight"
 #define HOSTNAME_ADRESS         1
