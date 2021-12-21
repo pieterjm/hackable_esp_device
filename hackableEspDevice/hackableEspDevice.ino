@@ -31,7 +31,6 @@ UserHandler userHandler(&server);                                           //Fo
 SerialCommandExecuter cliExecuter;
 
 File fsUploadFile;                                                          //A File object to temporarily store the received file
-WiFiManager wifiManager;
 
 /**************************************************************************/
 /*!
@@ -55,15 +54,14 @@ void setup() {
       printStartupText(mess);
     }
     
+    //debug("WiFi Password: ");
+    //debugln(WIFI_PASSWORD);                                                   //Print WiFi password one time in plain text when debugger is enabled
+    
     pinMode(LED_BUILTIN, OUTPUT);
     digitalWrite(LED_BUILTIN, ledState);
 
     initializeHostname();
-    
-    if (!wifiManager.autoConnect(WIFI_CONF_AP_NAME)) {
-        connectWifi(); 
-    }
-    
+    setupWifi();    
     initializeServer();
     userHandler.updateUsers();
     cliExecuter.setUsers(userHandler.getUsers(), userHandler.getNumberOfUsers());
@@ -104,31 +102,29 @@ void initializeHostname() {
 
 /**************************************************************************/
 /*!
-    @brief    Connects to Wi-Fi.
+    @brief    Connects to WiFi if it can, otherwise starts as AP to
+              configure WiFI.
 */
 /**************************************************************************/
-void connectWifi() {
-    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+void setupWifi() {
+    WiFiManager wifiManager;
     
     debug("Connecting to WiFi");
-    delay(50);                                                              //Wait for setup, to prevent strange behaviour
 
-    while (WiFi.status() != WL_CONNECTED) {
-        delay(250);
-        debug(".");
+    if (wifiManager.autoConnect(WIFI_CONF_AP_NAME)) {
+        Serial.print("Connected to: ");
+        Serial.println(WiFi.SSID());
+        Serial.print("IP: ");
+        Serial.println(WiFi.localIP());
+    } else {
+        Serial.println("Failed to connect, connect with AP");
+        ESP.restart();
     }
 
-    Serial.println("");
-    Serial.print("IP: ");
-    Serial.println(WiFi.localIP().toString().c_str());                      //Print local IP Address
-
- 
-    debug("WiFi Password: ");
-    debugln(WIFI_PASSWORD);                                                 //Print WiFi password one time in plain text when debugger is enabled
-
     debug("Copy and paste the following URL: http://");
+    
     if (WiFi.hostname(DEFAULT_HOSTNAME)) {
-        debug(DEFAULT_HOSTNAME);
+        debugln(DEFAULT_HOSTNAME);
     } else {
         debugln(WiFi.hostname().c_str());
     }
@@ -259,8 +255,8 @@ void initializeServer() {
 void loop() {
   server.handleClient();
   if(timer.repeat()){                                                       //Prints WiFi password every 30 second on serial in the form of stars: "*****", so it is not readable, it's a hint
-      //debug("Wifi Password: ");
-      String wifipass = WIFI_PASSWORD;
+      debug("Wifi Password: ");
+      String wifipass = "WiFi.password()?";
       uint8_t charCount = wifipass.length();                                //Count how many characters the WiFi password contains
       for (uint8_t i = 0; i < charCount; i++) {
         Serial.print("*");                                                  //Print a "*" for each password character
