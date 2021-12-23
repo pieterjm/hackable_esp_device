@@ -317,7 +317,7 @@ bool printStringInBytes(String str) {
     }
     Serial.print("0A ");
     i++;
-    /* Print . untill end of line, to match random data */
+    /* Print . (2E) until end of line, to match random data */
     while (i < LENGTH-1) {
       Serial.print("2E ");
       i++;

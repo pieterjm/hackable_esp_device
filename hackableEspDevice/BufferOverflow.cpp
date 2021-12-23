@@ -212,6 +212,7 @@ String BufferOverflow::_getOverflowPortion(bool print) {
     if(_numChars < OVERFLOW_LENGTH) {
         uint8_t numMissingBytes = OVERFLOW_LENGTH - _numChars;
         overflowPortion += _generateRandomBytes(numMissingBytes);
+        
         if (print) {
             Serial.print(overflowPortion);
         }

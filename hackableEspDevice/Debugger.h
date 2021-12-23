@@ -9,7 +9,7 @@
 #define DEBUGGER_H
 #include <stdint.h>                                                         //For defining bits per integer
 #include "Arduino.h"
-#include <EEPROM.h>                                                       //For reading from and writing to flash memory, used for resetting wifi
+#include <EEPROM.h>                                                         //For reading from and writing to flash memory, used for resetting wifi
 
 /* 
  * 1 byte to store the enable debug flag.

@@ -79,8 +79,8 @@ bool SerialCommandExecuter::_parseCommand(String commandString) {
     }
 
     /* Check which command is given */
-    if (command == COMMAND_1) {
-        _printHelp(COMMAND_1);
+    if (command == COMMAND_HELP) {
+        _printHelp(COMMAND_HELP);
     } else {
         /* If help needs to be printed, print it and return */
         if (_checkHelp(params[0], command)) {
@@ -88,40 +88,40 @@ bool SerialCommandExecuter::_parseCommand(String commandString) {
         }
     }
     
-    if (command == COMMAND_2) {
+    if (command == COMMAND_DEBUG) {
         if (!_checkParams(numParams, 1, 1) || !_enableDebug(params[0])) {
             return false;
         }
-    } else if (command == COMMAND_3) {
+    } else if (command == COMMAND_SU) {
         if (!_checkParams(numParams, 1, 1) || !_superUserLogin(params[0])) {
             return false;
         }
-    } else if (command == COMMAND_4) {
+    } else if (command == COMMAND_KEYS) {
         if (!_viewKey()) {
             return false;
         }
-    } else if ((command == COMMAND_5)) {
+    } else if ((command == COMMAND_RESTART)) {
         _restart();
-    } else if (command == COMMAND_6) {
+    } else if (command == COMMAND_USERS) {
         if (!_viewUsers()) {
           return false;
         }
-    } else if (command == COMMAND_7) {
+    } else if (command == COMMAND_HOSTNAME) {
         if (!_checkParams(numParams, 0, 2) || !_hostname(params)) {
           return false;
         }
-    } else if (command == COMMAND_8) {
+    } else if (command == COMMAND_LS) {
         buffOverflow.ls();
-    } else if (command == COMMAND_9) {
+    } else if (command == COMMAND_VI) {
         if (_checkParams(numParams, 1, 1)) {
           if (params[0] == "./testprogram.c" || params[0] == "testprogram.c") {
             buffOverflow.vi();
           } else {
-              Serial.println(ERROR_7_TEXT);
+              Serial.println(ERROR_NO_FILE);
               return false;
           }
         }
-    } else if (command == COMMAND_10) {
+    } else if (command == COMMAND_RUN) {
         if (_checkParams(numParams, 0, 1)) {
           if (numParams == 1) {
             /* If buffer overflow is done correctly,
@@ -135,21 +135,21 @@ bool SerialCommandExecuter::_parseCommand(String commandString) {
             buffOverflow.runCProgram("");
           }
         }
-    } else if (command == COMMAND_11) {
+    } else if (command == COMMAND_OBJDUMP) {
       if (_checkParams(numParams, 2, 2)) {
         if (params[0] != "-d") {
-            Serial.println(ERROR_3_TEXT);
+            Serial.println(ERROR_WRONG_ARGS);
             return false;
         }
           if (params[1] == "./testprogram" || params[1] == "testprogram") {
             buffOverflow.objectDump();
           } else {
-              Serial.println(ERROR_7_TEXT);
+              Serial.println(ERROR_NO_FILE);
             return false;
           }
         }
     } else {
-        Serial.println(ERROR_2_TEXT);
+        Serial.println(ERROR_CMD_NOT_FOUND);
         return false;
     }
     return true;
@@ -198,10 +198,10 @@ String* SerialCommandExecuter::_trimCommand(String commandString) {
 /**************************************************************************/
 bool SerialCommandExecuter::_checkParams(uint8_t numParams, uint8_t minNumberParams, uint8_t maxNumberParams) {
   if (numParams < minNumberParams) {
-      Serial.println(ERROR_4_TEXT);
+      Serial.println(ERROR_TOO_FEW_ARGS);
       return false;
   } else if (numParams > maxNumberParams) {
-      Serial.println(ERROR_8_TEXT);
+      Serial.println(ERROR_TOO_MANY_ARGS);
       return false;
   }
   return true;
@@ -215,36 +215,36 @@ bool SerialCommandExecuter::_checkParams(uint8_t numParams, uint8_t minNumberPar
 /**************************************************************************/
 void SerialCommandExecuter::_printHelp(String command) {
     /* Print help lines according to command */
-    if (command == "" || command == COMMAND_1) {                            //Default help
+    if (command == "" || command == COMMAND_HELP) {                         //Default help
         Serial.println("|---------------------------HELP---------------------------|");
         Serial.println("This is a commandline interface that allows access to the smartlight config");
         _printCommands();
-    } else if (command == COMMAND_2) {
+    } else if (command == COMMAND_DEBUG) {
         Serial.println("Usage: enableDebug [--off]              Turns the debug off");
         Serial.println("       enableDebug [--on]               Turns the debug on");
-    } else if (command == COMMAND_3) {
+    } else if (command == COMMAND_SU) {
       Serial.println("Usage: su {passwd}                        Login as superuser");
-    } else if (command == COMMAND_4) {
+    } else if (command == COMMAND_KEYS) {
         Serial.println("Usage: sshkeys                          Shows ssh keys");
-    } else if (command == COMMAND_5) {
+    } else if (command == COMMAND_RESTART) {
         Serial.println("Usage: reboot                           Reboots the device");
-    } else if (command == COMMAND_6) {
+    } else if (command == COMMAND_USERS) {
         Serial.println("Usage: users                            Shows usertable of website");
-    } else if (command == COMMAND_7) {
+    } else if (command == COMMAND_HOSTNAME) {
         Serial.println("Usage: hostname                         Gives the current hostname");
         Serial.println("       hostname [--set] {newhostname}   Set new hostname. (needs reboot)");
         Serial.println("       hostname [-i]                    Gives the current ip-address");
         Serial.println("       hostname [--default]             Sets the hostname to the default hostname");
-    } else if (command == COMMAND_8) {
+    } else if (command == COMMAND_LS) {
         Serial.println("Usage: ls                               Shows files in current folder");
-    } else if (command == COMMAND_9) {
+    } else if (command == COMMAND_VI) {
         Serial.println("Usage: vi {filename}                    Opens file in text editor");
-    }else if (command == COMMAND_10) {
+    }else if (command == COMMAND_RUN) {
         Serial.println("Usage: ./{filename}                     Runs an executable file");
-    } else if (command == COMMAND_11) {
+    } else if (command == COMMAND_OBJDUMP) {
         Serial.println("Usage: objdump -d {filename}            Prints disassembled code of an executable file");
     } else {
-        Serial.println(ERROR_2_TEXT);
+        Serial.println(ERROR_CMD_NOT_FOUND);
     }
 }
 
@@ -255,16 +255,16 @@ void SerialCommandExecuter::_printHelp(String command) {
 /**************************************************************************/
 void SerialCommandExecuter::_printCommands() {
     Serial.println("Available commands:");
-    Serial.println(COMMAND_1);
-    Serial.println(COMMAND_2);
-    Serial.println(COMMAND_3);
-    Serial.println(COMMAND_4);
-    Serial.println(COMMAND_5);
-    Serial.println(COMMAND_6);
-    Serial.println(COMMAND_7);
-    Serial.println(COMMAND_8);
-    Serial.println(COMMAND_9);
-    Serial.println(COMMAND_11);
+    Serial.println(COMMAND_HELP);
+    Serial.println(COMMAND_DEBUG);
+    Serial.println(COMMAND_SU);
+    Serial.println(COMMAND_KEYS);
+    Serial.println(COMMAND_RESTART);
+    Serial.println(COMMAND_USERS);
+    Serial.println(COMMAND_HOSTNAME);
+    Serial.println(COMMAND_LS);
+    Serial.println(COMMAND_VI);
+    Serial.println(COMMAND_OBJDUMP);
 }
 
 /**************************************************************************/
@@ -283,7 +283,7 @@ bool SerialCommandExecuter::_enableDebug(String enable) {
         setDebugEnabled(false);
         Serial.println("debug = false");
     } else {
-        Serial.println(ERROR_3_TEXT);
+        Serial.println(ERROR_WRONG_ARGS);
         return false;
     }
     return true;
@@ -301,7 +301,7 @@ bool SerialCommandExecuter::_superUserLogin(String password) {
         _isLoggedIn = true;
         Serial.println("You are now super user.");
     } else {
-        Serial.println(ERROR_5_TEXT);
+        Serial.println(ERROR_WRONG_PWD);
         return false;
     }
     return true;
@@ -315,7 +315,7 @@ bool SerialCommandExecuter::_superUserLogin(String password) {
 /**************************************************************************/
 bool SerialCommandExecuter::_viewKey() {
     if (!_isLoggedIn) {
-        Serial.println(ERROR_6_TEXT);
+        Serial.println(ERROR_NO_PERMISSION);
         return false;
     }
     Serial.println("Encryption key for config.conf");
@@ -349,7 +349,7 @@ bool SerialCommandExecuter::_viewUsers() {
     String userPrints[USER_INFO_LENGTH] = {""};
       
     if (!_isLoggedIn) {
-        Serial.println(ERROR_6_TEXT);
+        Serial.println(ERROR_NO_PERMISSION);
         return false;
     }
     
@@ -385,14 +385,14 @@ bool SerialCommandExecuter::_hostname(String* params) {
       return true;
     }
     
-    if (params[0] == "--set" && params[1] != "") {                        //If parameter == "--set" check if next value is not empty
+    if (params[0] == "--set" && params[1] != "") {                          //If parameter == "--set" check if next value is not empty
         char newHostname[MAX_HOSTNAME_LENGTH];
         params[1].toCharArray(newHostname, MAX_HOSTNAME_LENGTH);
         writeHostname(newHostname);
     } else if (params[0] == "--default"){
         writeHostname(DEFAULT_HOSTNAME);
     } else {
-        Serial.println(ERROR_3_TEXT);                                       //If it can't find suitable params: give error
+        Serial.println(ERROR_WRONG_ARGS);                                   //If it can't find suitable params: give error
         return false;
     }
     return true;

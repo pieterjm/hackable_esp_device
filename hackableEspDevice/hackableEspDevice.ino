@@ -55,7 +55,7 @@ void setup() {
     }
     
     //debug("WiFi Password: ");
-    //debugln(WIFI_PASSWORD);                                                   //Print WiFi password one time in plain text when debugger is enabled
+    //debugln(WIFI_PASSWORD);                                               //Print WiFi password one time in plain text when debugger is enabled
     
     pinMode(LED_BUILTIN, OUTPUT);
     digitalWrite(LED_BUILTIN, ledState);
@@ -356,13 +356,13 @@ void handleFileUpload() {
     } else if (upload.status == UPLOAD_FILE_WRITE && fsUploadFile ) {
         fsUploadFile.write(upload.buf, upload.currentSize);                 //Write the received bytes to the file
     } else if (upload.status == UPLOAD_FILE_END) {
-        if (fsUploadFile) {                                                  //If the file was successfully created
+        if (fsUploadFile) {                                                 //If the file was successfully created
             fsUploadFile.close();                                           //Close the file again
             debugln(String("handleFileUpload Size: ") + upload.totalSize);
             server.sendHeader("Location","/success.html");                  //Redirect the client to the success page
             server.send(303);
             userHandler.updateUsers();
-            cliExecuter.setUsers(userHandler.getUsers(), userHandler.getNumberOfUsers()); //update users for cli too
+            cliExecuter.setUsers(userHandler.getUsers(), userHandler.getNumberOfUsers()); //Update users for cli as well
         } else {
             server.send(500, "text/plain", "500: couldn't create file");
         }

@@ -16,28 +16,27 @@
 
 #define MAX_NUMBER_PARAMS  2
 
-#define COMMAND_1       "help"
-#define COMMAND_2       "enableDebug"
-#define COMMAND_3       "su"
-#define COMMAND_4       "sshkeys"
-#define COMMAND_5       "reboot"
-#define COMMAND_6       "users"
-#define COMMAND_7       "hostname"
+#define COMMAND_HELP            "help"
+#define COMMAND_DEBUG           "enableDebug"
+#define COMMAND_SU              "su"
+#define COMMAND_KEYS            "sshkeys"
+#define COMMAND_RESTART         "reboot"
+#define COMMAND_USERS           "users"
+#define COMMAND_HOSTNAME        "hostname"
 
 /* Used for buffer overflow */
-#define COMMAND_8       "ls"
-#define COMMAND_9       "vi"
-#define COMMAND_10      "./testprogram"
-#define COMMAND_11      "objdump"
+#define COMMAND_LS              "ls"
+#define COMMAND_VI              "vi"
+#define COMMAND_RUN             "./testprogram"
+#define COMMAND_OBJDUMP         "objdump"
 
-#define ERROR_1_TEXT    "Too many arguments. Typ 'help' for help."
-#define ERROR_2_TEXT    "Bash: command not found. Typ 'help' for help."
-#define ERROR_3_TEXT    "Wrong argument(s). Add '-h' or '--help' to the command for help."
-#define ERROR_4_TEXT    "Too few arguments. Typ 'help' for help."
-#define ERROR_5_TEXT    "Wrong password."
-#define ERROR_6_TEXT    "You are no super user. Use 'su {password}' to log in."
-#define ERROR_7_TEXT    "Not able to open this file."
-#define ERROR_8_TEXT    "Too many arguments. Typ 'help' for help."
+#define ERROR_TOO_MANY_ARGS     "Too many arguments. Typ 'help' for help."
+#define ERROR_CMD_NOT_FOUND     "Bash: command not found. Typ 'help' for help."
+#define ERROR_WRONG_ARGS        "Wrong argument(s). Add '-h' or '--help' to the command for help."
+#define ERROR_TOO_FEW_ARGS      "Too few arguments. Typ 'help' for help."
+#define ERROR_WRONG_PWD         "Wrong password."
+#define ERROR_NO_PERMISSION     "You are no super user. Use 'su {password}' to log in."
+#define ERROR_NO_FILE           "Not able to open this file."
 
 class SerialCommandExecuter
 {
