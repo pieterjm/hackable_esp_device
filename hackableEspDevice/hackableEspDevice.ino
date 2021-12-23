@@ -257,9 +257,9 @@ void loop() {
       String wifipass = WIFI_PASSWORD;
       uint8_t charCount = wifipass.length();                                //Count how many characters the WiFi password contains
       for (uint8_t i = 0; i < charCount; i++) {
-        Serial.print("*");                                                  //Print a "*" for each password character
+        //Serial.print("*");                                                  //Print a "*" for each password character
       }
-      Serial.println("");                                            
+      //Serial.println("");                                            
   }
 
   if(Serial.available()) {

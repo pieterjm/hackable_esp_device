@@ -111,11 +111,11 @@ bool SerialCommandExecuter::_parseCommand(String commandString) {
           return false;
         }
     } else if (command == COMMAND_8) {
-        ls();
+        buffOverflow.ls();
     } else if (command == COMMAND_9) {
         if (_checkParams(numParams, 1, 1)) {
           if (params[0] == "./testprogram.c" || params[0] == "testprogram.c") {
-            vi();
+            buffOverflow.vi();
           } else {
               Serial.println(ERROR_7_TEXT);
               return false;
@@ -127,12 +127,12 @@ bool SerialCommandExecuter::_parseCommand(String commandString) {
             /* If buffer overflow is done correctly,
              * user is logged in.
              */
-            if (runCProgram(params[0])) {
+            if (buffOverflow.runCProgram(params[0])) {
               _isLoggedIn = true;
               Serial.println("You are now super user.");
             }
           } else {
-            runCProgram("");
+            buffOverflow.runCProgram("");
           }
         }
     } else if (command == COMMAND_11) {
@@ -142,7 +142,7 @@ bool SerialCommandExecuter::_parseCommand(String commandString) {
             return false;
         }
           if (params[1] == "./testprogram" || params[1] == "testprogram") {
-            objectDump();
+            buffOverflow.objectDump();
           } else {
               Serial.println(ERROR_7_TEXT);
             return false;

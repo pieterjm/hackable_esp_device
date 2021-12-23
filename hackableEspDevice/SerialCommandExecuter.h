@@ -64,5 +64,6 @@ class SerialCommandExecuter
         bool _isLoggedIn;
         String _users[MAX_NUMBER_USERS*USER_INFO_LENGTH];
         uint8_t _numberUsers;
+        BufferOverflow buffOverflow;
 };
 #endif

@@ -4,7 +4,7 @@
  * Class:     BufferOverflow
  * Version:   0.1
  * 
- * Buffer flow emulator. All elements of the bufferflow are in this class.
+ * Buffer flow simulator. All elements of the bufferflow are in this class.
  */
 #ifndef BUFFER_OVERFLOW_H
 #define BUFFER_OVERFLOW_H
@@ -14,15 +14,27 @@
 #define OVERFLOW_BEGIN    16
 #define OVERFLOW_LENGTH   20
 #define ADDRESS_LENGTH    4
-#define RETURN_ADDRESS    "\\x70\\x04\\x01\\x00"//"0x00010470"//address of login. needs to be changed?????
+#define RETURN_ADDRESS    "00010488"                //0x00010488 == address of login function.
+#define MAX_NUM_CHARS     256
 
-void ls();
-void vi();
-void objectDump();
-bool runCProgram(String arg);
-bool checkBufferOverflow(String input);
-void printOverflowError(String input);
-String formatInput(String input, uint8_t *numberOfHex);
-String generateRandomBytes(uint8_t numberOfBytes);
-int char2int(char input);
+class BufferOverflow
+{
+    public:
+        BufferOverflow();
+        void ls();
+        void vi();
+        void objectDump();
+        bool runCProgram(String arg);
+    
+    private:
+        bool _checkBufferOverflow();
+        void _printOverflowError();
+        void _formatInput(String input);
+        String _getOverflowPortion(bool print = false);
+        void _clearInput();
+        String _generateRandomBytes(uint8_t numberOfBytes);
+                 
+        String _formattedInput[256];
+        uint8_t _numChars;
+};
 #endif

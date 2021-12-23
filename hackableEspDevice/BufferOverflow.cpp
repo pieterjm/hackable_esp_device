@@ -3,18 +3,25 @@
  * Author:    Luke de Munk
  * Version:   0.1
  * 
- * Buffer flow emulator. All elements of the bufferflow are in this class.
+ * Buffer flow simulator. All elements of the bufferflow are in this class.
  */
 #include "BufferOverflow.h"
 
 /**************************************************************************/
 /*!
-  @brief    Prints the fake list of files.
-  @param    var           desc
-  @return   var           desc
+  @brief    Constructor.
 */
 /**************************************************************************/
-void ls() {
+BufferOverflow::BufferOverflow() {
+  _clearInput();                                                            //First time call is the declaration of the array.
+}
+
+/**************************************************************************/
+/*!
+  @brief    Prints the fake list of files.
+*/
+/**************************************************************************/
+void BufferOverflow::ls() {
     Serial.println(F("testprogram.c"));
     Serial.println(F("testprogram"));
 }
@@ -24,7 +31,7 @@ void ls() {
   @brief    Prints the vulnerable testprogram.
 */
 /**************************************************************************/
-void vi() {
+void BufferOverflow::vi() {
     Serial.println(F("|-----------FILENAME-----------|-----------TYPE-----------|-----------AUTOR-----------|"));
     Serial.println(F("|---------testprogram.c--------|---------READONLY---------|-----------admin-----------|"));
     Serial.println(F("|-------------------------------------------------------------------------------------|"));
@@ -52,6 +59,7 @@ void vi() {
     Serial.println(F("22        return 0;                                                                   |"));
     Serial.println(F("23    }                                                                               |"));
     Serial.println(F("|-------------------------------------------------------------------------------------|"));
+    Serial.println(F(""));
 }
 
 /**************************************************************************/
@@ -59,7 +67,11 @@ void vi() {
   @brief    Prints the disassembled code of the vulnerable testprogram.
 */
 /**************************************************************************/
-void objectDump() {
+void BufferOverflow::objectDump() {
+    Serial.println(F("testprogram:     file format elf32-littlearm"));
+    Serial.println(F(""));
+    Serial.println(F("Disassembly of section .init:"));
+    Serial.println(F(""));
     Serial.println(F("00010438 <main>:"));
     Serial.println(F("   10438: e92d4800  push  {fp, lr}"));
     Serial.println(F("   1043c: e28db004  add fp, sp, #4"));
@@ -81,126 +93,195 @@ void objectDump() {
     Serial.println(F("   1047c: e1a00003  mov r0, r3"));
     Serial.println(F("   10480: e24bd004  sub sp, fp, #4"));
     Serial.println(F("   10484: e8bd8800  pop {fp, pc}"));
-
+    Serial.println(F(""));
+    Serial.println(F("00010488 <login>:"));
+    Serial.println(F("   10488: e92d4800  push  {fp, lr}"));
+    Serial.println(F("   1048c: e28db004  add fp, sp, #4"));
+    Serial.println(F("   10490: e24dd008  sub sp, sp, #8"));
+    Serial.println(F("   10494: e50b0008  str r0, [fp, #-8]"));
+    Serial.println(F("   10498: e59f000c  ldr r0, [pc, #12] ; 104ac <login+0x24>"));
+    Serial.println(F("   1049c: ebffff9a  bl  1030c <printf@plt>"));
+    Serial.println(F("   104a0: e1a00000  nop     ; (mov r0, r0)"));
+    Serial.println(F("   104a4: e24bd004  sub sp, fp, #4"));
+    Serial.println(F("   104a8: e8bd8800  pop {fp, pc}"));
+    Serial.println(F("   104ac: 0001053c  .word 0x0001053c"));
+    Serial.println(F(""));
+    Serial.println(F("000104b0 <logout>:"));
+    Serial.println(F("   104b0: e92d4800  push  {fp, lr}"));
+    Serial.println(F("   104b4: e28db004  add fp, sp, #4"));
+    Serial.println(F("   104b8: e59f0008  ldr r0, [pc, #8]  ; 104c8 <logout+0x18>"));
+    Serial.println(F("   104bc: ebffff92  bl  1030c <printf@plt>"));
+    Serial.println(F("   104c0: e1a00000  nop     ; (mov r0, r0)"));
+    Serial.println(F("   104c4: e8bd8800  pop {fp, pc}"));
+    Serial.println(F("   104c8: 00010548  .word 0x00010548"));
+    Serial.println(F(""));
 }
 
 /**************************************************************************/
 /*!
-  @brief    Runs the vulnerable testprogram.
+  @brief    Simulates the vulnerable testprogram.
+  @param    arg       Given argument
   @return   bool      True if the buffer overflow attack is done correctly
 */
 /**************************************************************************/
-bool runCProgram(String arg) {
-  /* If the length is OK, run program
-   * Else, check if buffer overflow attack
-   * is correctly done.
-   */
-    if (arg.length() < OVERFLOW_BEGIN) {
+bool BufferOverflow::runCProgram(String arg) {
+    _formatInput(arg);
+    if (_numChars < OVERFLOW_BEGIN) {
         Serial.println("You are now super user.");
         Serial.print("Hello ");
         Serial.println(arg);
         Serial.println("You are not longer super user.");
     } else {
-        if (checkBufferOverflow(arg)) {
+        if (_checkBufferOverflow()) {
           return true;
         }
     }
     return false;
 }
 
-bool checkBufferOverflow(String input) {
-  if(input.substring(OVERFLOW_BEGIN) == RETURN_ADDRESS) { //???
+/**************************************************************************/
+/*!
+  @brief    Checks if the buffer overflow is done correctly.
+  @return   bool      True if the buffer overflow attack is done correctly
+*/
+/**************************************************************************/
+bool BufferOverflow::_checkBufferOverflow() {
+  if(_getOverflowPortion() == RETURN_ADDRESS) {
     return true;
   }
-  printOverflowError(input);
+  
+  _printOverflowError();                                                    //If the overflow is not correctly, print value of the return address pointer
   return false;
 }
 
-void printOverflowError(String input) {
-  String overflowPortion = "";
-  uint8_t numberOfHex = 0;
-  
+/**************************************************************************/
+/*!
+  @brief    Prints the segmentation error when overflow is not correctly.
+*/
+/**************************************************************************/
+void BufferOverflow::_printOverflowError() {
   Serial.println("Program received signal SIGSEGV, Segmentation fault.");
   Serial.print("0x");
-  
-  String formattedInput = formatInput(input, &numberOfHex);
-  Serial.println(formattedInput.length());
-  
-  Serial.println(formattedInput[formattedInput.length()-1], HEX);
-  if(formattedInput.length() < OVERFLOW_LENGTH) {
-      uint8_t numMissingBytes = OVERFLOW_LENGTH - formattedInput.length();
-      String randomBytes = generateRandomBytes(numMissingBytes);
-      
-      overflowPortion = formattedInput.substring(numMissingBytes, numMissingBytes-ADDRESS_LENGTH);
-      Serial.println(randomBytes);
-      Serial.println(overflowPortion);
-      for (uint8_t i = 0; i < ADDRESS_LENGTH-numMissingBytes; i++) {
-          Serial.print(overflowPortion[i], HEX);
-      }
-  } else {
-      //overflowPortion = input.substring(OVERFLOW_BEGIN, OVERFLOW_LENGTH);
-      for (uint8_t i = OVERFLOW_BEGIN; i < ADDRESS_LENGTH; i++) {
-          Serial.print(formattedInput[i], HEX);
-      }
-  }
+  _getOverflowPortion(true);
   Serial.println(" in ?? ()");
 }
 
-String formatInput(String input, uint8_t *numberOfHex) {
-    char tmp;
-    uint8_t lastIndex = 0;
-    uint8_t counter = 0;
-    String kanker;
-    while(input.indexOf("\\x", lastIndex) != -1) {
-      lastIndex = input.indexOf("\\x", lastIndex);
-      input[lastIndex] = ' ';
-      input[lastIndex+1] = ' ';
-      input[lastIndex+2] = ' ';
-      input[lastIndex+3] = char(char2int(input[lastIndex+3])*16 + char2int(input[lastIndex+2]));
-      kanker = char(char2int(input[lastIndex+3])*16 + char2int(input[lastIndex+2]));
-      Serial.println(kanker[0], HEX);
-      lastIndex += 4;
-      counter++;
+/**************************************************************************/
+/*!
+  @brief    Converts the given argument string to an understandable format.
+  @param    input     String of the given arguments
+*/
+/**************************************************************************/
+void BufferOverflow::_formatInput(String input) {
+    String tmp = "";
+    
+    _clearInput();
+    
+    /* Set every character in an element */
+    for (uint16_t i = 0; i < input.length(); i++) {
+        if (input[i] == '\\') {
+            _formattedInput[_numChars] = "\\x";                             //Move all hex chars in one element (for ex.: '\x90')
+            _formattedInput[_numChars] += input[i+2];
+            _formattedInput[_numChars] += input[i+3];
+            i += 3;                                                         //Increase with 3, because the number of chars taken for a hex is 4 ('\x90')
+        } else {
+            _formattedInput[_numChars] = input[i];
+        }
+        _numChars++;
     }
-    *numberOfHex = counter;
 
-    String formattedInput = "                                ";//Fill with something, otherwise setCharAt() is not working...
-    uint8_t j = 0;
-    
-    for (uint8_t i = 0; i < input.length(); i++) {
-      if (input[i] != ' ') {
-        formattedInput.setCharAt(j, input.charAt(i));
-        j++;
-      }
+    /* Turn the whole array, to simulate little endian systems */
+    for (uint8_t i = 0; i < _numChars/2-1; i++) {
+        tmp = _formattedInput[i];
+        _formattedInput[i] = _formattedInput[_numChars-i-1];
+        _formattedInput[_numChars-i-1] = tmp;
+        tmp = "";
     }
-    
-    formattedInput = formattedInput.substring(0, formattedInput.indexOf(" "));
-  /*
-    for (uint8_t i = 0; i < formattedInput.length()/2-1; i++) {
-      tmp = formattedInput[i];
-      formattedInput[i] = formattedInput[formattedInput.length()-i-1];
-      formattedInput[formattedInput.length()-i-1] = tmp;
-    }*/
-    return formattedInput;
-}
-int char2int(char input)
-{
-  if(input >= '0' && input <= '9')
-    return input - '0';
-  if(input >= 'A' && input <= 'F')
-    return input - 'A' + 10;
-  if(input >= 'a' && input <= 'f')
-    return input - 'a' + 10;
-  return -1;
 }
 
-String generateRandomBytes(uint8_t numberOfBytes) {
+/**************************************************************************/
+/*!
+  @brief    Converts the given argument string to an understandable format.
+  @param    print     If true, the overflowportion gets printed directly
+                      (To avoid character glichting with HEX parameter)
+*/
+/**************************************************************************/
+String BufferOverflow::_getOverflowPortion(bool print) {
+    String overflowPortion = "";
+    
+    if(_numChars < OVERFLOW_LENGTH) {
+        uint8_t numMissingBytes = OVERFLOW_LENGTH - _numChars;
+        overflowPortion += _generateRandomBytes(numMissingBytes);
+        if (print) {
+            Serial.print(overflowPortion);
+        }
+        
+        /* To determine and print the overflow portion */
+        for (uint8_t i = 0; i < ADDRESS_LENGTH - numMissingBytes; i++) {
+            /* Check if is hex number, else print as hex */
+            if (_formattedInput[i][0] == '\\') {
+                overflowPortion += _formattedInput[i][2];
+                overflowPortion += _formattedInput[i][3];
+                if (print) {
+                    Serial.print(_formattedInput[i][2]);
+                    Serial.print(_formattedInput[i][3]);
+                }
+            } else {
+                overflowPortion += _formattedInput[i];
+                if (print) {
+                    Serial.print(char(_formattedInput[i][0]), HEX);
+                }
+            }
+        }
+    } else {
+        /* To print the overflow portion */
+        uint8_t delta = abs(_numChars - OVERFLOW_LENGTH);
+        for (uint8_t i = delta; i < delta + ADDRESS_LENGTH; i++) {
+            /* Check if is hex number, else print as hex */
+            if (_formattedInput[i][0] == '\\') {
+                overflowPortion += _formattedInput[i][2];
+                overflowPortion += _formattedInput[i][3];
+                if (print) {
+                    Serial.print(_formattedInput[i][2]);
+                    Serial.print(_formattedInput[i][3]);
+                }
+            } else {
+                if (print) {
+                    Serial.print(char(_formattedInput[i][0]), HEX);
+                }
+                overflowPortion += _formattedInput[i];
+            }
+        }
+    }
+    return overflowPortion;
+}
+
+/**************************************************************************/
+/*!
+  @brief    Clears the input array and number of chars.
+*/
+/**************************************************************************/
+void BufferOverflow::_clearInput() {
+    for (uint16_t i = 0; i < MAX_NUM_CHARS; i++) {
+        _formattedInput[i] = "";
+    }
+    _numChars = 0;
+}
+
+/**************************************************************************/
+/*!
+  @brief    Generates random bytes to fill the return register when the
+            overflow bytes are too less.
+  @param    numBytes  Number of needed bytes
+  @return   String    String of the generated bytes
+*/
+/**************************************************************************/
+String BufferOverflow::_generateRandomBytes(uint8_t numBytes) {
     String bytes = "";
-    randomSeed(numberOfBytes);
+    randomSeed(numBytes);
     
-    for (uint8_t i = 0; i < numberOfBytes; i++) {
-      bytes += String(random(127), HEX);
+    for (uint8_t i = 0; i < numBytes; i++) {
+        bytes += String(random(127), HEX);
     }
-    
     return bytes;
 }
