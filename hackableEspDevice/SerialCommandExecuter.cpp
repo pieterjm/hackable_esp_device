@@ -63,7 +63,6 @@ void SerialCommandExecuter::executeCommand() {
 /**************************************************************************/
 bool SerialCommandExecuter::_parseCommand(String commandString) {
     String* trimmedCmdLine = _trimCommand(commandString);
-    //String* trimmedLessCmdLine =_trimLessCommand(commandString);
     String command = trimmedCmdLine[0].c_str();
     String params[MAX_NUMBER_PARAMS] = {""};
     uint8_t numParams = 0;
@@ -110,6 +109,44 @@ bool SerialCommandExecuter::_parseCommand(String commandString) {
     } else if (command == COMMAND_7) {
         if (!_checkParams(numParams, 0, 2) || !_hostname(params)) {
           return false;
+        }
+    } else if (command == COMMAND_8) {
+        buffOverflow.ls();
+    } else if (command == COMMAND_9) {
+        if (_checkParams(numParams, 1, 1)) {
+          if (params[0] == "./testprogram.c" || params[0] == "testprogram.c") {
+            buffOverflow.vi();
+          } else {
+              Serial.println(ERROR_7_TEXT);
+              return false;
+          }
+        }
+    } else if (command == COMMAND_10) {
+        if (_checkParams(numParams, 0, 1)) {
+          if (numParams == 1) {
+            /* If buffer overflow is done correctly,
+             * user is logged in.
+             */
+            if (buffOverflow.runCProgram(params[0])) {
+              _isLoggedIn = true;
+              Serial.println("You are now super user.");
+            }
+          } else {
+            buffOverflow.runCProgram("");
+          }
+        }
+    } else if (command == COMMAND_11) {
+      if (_checkParams(numParams, 2, 2)) {
+        if (params[0] != "-d") {
+            Serial.println(ERROR_3_TEXT);
+            return false;
+        }
+          if (params[1] == "./testprogram" || params[1] == "testprogram") {
+            buffOverflow.objectDump();
+          } else {
+              Serial.println(ERROR_7_TEXT);
+            return false;
+          }
         }
     } else {
         Serial.println(ERROR_2_TEXT);
@@ -161,10 +198,10 @@ String* SerialCommandExecuter::_trimCommand(String commandString) {
 /**************************************************************************/
 bool SerialCommandExecuter::_checkParams(uint8_t numParams, uint8_t minNumberParams, uint8_t maxNumberParams) {
   if (numParams < minNumberParams) {
-      Serial.println(ERROR_3_TEXT);
+      Serial.println(ERROR_4_TEXT);
       return false;
   } else if (numParams > maxNumberParams) {
-      Serial.println(ERROR_3_TEXT);
+      Serial.println(ERROR_8_TEXT);
       return false;
   }
   return true;
@@ -188,7 +225,7 @@ void SerialCommandExecuter::_printHelp(String command) {
     } else if (command == COMMAND_3) {
       Serial.println("Usage: su {passwd}                        Login as superuser");
     } else if (command == COMMAND_4) {
-        Serial.println("Usage: keys                             Shows ssh keys");
+        Serial.println("Usage: sshkeys                          Shows ssh keys");
     } else if (command == COMMAND_5) {
         Serial.println("Usage: reboot                           Reboots the device");
     } else if (command == COMMAND_6) {
@@ -198,6 +235,14 @@ void SerialCommandExecuter::_printHelp(String command) {
         Serial.println("       hostname [--set] {newhostname}   Set new hostname. (needs reboot)");
         Serial.println("       hostname [-i]                    Gives the current ip-address");
         Serial.println("       hostname [--default]             Sets the hostname to the default hostname");
+    } else if (command == COMMAND_8) {
+        Serial.println("Usage: ls                               Shows files in current folder");
+    } else if (command == COMMAND_9) {
+        Serial.println("Usage: vi {filename}                    Opens file in text editor");
+    }else if (command == COMMAND_10) {
+        Serial.println("Usage: ./{filename}                     Runs an executable file");
+    } else if (command == COMMAND_11) {
+        Serial.println("Usage: objdump -d {filename}            Prints disassembled code of an executable file");
     } else {
         Serial.println(ERROR_2_TEXT);
     }
@@ -217,6 +262,9 @@ void SerialCommandExecuter::_printCommands() {
     Serial.println(COMMAND_5);
     Serial.println(COMMAND_6);
     Serial.println(COMMAND_7);
+    Serial.println(COMMAND_8);
+    Serial.println(COMMAND_9);
+    Serial.println(COMMAND_11);
 }
 
 /**************************************************************************/
