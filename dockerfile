@@ -1,3 +1,3 @@
 FROM hrektts/doxygen
 COPY .\ /data
-RUN ["doxygen" ,"/data/newdoxygen.config"]
+RUN ["doxygen" ,"/data/Dockerdoxygen.config"]
