@@ -13,7 +13,7 @@
 */
 /**************************************************************************/
 BufferOverflow::BufferOverflow() {
-  _clearInput();                                                            //First time call is the declaration of the array.
+    _clearInput();                                                          //First time call is the declaration of the array.
 }
 
 /**************************************************************************/

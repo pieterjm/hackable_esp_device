@@ -13,7 +13,7 @@
 
 #define OVERFLOW_BEGIN    16                                                //Because array is in byte resolution, 10 becomes 16. Then the return address pointer starts
 #define ADDRESS_LENGTH    4                                                 //Address is 32 bits long, so 4 bytes
-#define OVERFLOW_LENGTH   OVERFLOW_BEGIN + ADDRESS_LENGTH
+#define OVERFLOW_LENGTH   20//OVERFLOW_BEGIN + ADDRESS_LENGTH
 #define RETURN_ADDRESS    "00010488"                                        //0x00010488 == address of login function.
 #define MAX_NUM_CHARS     256
 

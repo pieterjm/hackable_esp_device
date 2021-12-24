@@ -42,15 +42,13 @@ void SerialCommandExecuter::executeCommand() {
     
     if (command != "") {
         if (_isLoggedIn) {
-          Serial.print("~# ");
+          Serial.print("~# ");                                              //For the Linux feeling, superuser
         } else {
-          Serial.print("~$ ");
+          Serial.print("~$ ");                                              //For the Linux feeling, no superuser
         }
         Serial.print(command);                                              //Echo command
         
-        if (!_parseCommand(command)) {
-            debugln("Parse error");
-        }
+        _parseCommand(command);
     }
 }
 
@@ -121,19 +119,31 @@ bool SerialCommandExecuter::_parseCommand(String commandString) {
               return false;
           }
         }
-    } else if (command == COMMAND_RUN) {
+    } else if (command.substring(0, 2) == COMMAND_RUN) {                    //Substring == "./" the rest is filename
         if (_checkParams(numParams, 0, 1)) {
-          if (numParams == 1) {
-            /* If buffer overflow is done correctly,
-             * user is logged in.
-             */
-            if (buffOverflow.runCProgram(params[0])) {
-              _isLoggedIn = true;
-              Serial.println("You are now super user.");
+            String filename = command.substring(2);                           //The rest of the command is filename
+          
+            if (filename == "testprogram.c") {
+                Serial.println(ERROR_PERM_DENIED);
+                return false;
             }
-          } else {
-            buffOverflow.runCProgram("");
-          }
+            
+            if (filename != "testprogram") {
+                Serial.println(ERROR_NO_FILE_DIR);
+                return false;
+            }
+            
+            if (numParams == 1) {
+                /* If buffer overflow is done correctly,
+                 * user is logged in.
+                 */
+                if (buffOverflow.runCProgram(params[0])) {
+                    _isLoggedIn = true;
+                    Serial.println(MESS_SUPER_USER);
+                }
+            } else {
+                buffOverflow.runCProgram("");
+            }
         }
     } else if (command == COMMAND_OBJDUMP) {
       if (_checkParams(numParams, 2, 2)) {
@@ -299,7 +309,7 @@ bool SerialCommandExecuter::_enableDebug(String enable) {
 bool SerialCommandExecuter::_superUserLogin(String password) {
     if (password == ROOT_PASSWORD) {
         _isLoggedIn = true;
-        Serial.println("You are now super user.");
+        Serial.println(MESS_SUPER_USER);
     } else {
         Serial.println(ERROR_WRONG_PWD);
         return false;

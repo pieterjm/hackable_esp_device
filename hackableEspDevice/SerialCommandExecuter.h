@@ -27,16 +27,21 @@
 /* Used for buffer overflow */
 #define COMMAND_LS              "ls"
 #define COMMAND_VI              "vi"
-#define COMMAND_RUN             "./testprogram"
+#define COMMAND_RUN             "./"
 #define COMMAND_OBJDUMP         "objdump"
+
+#define MESS_SUPER_USER         "You are now super user."
+
 
 #define ERROR_TOO_MANY_ARGS     "Too many arguments. Typ 'help' for help."
 #define ERROR_CMD_NOT_FOUND     "Bash: command not found. Typ 'help' for help."
+#define ERROR_PERM_DENIED       "Bash: Permission denied"
 #define ERROR_WRONG_ARGS        "Wrong argument(s). Add '-h' or '--help' to the command for help."
 #define ERROR_TOO_FEW_ARGS      "Too few arguments. Typ 'help' for help."
 #define ERROR_WRONG_PWD         "Wrong password."
 #define ERROR_NO_PERMISSION     "You are no super user. Use 'su {password}' to log in."
-#define ERROR_NO_FILE           "Not able to open this file."
+#define ERROR_NO_FILE           "No such file."
+#define ERROR_NO_FILE_DIR       "No such file or directory."
 
 class SerialCommandExecuter
 {

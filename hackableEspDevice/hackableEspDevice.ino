@@ -78,24 +78,23 @@ void initializeHostname() {
     String customHostname = getHostname();
     /* Check if custom hostname is set, otherwise use default */
     if (customHostname != "") {
-        debugln("Custom hostname set");
         /* Check if hostname can be set */
         if (WiFi.hostname(customHostname)){
             debug(customHostname);
-            debugln(" is now the hostname");
+            debugln(" is the hostname.");
         } else {
-            debug(" could not set '");
+            debug("Could not set '");
             debug(customHostname);
-            debugln("' as hostname");
+            debugln("' as hostname.");
         }
     } else {
         if (WiFi.hostname(DEFAULT_HOSTNAME)) {
             debug(DEFAULT_HOSTNAME);
-            debugln(" is now the hostname");
+            debugln(" is the hostname.");
         } else {
             debug("Could not set '");
             debug(DEFAULT_HOSTNAME);
-            debugln("' as hostname");
+            debugln("' as hostname.");
         }
     }
 }
@@ -109,8 +108,6 @@ void initializeHostname() {
 void setupWifi() {
     WiFiManager wifiManager;
     
-    debug("Connecting to WiFi");
-
     if (wifiManager.autoConnect(WIFI_CONF_AP_NAME)) {
         Serial.print("Connected to: ");
         Serial.println(WiFi.SSID());
@@ -255,7 +252,7 @@ void initializeServer() {
 void loop() {
   server.handleClient();
   if(timer.repeat()){                                                       //Prints WiFi password every 30 second on serial in the form of stars: "*****", so it is not readable, it's a hint
-      debug("Wifi Password: ");
+      //debug("Wifi Password: ");
       String wifipass = "WiFi.password()?";
       uint8_t charCount = wifipass.length();                                //Count how many characters the WiFi password contains
       for (uint8_t i = 0; i < charCount; i++) {
