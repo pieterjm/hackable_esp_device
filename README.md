@@ -65,7 +65,7 @@ There are multiple ways to upload the program files to the board. The two ways l
 
 1. the src dir needs to contain all the files from the `hackableEspDevice` directory except the data directory
 2. rename the `hackableEspDevice.ino` to `main.cpp`
-3. in `main.cpp` add a reference to all functions in main eg.
+3. in `main.cpp` add a reference to all functions in main eg.\
 void setup();\
 void setup();\
 void initializeHostname();\
