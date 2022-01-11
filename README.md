@@ -1,8 +1,7 @@
 # Hackable ESP8266 device
 Firmware for ESP8266 based device (D1 Mini board) with designed vunerabilities to practice ethical hacking. The software is tested on the following boards:
 
-* D1 Mini
-
+* [D1 Mini](https://www.berrybase.de/en/dev.-boards/esp8266-esp32-d1-mini/)
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your D1 Mini (or other ESP8266 based boards) for development or hacking purposes.
@@ -13,7 +12,15 @@ The software is written, compiled and uploaded using the [Arduino IDE](https://w
 
 ### Dependecies
 
-No dependecies yet.
+
+#### Libaries
+
+- ESP Async WebServer V1.2.3
+- ESPAsyncWebServer-esphome V2.1.0
+- Neotimer V1.1.6
+
+#### Files
+- config.h
 
 ### Installing
 
@@ -28,9 +35,17 @@ There are multiple ways to upload the program files to the board. First instruct
 6. Upload the program to the device.
 7. Connect to the `Configure Smartlight Wifi` AP to configure the wifi.
 
-<b>Visual Studio Code</b>
+<b>Visual Studio Code + Platformio</b>
 1. Install the [Platformio](https://platformio.org/install/ide?install=vscode) plugin.
-2. ??
+2. Install the [driver](https://github.com/HobbyComponents/CH340-Drivers) for the esp8266
+3. Run the toPlatformio.ps1 script and select the copy or sybolic option
+4. Run the toPlatformio.ps1 script and select fix
+5. Open visual studio code in the HackableEspDevicePlatformio directory
+6. In visual studio code open the project in the platformio addon. (Platoformio > Projects > open HackableEspDevicePlatformio)
+7. Upload the program (project tasks > General> Upload)
+8. Upload the filesystem Image (Project tasks > Platform > Upload filesystem Image)
+9.  Done the device should now be ready for use
+
 
 ## Hardware
 
