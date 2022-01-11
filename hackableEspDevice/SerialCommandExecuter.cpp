@@ -46,7 +46,7 @@ void SerialCommandExecuter::executeCommand() {
         } else {
           Serial.print("~$ ");                                              //For the Linux feeling, no superuser
         }
-        Serial.print(command);                                              //Echo command
+        Serial.print(command);                                              //Echo command (command ends with \n)
         
         _parseCommand(command);
     }
