@@ -15,6 +15,7 @@ The software is written, compiled and uploaded using the [Arduino IDE](https://w
 
 #### Libaries
 
+- ESP for Arduino IDE
 - ESP Async WebServer V1.2.3
 - ESPAsyncWebServer-esphome V2.1.0
 - Neotimer V1.1.6
@@ -24,28 +25,60 @@ The software is written, compiled and uploaded using the [Arduino IDE](https://w
 
 ### Installing
 
-There are multiple ways to upload the program files to the board. First instructions for the Arduino IDE are described. Then instructions for Visual Studio Code are described.
+<b>General install</b>
+1. Install the [driver](https://github.com/HobbyComponents/CH340-Drivers) for the esp8266
+2. Clone the repository
+
+There are multiple ways to upload the program files to the board. The two ways listed here are using Arduino IDE and Platformio on visual studio code
 
 <b>Arduino IDE</b>
-1. Clone the repository.
-2. Follow [this](https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide) tutorial about the SPIFFS.
-3. Navigate to the `hackableEspDevice` folder.
-4. Open `hackableEspDevice.ino`.
-5. Upload the files in the `data` folder (see the tutorial).
-6. Upload the program to the device.
-7. Connect to the `Configure Smartlight Wifi` AP to configure the wifi.
+
+1. Install the [Arduino IDE](https://www.arduino.cc/en/software)
+2. [Add the esp8266 libaries to Arduino IDE](https://www.nonscio.com/blog/installing-esp8266-libraries-to-the-arduino-ide)
+3. Follow [this](https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide) tutorial about the SPIFFS.
+4. Navigate to the `hackableEspDevice` folder.
+5. Open `hackableEspDevice.ino`.
+6. Upload the files in the `data` folder (see the tutorial).
+7. Upload the program to the device.
+8. Connect to the `Configure Smartlight Wifi` AP to configure the wifi.
 
 <b>Visual Studio Code + Platformio</b>
 1. Install the [Platformio](https://platformio.org/install/ide?install=vscode) plugin.
-2. Install the [driver](https://github.com/HobbyComponents/CH340-Drivers) for the esp8266
-3. Run the toPlatformio.ps1 script and select the copy or sybolic option
-4. Run the toPlatformio.ps1 script and select fix
-5. Open visual studio code in the HackableEspDevicePlatformio directory
-6. In visual studio code open the project in the platformio addon. (Platoformio > Projects > open HackableEspDevicePlatformio)
-7. Upload the program (project tasks > General> Upload)
-8. Upload the filesystem Image (Project tasks > Platform > Upload filesystem Image)
-9.  Done the device should now be ready for use
+2. Perpare files for platformio
+   - Run the `toPlatformio.ps1` script and select the copy or sybolic option
+   - Run the `toPlatformio.ps1` script and select fix
+   - Or perpare the files manualy see manual prep platformio
+3. Open visual studio code in the `HackableEspDevicePlatformio` directory
+4. In visual studio code open the project in the platformio addon. `(Platoformio > Projects > open HackableEspDevicePlatformio)`
+5. Upload the program `(project tasks > General> Upload)`
+6. Upload the filesystem Image `(Project tasks > Platform > Upload filesystem Image)`
+7.  Done the device should now be ready for use
 
+### Manual platformio prep
+1. create the correct hiarchy 
+
+    |HackableEspDevicePlatformio\ \
+    |--- platformio.ini \
+    |--- src\ \
+    |--- src\main.cpp\
+    |--- data\ 
+
+1. the src dir needs to contain all the files from the `hackableEspDevice` directory except the data directory
+2. rename the `hackableEspDevice.ino` to `main.cpp`
+3. in `main.cpp` add a reference to all functions in main eg.
+void setup();\
+void setup();\
+void initializeHostname();\
+void connectWifi();\
+void initializeServer();\
+void loop();\
+String processor(const String& var);\
+String getContentType(String filename);\
+void handleFileRequest(String path, uint8_t permissionLevel);\
+void handleFileUpload();\
+void handleFileDownload();
+4. Move the platoformio.ini file from the root dir to the `hackableEspDevicePlatoformio` dir
+5. Copy all files from `hackableEspDevice\data` to `hackableEspDevicePlatformio\data`
 
 ## Hardware
 
