@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['wifi_5fpassword_0',['WIFI_PASSWORD',['../config__template_8h.html#a8685d8aff7e570048090a3a51afceb07',1,'config_template.h']]],
-  ['wifi_5fssid_1',['WIFI_SSID',['../config__template_8h.html#a586542b79d00e4db7e1d5a667ae83a2b',1,'config_template.h']]],
-  ['writehostname_2',['writeHostname',['../_hostname_write_8cpp.html#a3578ab59ccb5e13e7ab278fa69b151c8',1,'writeHostname(char hostname[32]):&#160;HostnameWrite.cpp'],['../_hostname_write_8h.html#a3578ab59ccb5e13e7ab278fa69b151c8',1,'writeHostname(char hostname[32]):&#160;HostnameWrite.cpp']]]
+  ['updateusers_0',['updateUsers',['../class_user_handler.html#ab5267a38ddc76c3887e535fd02914370',1,'UserHandler']]],
+  ['user_5finfo_5flength_1',['USER_INFO_LENGTH',['../config2_8h.html#a422d4595c282537965ffb1db954d2046',1,'config2.h']]],
+  ['userhandler_2',['UserHandler',['../class_user_handler.html',1,'UserHandler'],['../class_user_handler.html#ae44272296983fa6a2df985c8e2596109',1,'UserHandler::UserHandler()']]],
+  ['userhandler_2ecpp_3',['userHandler.cpp',['../user_handler_8cpp.html',1,'']]],
+  ['userhandler_2eh_4',['userHandler.h',['../user_handler_8h.html',1,'']]]
 ];

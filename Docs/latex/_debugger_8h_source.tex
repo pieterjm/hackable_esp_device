@@ -1,0 +1,34 @@
+\hypertarget{_debugger_8h_source}{}\doxysection{Debugger.\+h}
+\label{_debugger_8h_source}\index{hackableEspDevice/Debugger.h@{hackableEspDevice/Debugger.h}}
+\mbox{\hyperlink{_debugger_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00001}00001 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00002}00002 \textcolor{comment}{ * File:      Debugger.h}}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00003}00003 \textcolor{comment}{ * Author:    Luke de Munk}}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00004}00004 \textcolor{comment}{ * Version:   0.1}}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00005}00005 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00006}00006 \textcolor{comment}{ * Class for handling the debug prints.}}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00007}00007 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00008}00008 \textcolor{preprocessor}{\#ifndef DEBUGGER\_H}}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00009}00009 \textcolor{preprocessor}{\#define DEBUGGER\_H}}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00010}00010 \textcolor{preprocessor}{\#include <stdint.h>}                                                         \textcolor{comment}{//For defining bits per integer}}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00011}00011 \textcolor{preprocessor}{\#include "{}Arduino.h"{}}}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00012}00012 \textcolor{preprocessor}{\#include <EEPROM.h>}                                                         \textcolor{comment}{//For reading from and writing to flash memory, used for resetting wifi}}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00014}00014 \textcolor{comment}{/* }}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00015}00015 \textcolor{comment}{ * 1 byte to store the enable debug flag.}}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00016}00016 \textcolor{comment}{ * Is done in EEPROM, because the}}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00017}00017 \textcolor{comment}{ * flag is then non-\/volatile and can}}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00018}00018 \textcolor{comment}{ * be used by multiple classes. Also }}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00019}00019 \textcolor{comment}{ * is saved during restart.}}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00020}00020 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00021}\mbox{\hyperlink{_debugger_8h_a93d29279d9e62049b82ff07a8470112e}{00021}} \textcolor{preprocessor}{\#define ENABLE\_DEBUG\_FLAG\_ADDRESS   0}}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00023}00023 \textcolor{keywordtype}{void} \mbox{\hyperlink{_debugger_8h_aee8aa821792dfa745cfffd6f8b03d529}{debug}}(String text);}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00024}00024 \textcolor{keywordtype}{void} \mbox{\hyperlink{_debugger_8h_acc3264da13e660e155c411013e1e4bb4}{debugln}}(String text);}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00025}00025 \textcolor{keywordtype}{bool} \mbox{\hyperlink{_debugger_8h_a7206590aa5cac661bfcf635be73513db}{getDebugEnabled}}();}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00026}00026 \textcolor{keywordtype}{void} \mbox{\hyperlink{_debugger_8h_ad1e4185e4e4f6ffc254dbcc964d38710}{setDebugEnabled}}(\textcolor{keywordtype}{bool} isEnabled);}
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{_debugger_8h_source_l00028}00028 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

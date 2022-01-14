@@ -1,0 +1,123 @@
+\hypertarget{class_user_handler}{}\doxysection{User\+Handler Class Reference}
+\label{class_user_handler}\index{UserHandler@{UserHandler}}
+
+
+{\ttfamily \#include $<$user\+Handler.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_user_handler_ae44272296983fa6a2df985c8e2596109}{User\+Handler}} (ESP8266\+Web\+Server $\ast$\mbox{\hyperlink{hackable_esp_device_8ino_a58141c4f251beaa1fee89b632d87152f}{server}})
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_user_handler_ab5267a38ddc76c3887e535fd02914370}{update\+Users}} ()
+\begin{DoxyCompactList}\small\item\em Updates the users from the config file in workmemory. \end{DoxyCompactList}\item 
+String $\ast$ \mbox{\hyperlink{class_user_handler_af30dbda21be1f07ba95a3a2040b0bed6}{get\+Users}} ()
+\begin{DoxyCompactList}\small\item\em Gets users. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{class_user_handler_abc8548e9a986b34e225c0a127dd4fbfb}{get\+Number\+Of\+Users}} ()
+\begin{DoxyCompactList}\small\item\em Gets number users. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_user_handler_a4f44b5bbcb227ad8f3d4c0857f0d715a}{check\+Permission}} (uint8\+\_\+t permission\+Level, ESP8266\+Web\+Server $\ast$\mbox{\hyperlink{hackable_esp_device_8ino_a58141c4f251beaa1fee89b632d87152f}{server}})
+\begin{DoxyCompactList}\small\item\em Checks if user has permission. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{user_handler_8h_source_l00016}{16}} of file \mbox{\hyperlink{user_handler_8h_source}{user\+Handler.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_user_handler_ae44272296983fa6a2df985c8e2596109}\label{class_user_handler_ae44272296983fa6a2df985c8e2596109}} 
+\index{UserHandler@{UserHandler}!UserHandler@{UserHandler}}
+\index{UserHandler@{UserHandler}!UserHandler@{UserHandler}}
+\doxysubsubsection{\texorpdfstring{UserHandler()}{UserHandler()}}
+{\footnotesize\ttfamily User\+Handler\+::\+User\+Handler (\begin{DoxyParamCaption}\item[{ESP8266\+Web\+Server $\ast$}]{server }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em server} & Webserver object \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{user_handler_8cpp_source_l00017}{17}} of file \mbox{\hyperlink{user_handler_8cpp_source}{user\+Handler.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_user_handler_a4f44b5bbcb227ad8f3d4c0857f0d715a}\label{class_user_handler_a4f44b5bbcb227ad8f3d4c0857f0d715a}} 
+\index{UserHandler@{UserHandler}!checkPermission@{checkPermission}}
+\index{checkPermission@{checkPermission}!UserHandler@{UserHandler}}
+\doxysubsubsection{\texorpdfstring{checkPermission()}{checkPermission()}}
+{\footnotesize\ttfamily bool User\+Handler\+::check\+Permission (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{permission\+Level,  }\item[{ESP8266\+Web\+Server $\ast$}]{server }\end{DoxyParamCaption})}
+
+
+
+Checks if user has permission. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em permission\+Level} & 0 = not logged in, 1 = user, 2 = admin \\
+\hline
+{\em server} & Webserver object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool If user has permission 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{user_handler_8cpp_source_l00080}{80}} of file \mbox{\hyperlink{user_handler_8cpp_source}{user\+Handler.\+cpp}}.
+
+\mbox{\Hypertarget{class_user_handler_abc8548e9a986b34e225c0a127dd4fbfb}\label{class_user_handler_abc8548e9a986b34e225c0a127dd4fbfb}} 
+\index{UserHandler@{UserHandler}!getNumberOfUsers@{getNumberOfUsers}}
+\index{getNumberOfUsers@{getNumberOfUsers}!UserHandler@{UserHandler}}
+\doxysubsubsection{\texorpdfstring{getNumberOfUsers()}{getNumberOfUsers()}}
+{\footnotesize\ttfamily uint8\+\_\+t User\+Handler\+::get\+Number\+Of\+Users (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets number users. 
+
+
+
+Definition at line \mbox{\hyperlink{user_handler_8cpp_source_l00068}{68}} of file \mbox{\hyperlink{user_handler_8cpp_source}{user\+Handler.\+cpp}}.
+
+\mbox{\Hypertarget{class_user_handler_af30dbda21be1f07ba95a3a2040b0bed6}\label{class_user_handler_af30dbda21be1f07ba95a3a2040b0bed6}} 
+\index{UserHandler@{UserHandler}!getUsers@{getUsers}}
+\index{getUsers@{getUsers}!UserHandler@{UserHandler}}
+\doxysubsubsection{\texorpdfstring{getUsers()}{getUsers()}}
+{\footnotesize\ttfamily String $\ast$ User\+Handler\+::get\+Users (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets users. 
+
+
+
+Definition at line \mbox{\hyperlink{user_handler_8cpp_source_l00059}{59}} of file \mbox{\hyperlink{user_handler_8cpp_source}{user\+Handler.\+cpp}}.
+
+\mbox{\Hypertarget{class_user_handler_ab5267a38ddc76c3887e535fd02914370}\label{class_user_handler_ab5267a38ddc76c3887e535fd02914370}} 
+\index{UserHandler@{UserHandler}!updateUsers@{updateUsers}}
+\index{updateUsers@{updateUsers}!UserHandler@{UserHandler}}
+\doxysubsubsection{\texorpdfstring{updateUsers()}{updateUsers()}}
+{\footnotesize\ttfamily void User\+Handler\+::update\+Users (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Updates the users from the config file in workmemory. 
+
+
+
+Definition at line \mbox{\hyperlink{user_handler_8cpp_source_l00026}{26}} of file \mbox{\hyperlink{user_handler_8cpp_source}{user\+Handler.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+hackable\+Esp\+Device/\mbox{\hyperlink{user_handler_8h}{user\+Handler.\+h}}\item 
+hackable\+Esp\+Device/\mbox{\hyperlink{user_handler_8cpp}{user\+Handler.\+cpp}}\end{DoxyCompactItemize}

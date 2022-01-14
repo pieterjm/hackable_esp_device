@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['max_5fnumber_5fparams_0',['MAX_NUMBER_PARAMS',['../_serial_command_executer_8h.html#ac3c1be4a81c254ff0ffff58e4aa474e3',1,'SerialCommandExecuter.h']]],
-  ['max_5fnumber_5fusers_1',['MAX_NUMBER_USERS',['../config__template_8h.html#aa5df64e0df4fb1fd5822282ff1972e74',1,'config_template.h']]]
+  ['hostname_5fadress_0',['HOSTNAME_ADRESS',['../config2_8h.html#aaf0ab5fbf085d3b9f729814498862110',1,'config2.h']]],
+  ['http_5fconfig_5flocation_1',['HTTP_CONFIG_LOCATION',['../config2_8h.html#a0f35d3b3a0b89c7b2b3285936c4d41a7',1,'config2.h']]]
 ];

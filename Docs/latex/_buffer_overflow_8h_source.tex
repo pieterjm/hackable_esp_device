@@ -1,0 +1,46 @@
+\hypertarget{_buffer_overflow_8h_source}{}\doxysection{Buffer\+Overflow.\+h}
+\label{_buffer_overflow_8h_source}\index{hackableEspDevice/BufferOverflow.h@{hackableEspDevice/BufferOverflow.h}}
+\mbox{\hyperlink{_buffer_overflow_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00001}00001 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00002}00002 \textcolor{comment}{ * File:      BufferOverflow.h}}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00003}00003 \textcolor{comment}{ * Author:    Luke de Munk}}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00004}00004 \textcolor{comment}{ * Class:     BufferOverflow}}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00005}00005 \textcolor{comment}{ * Version:   0.1}}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00006}00006 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00007}00007 \textcolor{comment}{ * Buffer flow simulator. All elements of the bufferflow are in this class.}}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00008}00008 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00009}00009 \textcolor{preprocessor}{\#ifndef BUFFER\_OVERFLOW\_H}}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00010}00010 \textcolor{preprocessor}{\#define BUFFER\_OVERFLOW\_H}}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00011}00011 \textcolor{preprocessor}{\#include <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00012}00012 \textcolor{preprocessor}{\#include "{}Arduino.h"{}}}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00014}\mbox{\hyperlink{_buffer_overflow_8h_a3cdf9d8c4b9dc5307c7f1b37917659e6}{00014}} \textcolor{preprocessor}{\#define OVERFLOW\_BEGIN    16                                                }\textcolor{comment}{//Because array is in byte resolution, 10 becomes 16. Then the return address pointer starts}}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00015}\mbox{\hyperlink{_buffer_overflow_8h_a8beaa5b28cf9a48a1df357d25ec9704e}{00015}} \textcolor{preprocessor}{\#define ADDRESS\_LENGTH    4                                                 }\textcolor{comment}{//Address is 32 bits long, so 4 bytes}}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00016}\mbox{\hyperlink{_buffer_overflow_8h_a8c0a18f677499293525b066fb30b1eba}{00016}} \textcolor{preprocessor}{\#define OVERFLOW\_LENGTH   20}\textcolor{comment}{//OVERFLOW\_BEGIN + ADDRESS\_LENGTH}}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00017}\mbox{\hyperlink{_buffer_overflow_8h_af5443d79986ee048fa56e0cb9db6ff6e}{00017}} \textcolor{preprocessor}{\#define RETURN\_ADDRESS    "{}00010488"{}}                                        \textcolor{comment}{//0x00010488 == address of login function.}}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00018}\mbox{\hyperlink{_buffer_overflow_8h_af920d5958cab009756375b7c0e3fa9dc}{00018}} \textcolor{preprocessor}{\#define MAX\_NUM\_CHARS     256}}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00020}\mbox{\hyperlink{class_buffer_overflow}{00020}} \textcolor{keyword}{class }\mbox{\hyperlink{class_buffer_overflow}{BufferOverflow}}}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00021}00021 \{}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00022}00022     \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00023}00023         \mbox{\hyperlink{class_buffer_overflow_a296dd5a8754214ab3a551047d7d64501}{BufferOverflow}}();}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00024}00024         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_buffer_overflow_ad07b6cca0dced1bc955ea3d0c99b93fa}{ls}}();}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00025}00025         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_buffer_overflow_a923093d8aa31018b33d8a6906d372e1c}{vi}}();}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00026}00026         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_buffer_overflow_ad53f098752a13155046b79d222e32140}{objectDump}}();}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00027}00027         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_buffer_overflow_ab0aba29bf8441de0dbf2c1fb119003c0}{runCProgram}}(String arg);}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00028}00028     }
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00029}00029     \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00030}00030         \textcolor{keywordtype}{bool} \_checkBufferOverflow();}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00031}00031         \textcolor{keywordtype}{void} \_printOverflowError();}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00032}00032         \textcolor{keywordtype}{void} \_formatInput(String input);}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00033}00033         String \_getOverflowPortion(\textcolor{keywordtype}{bool} print = \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00034}00034         \textcolor{keywordtype}{void} \_clearInput();}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00035}00035         String \_generateRandomBytes(uint8\_t numberOfBytes);}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00036}00036                  }
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00037}00037         String \_formattedInput[256];}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00038}00038         uint8\_t \_numChars;}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00039}00039 \};}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00040}00040 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

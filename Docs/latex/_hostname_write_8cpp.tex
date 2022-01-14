@@ -1,0 +1,96 @@
+\hypertarget{_hostname_write_8cpp}{}\doxysection{hackable\+Esp\+Device/\+Hostname\+Write.cpp File Reference}
+\label{_hostname_write_8cpp}\index{hackableEspDevice/HostnameWrite.cpp@{hackableEspDevice/HostnameWrite.cpp}}
+{\ttfamily \#include \char`\"{}Hostname\+Write.\+h\char`\"{}}\newline
+Include dependency graph for Hostname\+Write.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=316pt]{_hostname_write_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+String \mbox{\hyperlink{_hostname_write_8cpp_a1c60cc0a431e819d47f645094e36b6bb}{get\+Hostname}} ()
+\begin{DoxyCompactList}\small\item\em Gets the hostname from the EEPROM. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_hostname_write_8cpp_ae8aa3c92ae0ab79d141bbec42f7f662c}{write\+Hostname}} (char hostname\mbox{[}\mbox{\hyperlink{config2_8h_ad5570a4ab8c9d790b0e8f7c15378d582}{MAX\+\_\+\+HOSTNAME\+\_\+\+LENGTH}}\mbox{]})
+\begin{DoxyCompactList}\small\item\em Writes the new hostname to the EEPROM. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_hostname_write_8cpp_ab6a2cda115b3d0fe14a1916603ec19d4}{set\+EEPROMTo\+NULL}} (int write\+Length, int start\+Adress)
+\begin{DoxyCompactList}\small\item\em Resets the EEPROM at the start\+Adress. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_hostname_write_8cpp_ad104ddaec037908e58d9d06b53d19962}{check\+Eeprom\+Commit}} ()
+\begin{DoxyCompactList}\small\item\em Checks if the eeprom was actually committed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{_hostname_write_8cpp_ad104ddaec037908e58d9d06b53d19962}\label{_hostname_write_8cpp_ad104ddaec037908e58d9d06b53d19962}} 
+\index{HostnameWrite.cpp@{HostnameWrite.cpp}!checkEepromCommit@{checkEepromCommit}}
+\index{checkEepromCommit@{checkEepromCommit}!HostnameWrite.cpp@{HostnameWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{checkEepromCommit()}{checkEepromCommit()}}
+{\footnotesize\ttfamily void check\+Eeprom\+Commit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Checks if the eeprom was actually committed. 
+
+
+
+Definition at line \mbox{\hyperlink{_hostname_write_8cpp_source_l00077}{77}} of file \mbox{\hyperlink{_hostname_write_8cpp_source}{Hostname\+Write.\+cpp}}.
+
+\mbox{\Hypertarget{_hostname_write_8cpp_a1c60cc0a431e819d47f645094e36b6bb}\label{_hostname_write_8cpp_a1c60cc0a431e819d47f645094e36b6bb}} 
+\index{HostnameWrite.cpp@{HostnameWrite.cpp}!getHostname@{getHostname}}
+\index{getHostname@{getHostname}!HostnameWrite.cpp@{HostnameWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{getHostname()}{getHostname()}}
+{\footnotesize\ttfamily String get\+Hostname (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the hostname from the EEPROM. 
+
+\begin{DoxyReturn}{Returns}
+hostname contains the hostname from eeprom (true == enabled) 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_hostname_write_8cpp_source_l00017}{17}} of file \mbox{\hyperlink{_hostname_write_8cpp_source}{Hostname\+Write.\+cpp}}.
+
+\mbox{\Hypertarget{_hostname_write_8cpp_ab6a2cda115b3d0fe14a1916603ec19d4}\label{_hostname_write_8cpp_ab6a2cda115b3d0fe14a1916603ec19d4}} 
+\index{HostnameWrite.cpp@{HostnameWrite.cpp}!setEEPROMToNULL@{setEEPROMToNULL}}
+\index{setEEPROMToNULL@{setEEPROMToNULL}!HostnameWrite.cpp@{HostnameWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{setEEPROMToNULL()}{setEEPROMToNULL()}}
+{\footnotesize\ttfamily void set\+EEPROMTo\+NULL (\begin{DoxyParamCaption}\item[{int}]{write\+Length,  }\item[{int}]{start\+Adress }\end{DoxyParamCaption})}
+
+
+
+Resets the EEPROM at the start\+Adress. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em write\+Length} & int of total lenth to be writen \\
+\hline
+{\em start\+Adress} & int of start adress \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_hostname_write_8cpp_source_l00054}{54}} of file \mbox{\hyperlink{_hostname_write_8cpp_source}{Hostname\+Write.\+cpp}}.
+
+\mbox{\Hypertarget{_hostname_write_8cpp_ae8aa3c92ae0ab79d141bbec42f7f662c}\label{_hostname_write_8cpp_ae8aa3c92ae0ab79d141bbec42f7f662c}} 
+\index{HostnameWrite.cpp@{HostnameWrite.cpp}!writeHostname@{writeHostname}}
+\index{writeHostname@{writeHostname}!HostnameWrite.cpp@{HostnameWrite.cpp}}
+\doxysubsubsection{\texorpdfstring{writeHostname()}{writeHostname()}}
+{\footnotesize\ttfamily void write\+Hostname (\begin{DoxyParamCaption}\item[{char}]{hostname\mbox{[}\+MAX\+\_\+\+HOSTNAME\+\_\+\+LENGTH\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Writes the new hostname to the EEPROM. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em hostname} & char\mbox{[}32\mbox{]} that contains the hostname to be written \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_hostname_write_8cpp_source_l00035}{35}} of file \mbox{\hyperlink{_hostname_write_8cpp_source}{Hostname\+Write.\+cpp}}.
+

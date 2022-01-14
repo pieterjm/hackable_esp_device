@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['off_0',['OFF',['../hackable_esp_device_8ino.html#a29e413f6725b2ba32d165ffaa35b01e5',1,'hackableEspDevice.ino']]],
-  ['on_1',['ON',['../hackable_esp_device_8ino.html#ad76d1750a6cdeebd506bfcd6752554d2',1,'hackableEspDevice.ino']]]
+  ['name_0',['name',['../classname.html',1,'name'],['../classname.html#aec6e044e563ff5f1645f37e879a5fe73',1,'name::name()']]]
 ];

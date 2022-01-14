@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['permission_5flvl_5fadmin_0',['PERMISSION_LVL_ADMIN',['../config__template_8h.html#a59ce2a135fe3f47be79bf993d3413b59',1,'config_template.h']]],
-  ['permission_5flvl_5fall_1',['PERMISSION_LVL_ALL',['../config__template_8h.html#a824e9b77b01c21dc817aa156bc98f319',1,'config_template.h']]],
-  ['permission_5flvl_5fuser_2',['PERMISSION_LVL_USER',['../config__template_8h.html#a35deba6f6b52d3fa55f87c2bc927b66b',1,'config_template.h']]],
-  ['processor_3',['processor',['../hackable_esp_device_8ino.html#a0c021f9721c3b479757f8e1b40624b6c',1,'hackableEspDevice.ino']]]
+  ['objectdump_0',['objectDump',['../class_buffer_overflow.html#ad53f098752a13155046b79d222e32140',1,'BufferOverflow']]],
+  ['off_1',['OFF',['../hackable_esp_device_8ino.html#a29e413f6725b2ba32d165ffaa35b01e5',1,'hackableEspDevice.ino']]],
+  ['on_2',['ON',['../hackable_esp_device_8ino.html#ad76d1750a6cdeebd506bfcd6752554d2',1,'hackableEspDevice.ino']]],
+  ['overflow_5fbegin_3',['OVERFLOW_BEGIN',['../_buffer_overflow_8h.html#a3cdf9d8c4b9dc5307c7f1b37917659e6',1,'BufferOverflow.h']]],
+  ['overflow_5flength_4',['OVERFLOW_LENGTH',['../_buffer_overflow_8h.html#a8c0a18f677499293525b066fb30b1eba',1,'BufferOverflow.h']]]
 ];

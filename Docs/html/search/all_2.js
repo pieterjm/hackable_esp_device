@@ -1,8 +1,20 @@
 var searchData=
 [
-  ['debug_0',['debug',['../_debugger_8cpp.html#aee8aa821792dfa745cfffd6f8b03d529',1,'debug(String text):&#160;Debugger.cpp'],['../_debugger_8h.html#aee8aa821792dfa745cfffd6f8b03d529',1,'debug(String text):&#160;Debugger.cpp']]],
-  ['debugger_2ecpp_1',['Debugger.cpp',['../_debugger_8cpp.html',1,'']]],
-  ['debugger_2eh_2',['Debugger.h',['../_debugger_8h.html',1,'']]],
-  ['debugln_3',['debugln',['../_debugger_8cpp.html#acc3264da13e660e155c411013e1e4bb4',1,'debugln(String text):&#160;Debugger.cpp'],['../_debugger_8h.html#acc3264da13e660e155c411013e1e4bb4',1,'debugln(String text):&#160;Debugger.cpp']]],
-  ['default_5fhostname_4',['DEFAULT_HOSTNAME',['../config__template_8h.html#acbd0b3def6b58577376d5c5edbc1f8d1',1,'config_template.h']]]
+  ['checkeepromcommit_0',['checkEepromCommit',['../_hostname_write_8cpp.html#ad104ddaec037908e58d9d06b53d19962',1,'checkEepromCommit():&#160;HostnameWrite.cpp'],['../_hostname_write_8h.html#ad104ddaec037908e58d9d06b53d19962',1,'checkEepromCommit():&#160;HostnameWrite.cpp']]],
+  ['checkpermission_1',['checkPermission',['../class_user_handler.html#a4f44b5bbcb227ad8f3d4c0857f0d715a',1,'UserHandler']]],
+  ['classtemplate_2ecpp_2',['classTemplate.cpp',['../class_template_8cpp.html',1,'']]],
+  ['classtemplate_2eh_3',['classTemplate.h',['../class_template_8h.html',1,'']]],
+  ['cliexecuter_4',['cliExecuter',['../hackable_esp_device_8ino.html#a73eefd3b2f1f3d6d3dde51f8ce1f07f4',1,'hackableEspDevice.ino']]],
+  ['command_5fdebug_5',['COMMAND_DEBUG',['../_serial_command_executer_8h.html#a4271519e9ee5565b70175ae766253c65',1,'SerialCommandExecuter.h']]],
+  ['command_5fhelp_6',['COMMAND_HELP',['../_serial_command_executer_8h.html#aee9e8b97ac4a5cdc1c371da35a579210',1,'SerialCommandExecuter.h']]],
+  ['command_5fhostname_7',['COMMAND_HOSTNAME',['../_serial_command_executer_8h.html#a17435a155b6388f6992f108f4946ad95',1,'SerialCommandExecuter.h']]],
+  ['command_5fkeys_8',['COMMAND_KEYS',['../_serial_command_executer_8h.html#af998daeb22b38baa1ccbf04bd88dfe31',1,'SerialCommandExecuter.h']]],
+  ['command_5fls_9',['COMMAND_LS',['../_serial_command_executer_8h.html#a1ec42af5209fa6fe2a3ab53031e4c67a',1,'SerialCommandExecuter.h']]],
+  ['command_5fobjdump_10',['COMMAND_OBJDUMP',['../_serial_command_executer_8h.html#a7610a1d9786ba66a0def94c2a284cb30',1,'SerialCommandExecuter.h']]],
+  ['command_5frestart_11',['COMMAND_RESTART',['../_serial_command_executer_8h.html#a4b0eeaf40a8a79d1a17d2506909a1d07',1,'SerialCommandExecuter.h']]],
+  ['command_5frun_12',['COMMAND_RUN',['../_serial_command_executer_8h.html#a2e3c1635a22898c9e1ec48b57d7f3d99',1,'SerialCommandExecuter.h']]],
+  ['command_5fsu_13',['COMMAND_SU',['../_serial_command_executer_8h.html#a7e0cf8d05523e31cb48f7acf4ef8e832',1,'SerialCommandExecuter.h']]],
+  ['command_5fusers_14',['COMMAND_USERS',['../_serial_command_executer_8h.html#a9db5fb18d2bcb32925d11bd5e9ed758d',1,'SerialCommandExecuter.h']]],
+  ['command_5fvi_15',['COMMAND_VI',['../_serial_command_executer_8h.html#afec90b1f39bd61f392adbfcbe61229a0',1,'SerialCommandExecuter.h']]],
+  ['config2_2eh_16',['config2.h',['../config2_8h.html',1,'']]]
 ];

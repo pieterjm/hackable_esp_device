@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['processor_0',['processor',['../hackable_esp_device_8ino.html#a0c021f9721c3b479757f8e1b40624b6c',1,'hackableEspDevice.ino']]]
+  ['name_0',['name',['../classname.html#aec6e044e563ff5f1645f37e879a5fe73',1,'name']]]
 ];

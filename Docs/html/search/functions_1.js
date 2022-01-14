@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['debug_0',['debug',['../_debugger_8cpp.html#aee8aa821792dfa745cfffd6f8b03d529',1,'debug(String text):&#160;Debugger.cpp'],['../_debugger_8h.html#aee8aa821792dfa745cfffd6f8b03d529',1,'debug(String text):&#160;Debugger.cpp']]],
-  ['debugln_1',['debugln',['../_debugger_8cpp.html#acc3264da13e660e155c411013e1e4bb4',1,'debugln(String text):&#160;Debugger.cpp'],['../_debugger_8h.html#acc3264da13e660e155c411013e1e4bb4',1,'debugln(String text):&#160;Debugger.cpp']]]
+  ['checkeepromcommit_0',['checkEepromCommit',['../_hostname_write_8cpp.html#ad104ddaec037908e58d9d06b53d19962',1,'checkEepromCommit():&#160;HostnameWrite.cpp'],['../_hostname_write_8h.html#ad104ddaec037908e58d9d06b53d19962',1,'checkEepromCommit():&#160;HostnameWrite.cpp']]],
+  ['checkpermission_1',['checkPermission',['../class_user_handler.html#a4f44b5bbcb227ad8f3d4c0857f0d715a',1,'UserHandler']]]
 ];

@@ -1,0 +1,129 @@
+\hypertarget{_debugger_8h}{}\doxysection{hackable\+Esp\+Device/\+Debugger.h File Reference}
+\label{_debugger_8h}\index{hackableEspDevice/Debugger.h@{hackableEspDevice/Debugger.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}Arduino.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$EEPROM.\+h$>$}\newline
+Include dependency graph for Debugger.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=292pt]{_debugger_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_debugger_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_debugger_8h_a93d29279d9e62049b82ff07a8470112e}{ENABLE\+\_\+\+DEBUG\+\_\+\+FLAG\+\_\+\+ADDRESS}}~0
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{_debugger_8h_aee8aa821792dfa745cfffd6f8b03d529}{debug}} (String text)
+\begin{DoxyCompactList}\small\item\em Prints text if debug is enabled. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_debugger_8h_acc3264da13e660e155c411013e1e4bb4}{debugln}} (String text)
+\begin{DoxyCompactList}\small\item\em Prints text (+\textquotesingle{}~\newline
+\textquotesingle{}) if debug is enabled. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{_debugger_8h_a7206590aa5cac661bfcf635be73513db}{get\+Debug\+Enabled}} ()
+\begin{DoxyCompactList}\small\item\em Gets if debug is enabled. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_debugger_8h_ad1e4185e4e4f6ffc254dbcc964d38710}{set\+Debug\+Enabled}} (bool is\+Enabled)
+\begin{DoxyCompactList}\small\item\em Sets if debug is enabled. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{_debugger_8h_a93d29279d9e62049b82ff07a8470112e}\label{_debugger_8h_a93d29279d9e62049b82ff07a8470112e}} 
+\index{Debugger.h@{Debugger.h}!ENABLE\_DEBUG\_FLAG\_ADDRESS@{ENABLE\_DEBUG\_FLAG\_ADDRESS}}
+\index{ENABLE\_DEBUG\_FLAG\_ADDRESS@{ENABLE\_DEBUG\_FLAG\_ADDRESS}!Debugger.h@{Debugger.h}}
+\doxysubsubsection{\texorpdfstring{ENABLE\_DEBUG\_FLAG\_ADDRESS}{ENABLE\_DEBUG\_FLAG\_ADDRESS}}
+{\footnotesize\ttfamily \#define ENABLE\+\_\+\+DEBUG\+\_\+\+FLAG\+\_\+\+ADDRESS~0}
+
+
+
+Definition at line \mbox{\hyperlink{_debugger_8h_source_l00021}{21}} of file \mbox{\hyperlink{_debugger_8h_source}{Debugger.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{_debugger_8h_aee8aa821792dfa745cfffd6f8b03d529}\label{_debugger_8h_aee8aa821792dfa745cfffd6f8b03d529}} 
+\index{Debugger.h@{Debugger.h}!debug@{debug}}
+\index{debug@{debug}!Debugger.h@{Debugger.h}}
+\doxysubsubsection{\texorpdfstring{debug()}{debug()}}
+{\footnotesize\ttfamily void debug (\begin{DoxyParamCaption}\item[{String}]{text }\end{DoxyParamCaption})}
+
+
+
+Prints text if debug is enabled. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em text} & String of text that needs to be printed \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_debugger_8cpp_source_l00016}{16}} of file \mbox{\hyperlink{_debugger_8cpp_source}{Debugger.\+cpp}}.
+
+\mbox{\Hypertarget{_debugger_8h_acc3264da13e660e155c411013e1e4bb4}\label{_debugger_8h_acc3264da13e660e155c411013e1e4bb4}} 
+\index{Debugger.h@{Debugger.h}!debugln@{debugln}}
+\index{debugln@{debugln}!Debugger.h@{Debugger.h}}
+\doxysubsubsection{\texorpdfstring{debugln()}{debugln()}}
+{\footnotesize\ttfamily void debugln (\begin{DoxyParamCaption}\item[{String}]{text }\end{DoxyParamCaption})}
+
+
+
+Prints text (+\textquotesingle{}~\newline
+\textquotesingle{}) if debug is enabled. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em text} & String of text that needs to be printed \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_debugger_8cpp_source_l00030}{30}} of file \mbox{\hyperlink{_debugger_8cpp_source}{Debugger.\+cpp}}.
+
+\mbox{\Hypertarget{_debugger_8h_a7206590aa5cac661bfcf635be73513db}\label{_debugger_8h_a7206590aa5cac661bfcf635be73513db}} 
+\index{Debugger.h@{Debugger.h}!getDebugEnabled@{getDebugEnabled}}
+\index{getDebugEnabled@{getDebugEnabled}!Debugger.h@{Debugger.h}}
+\doxysubsubsection{\texorpdfstring{getDebugEnabled()}{getDebugEnabled()}}
+{\footnotesize\ttfamily bool get\+Debug\+Enabled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets if debug is enabled. 
+
+\begin{DoxyReturn}{Returns}
+is\+Enabled If debug is enabled (true == enabled) 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_debugger_8cpp_source_l00043}{43}} of file \mbox{\hyperlink{_debugger_8cpp_source}{Debugger.\+cpp}}.
+
+\mbox{\Hypertarget{_debugger_8h_ad1e4185e4e4f6ffc254dbcc964d38710}\label{_debugger_8h_ad1e4185e4e4f6ffc254dbcc964d38710}} 
+\index{Debugger.h@{Debugger.h}!setDebugEnabled@{setDebugEnabled}}
+\index{setDebugEnabled@{setDebugEnabled}!Debugger.h@{Debugger.h}}
+\doxysubsubsection{\texorpdfstring{setDebugEnabled()}{setDebugEnabled()}}
+{\footnotesize\ttfamily void set\+Debug\+Enabled (\begin{DoxyParamCaption}\item[{bool}]{is\+Enabled }\end{DoxyParamCaption})}
+
+
+
+Sets if debug is enabled. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em is\+Enabled} & If debug is enabled (true == enabled) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_debugger_8cpp_source_l00054}{54}} of file \mbox{\hyperlink{_debugger_8cpp_source}{Debugger.\+cpp}}.
+

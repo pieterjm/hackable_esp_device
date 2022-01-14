@@ -1,12 +1,8 @@
 var searchData=
 [
-  ['enable_5fdebug_5fflag_5faddress_0',['ENABLE_DEBUG_FLAG_ADDRESS',['../_debugger_8h.html#a93d29279d9e62049b82ff07a8470112e',1,'Debugger.h']]],
-  ['error_5f1_5ftext_1',['ERROR_1_TEXT',['../_serial_command_executer_8h.html#ae3186c854a00ad27dabf0bda24e4e9de',1,'SerialCommandExecuter.h']]],
-  ['error_5f2_5ftext_2',['ERROR_2_TEXT',['../_serial_command_executer_8h.html#a99bdb0ab1cf6dce85f8bb75098850292',1,'SerialCommandExecuter.h']]],
-  ['error_5f3_5ftext_3',['ERROR_3_TEXT',['../_serial_command_executer_8h.html#a024fdea0cc85139898d4586b8f92c3c1',1,'SerialCommandExecuter.h']]],
-  ['error_5f4_5ftext_4',['ERROR_4_TEXT',['../_serial_command_executer_8h.html#a9078f6d32d7b69c942d9f17b76e7b553',1,'SerialCommandExecuter.h']]],
-  ['error_5f5_5ftext_5',['ERROR_5_TEXT',['../_serial_command_executer_8h.html#a8782f48f1da78355c2f4538d81f07fa6',1,'SerialCommandExecuter.h']]],
-  ['error_5f6_5ftext_6',['ERROR_6_TEXT',['../_serial_command_executer_8h.html#ac7310086c449f86cbfd08619e4323c8a',1,'SerialCommandExecuter.h']]],
-  ['error_5f7_5ftext_7',['ERROR_7_TEXT',['../_serial_command_executer_8h.html#ad329e859eb9929ce6042eeefae0a7dd3',1,'SerialCommandExecuter.h']]],
-  ['executecommand_8',['executeCommand',['../class_serial_command_executer.html#a3dd139732e3317ed68575d6f3c77e2d6',1,'SerialCommandExecuter']]]
+  ['debug_0',['debug',['../_debugger_8cpp.html#aee8aa821792dfa745cfffd6f8b03d529',1,'debug(String text):&#160;Debugger.cpp'],['../_debugger_8h.html#aee8aa821792dfa745cfffd6f8b03d529',1,'debug(String text):&#160;Debugger.cpp']]],
+  ['debugger_2ecpp_1',['Debugger.cpp',['../_debugger_8cpp.html',1,'']]],
+  ['debugger_2eh_2',['Debugger.h',['../_debugger_8h.html',1,'']]],
+  ['debugln_3',['debugln',['../_debugger_8cpp.html#acc3264da13e660e155c411013e1e4bb4',1,'debugln(String text):&#160;Debugger.cpp'],['../_debugger_8h.html#acc3264da13e660e155c411013e1e4bb4',1,'debugln(String text):&#160;Debugger.cpp']]],
+  ['default_5fhostname_4',['DEFAULT_HOSTNAME',['../config2_8h.html#acbd0b3def6b58577376d5c5edbc1f8d1',1,'config2.h']]]
 ];

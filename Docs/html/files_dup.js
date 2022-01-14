@@ -4,7 +4,5 @@ var files_dup =
     [ "classTemplate.cpp", "class_template_8cpp.html", null ],
     [ "classTemplate.h", "class_template_8h.html", [
       [ "name", "classname.html", "classname" ]
-    ] ],
-    [ "FileHandler.cpp", "_file_handler_8cpp.html", "_file_handler_8cpp" ],
-    [ "FileHandler.h", "_file_handler_8h.html", "_file_handler_8h" ]
+    ] ]
 ];

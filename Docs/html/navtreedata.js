@@ -26,16 +26,18 @@ var NAVTREE =
 [
   [ "Hackable ESP device", "index.html", [
     [ "Hackable ESP8266 device", "index.html", [
-      [ "yo", "index.html#autotoc_md1", [
-        [ "Getting Started", "index.html#autotoc_md2", [
-          [ "Prerequisites", "index.html#autotoc_md3", null ],
-          [ "Dependecies", "index.html#autotoc_md4", null ],
-          [ "Installing", "index.html#autotoc_md5", null ]
+      [ "Getting Started", "index.html#autotoc_md1", [
+        [ "Prerequisites", "index.html#autotoc_md2", null ],
+        [ "Dependecies", "index.html#autotoc_md3", [
+          [ "Libaries", "index.html#autotoc_md4", null ],
+          [ "Files", "index.html#autotoc_md5", null ]
         ] ],
-        [ "Hardware", "index.html#autotoc_md6", null ],
-        [ "Questions or feedback?", "index.html#autotoc_md7", null ],
-        [ "Authors", "index.html#autotoc_md8", null ]
-      ] ]
+        [ "Installing", "index.html#autotoc_md6", null ],
+        [ "Manual platformio prep", "index.html#autotoc_md7", null ]
+      ] ],
+      [ "Hardware", "index.html#autotoc_md8", null ],
+      [ "Questions or feedback?", "index.html#autotoc_md9", null ],
+      [ "Authors", "index.html#autotoc_md10", null ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
@@ -59,7 +61,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_debugger_8cpp.html"
+"_buffer_overflow_8cpp.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

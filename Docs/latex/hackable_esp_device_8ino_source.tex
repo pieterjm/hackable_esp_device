@@ -1,0 +1,367 @@
+\hypertarget{hackable_esp_device_8ino_source}{}\doxysection{hackable\+Esp\+Device.\+ino}
+\label{hackable_esp_device_8ino_source}\index{hackableEspDevice/hackableEspDevice.ino@{hackableEspDevice/hackableEspDevice.ino}}
+\mbox{\hyperlink{hackable_esp_device_8ino}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00001}00001 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00002}00002 \textcolor{comment}{ * File:      hackableEspDevice.ino}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00003}00003 \textcolor{comment}{ * Authors:   ESPinoza (Team 1)}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00004}00004 \textcolor{comment}{ * Version:   0.1}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00005}00005 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00006}00006 \textcolor{comment}{ * The main file of the firmware of a vunerable-\/by-\/design ESP8266 controller.}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00007}00007 \textcolor{comment}{ * For more information, go to: https://gitlab.fdmci.hva.nl/munkl/hackable\_esp\_device}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00008}00008 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00009}00009 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00010}00010 \textcolor{preprocessor}{\#include <ESP8266WebServer.h>}                                               \textcolor{comment}{//For running the webserver}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00011}00011 \textcolor{preprocessor}{\#include <FS.h>}                                                             \textcolor{comment}{//For SPIFFS}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00012}00012 \textcolor{preprocessor}{\#include <stdint.h>}                                                         \textcolor{comment}{//For defining bits per integer}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00013}00013 \textcolor{preprocessor}{\#include <neotimer.h>}                                                       \textcolor{comment}{//For non-\/blocking timers (used for code execution in intervals)}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00014}00014 \textcolor{preprocessor}{\#include <WiFiManager.h>}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00015}00015 \textcolor{preprocessor}{\#include "{}config.h"{}}                                                         \textcolor{comment}{//For the configuration. If not exists: copy "{}config\_template.h"{}, add your configuration and rename to "{}config.h"{}}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00016}00016 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{user_handler_8h}{UserHandler.h}}"{}}                                                    \textcolor{comment}{//For handling the users from the config.conf}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00017}00017 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_serial_command_executer_8h}{SerialCommandExecuter.h}}"{}}                                          \textcolor{comment}{//For handling serial commands}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00018}00018 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_debugger_8h}{Debugger.h}}"{}}                                                       \textcolor{comment}{//For handling debug messages}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00019}00019 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_hostname_write_8h}{HostnameWrite.h}}"{}}                                                  \textcolor{comment}{//For handling the hostname changes}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00020}00020 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_startup_text_8h}{StartupText.h}}"{}}                                                    \textcolor{comment}{//For printing startup log files}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00022}00022 \textcolor{comment}{/* On and off are inverted because the built-\/in led is active low */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00023}\mbox{\hyperlink{hackable_esp_device_8ino_ad76d1750a6cdeebd506bfcd6752554d2}{00023}} \textcolor{preprocessor}{\#define ON                      LOW}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00024}\mbox{\hyperlink{hackable_esp_device_8ino_a29e413f6725b2ba32d165ffaa35b01e5}{00024}} \textcolor{preprocessor}{\#define OFF                     HIGH}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00025}00025 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00026}\mbox{\hyperlink{hackable_esp_device_8ino_a58141c4f251beaa1fee89b632d87152f}{00026}} ESP8266WebServer \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}(80);                                                \textcolor{comment}{//Object that listens for HTTP requests on port 80}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00027}\mbox{\hyperlink{hackable_esp_device_8ino_a263d4649a3eeb71bc1b2e02c81be5236}{00027}} Neotimer \mbox{\hyperlink{hackable_esp_device_8ino_a263d4649a3eeb71bc1b2e02c81be5236}{timer}} = Neotimer(30000);                                           \textcolor{comment}{//Setup a 30 second timer, to execute code with a 30 interval}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00028}\mbox{\hyperlink{hackable_esp_device_8ino_a9ed244b51c3b5335f72a7612b1293005}{00028}} uint8\_t \mbox{\hyperlink{hackable_esp_device_8ino_a9ed244b51c3b5335f72a7612b1293005}{ledState}} = \mbox{\hyperlink{hackable_esp_device_8ino_a29e413f6725b2ba32d165ffaa35b01e5}{OFF}};                                                     \textcolor{comment}{//Declare led state variable}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00030}\mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{00030}} \mbox{\hyperlink{class_user_handler}{UserHandler}} userHandler(\&\mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}});                                           \textcolor{comment}{//For handling the authentication}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00031}\mbox{\hyperlink{hackable_esp_device_8ino_a73eefd3b2f1f3d6d3dde51f8ce1f07f4}{00031}} \mbox{\hyperlink{class_serial_command_executer}{SerialCommandExecuter}} \mbox{\hyperlink{hackable_esp_device_8ino_a73eefd3b2f1f3d6d3dde51f8ce1f07f4}{cliExecuter}};}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00032}00032 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00033}\mbox{\hyperlink{hackable_esp_device_8ino_a85a1845cd6671bcef69845032851013b}{00033}} File \mbox{\hyperlink{hackable_esp_device_8ino_a85a1845cd6671bcef69845032851013b}{fsUploadFile}};                                                          \textcolor{comment}{//A File object to temporarily store the received file}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00035}00035 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00039}00039 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00040}\mbox{\hyperlink{hackable_esp_device_8ino_a4fc01d736fe50cf5b977f755b675f11d}{00040}} \textcolor{keywordtype}{void} \mbox{\hyperlink{hackable_esp_device_8ino_a4fc01d736fe50cf5b977f755b675f11d}{setup}}() \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00041}00041     Serial.begin(115200);                                                   \textcolor{comment}{//Serial port for debugging purposes}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00042}00042     }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00043}00043     \textcolor{comment}{/* Initialize SPIFFS */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00044}00044     \textcolor{keywordflow}{if}(!SPIFFS.begin()) \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00045}00045         \mbox{\hyperlink{_debugger_8cpp_acc3264da13e660e155c411013e1e4bb4}{debugln}}(\textcolor{stringliteral}{"{}An Error has occurred while mounting SPIFFS"{}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00046}00046         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00047}00047     \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00048}00048     }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00049}00049     \mbox{\hyperlink{_debugger_8cpp_acc3264da13e660e155c411013e1e4bb4}{debugln}}(\textcolor{stringliteral}{"{}Debug is enabled"{}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00050}00050     }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00051}00051     \textcolor{comment}{/* If debug is enabled, the root password is printed in a big string of text */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00052}00052     \textcolor{keywordflow}{if} (\mbox{\hyperlink{_debugger_8cpp_a7206590aa5cac661bfcf635be73513db}{getDebugEnabled}}()) \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00053}00053       String mess = \textcolor{stringliteral}{"{}ROOT: "{}} + String(\mbox{\hyperlink{config2_8h_aa7b443d3ef84813431db1ab50f225884}{ROOT\_PASSWORD}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00054}00054       \mbox{\hyperlink{_startup_text_8h_a45dc6bfc087176c6584f99a170b78bb3}{printStartupText}}(mess);}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00055}00055     \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00056}00056     }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00057}00057     \textcolor{comment}{//debug("{}WiFi Password: "{});}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00058}00058     \textcolor{comment}{//debugln(WIFI\_PASSWORD);                                               //Print WiFi password one time in plain text when debugger is enabled}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00059}00059     }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00060}00060     pinMode(LED\_BUILTIN, OUTPUT);}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00061}00061     digitalWrite(LED\_BUILTIN, \mbox{\hyperlink{hackable_esp_device_8ino_a9ed244b51c3b5335f72a7612b1293005}{ledState}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00062}00062 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00063}00063     \mbox{\hyperlink{hackable_esp_device_8ino_af9a7ef5ef61f50c11497d37c9ccda5b2}{initializeHostname}}();}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00064}00064     \mbox{\hyperlink{hackable_esp_device_8ino_aad42151da76d6be3b12c356b4b2e74f6}{setupWifi}}();    }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00065}00065     \mbox{\hyperlink{hackable_esp_device_8ino_a5ea6b44c795d4cc5929063f444147dba}{initializeServer}}();}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00066}00066     userHandler.updateUsers();}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00067}00067     \mbox{\hyperlink{hackable_esp_device_8ino_a73eefd3b2f1f3d6d3dde51f8ce1f07f4}{cliExecuter}}.\mbox{\hyperlink{class_serial_command_executer_a810f7d1f90cbb55ae7e05d6a7cd14fee}{setUsers}}(userHandler.getUsers(), userHandler.getNumberOfUsers());}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00068}00068     }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00069}00069     \mbox{\hyperlink{_debugger_8cpp_acc3264da13e660e155c411013e1e4bb4}{debugln}}(\textcolor{stringliteral}{"{}Serial commands available. Typ 'help' for help."{}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00070}00070 \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00071}00071 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00072}00072 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00076}00076 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00077}\mbox{\hyperlink{hackable_esp_device_8ino_af9a7ef5ef61f50c11497d37c9ccda5b2}{00077}} \textcolor{keywordtype}{void} \mbox{\hyperlink{hackable_esp_device_8ino_af9a7ef5ef61f50c11497d37c9ccda5b2}{initializeHostname}}() \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00078}00078     String customHostname = \mbox{\hyperlink{_hostname_write_8cpp_a1c60cc0a431e819d47f645094e36b6bb}{getHostname}}();}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00079}00079     \textcolor{comment}{/* Check if custom hostname is set, otherwise use default */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00080}00080     \textcolor{keywordflow}{if} (customHostname != \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00081}00081         \textcolor{comment}{/* Check if hostname can be set */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00082}00082         \textcolor{keywordflow}{if} (WiFi.hostname(customHostname))\{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00083}00083             \mbox{\hyperlink{_debugger_8cpp_aee8aa821792dfa745cfffd6f8b03d529}{debug}}(customHostname);}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00084}00084             \mbox{\hyperlink{_debugger_8cpp_acc3264da13e660e155c411013e1e4bb4}{debugln}}(\textcolor{stringliteral}{"{} is the hostname."{}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00085}00085         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00086}00086             \mbox{\hyperlink{_debugger_8cpp_aee8aa821792dfa745cfffd6f8b03d529}{debug}}(\textcolor{stringliteral}{"{}Could not set '"{}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00087}00087             \mbox{\hyperlink{_debugger_8cpp_aee8aa821792dfa745cfffd6f8b03d529}{debug}}(customHostname);}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00088}00088             \mbox{\hyperlink{_debugger_8cpp_acc3264da13e660e155c411013e1e4bb4}{debugln}}(\textcolor{stringliteral}{"{}' as hostname."{}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00089}00089         \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00090}00090     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00091}00091         \textcolor{keywordflow}{if} (WiFi.hostname(\mbox{\hyperlink{config2_8h_acbd0b3def6b58577376d5c5edbc1f8d1}{DEFAULT\_HOSTNAME}})) \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00092}00092             \mbox{\hyperlink{_debugger_8cpp_aee8aa821792dfa745cfffd6f8b03d529}{debug}}(\mbox{\hyperlink{config2_8h_acbd0b3def6b58577376d5c5edbc1f8d1}{DEFAULT\_HOSTNAME}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00093}00093             \mbox{\hyperlink{_debugger_8cpp_acc3264da13e660e155c411013e1e4bb4}{debugln}}(\textcolor{stringliteral}{"{} is the hostname."{}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00094}00094         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00095}00095             \mbox{\hyperlink{_debugger_8cpp_aee8aa821792dfa745cfffd6f8b03d529}{debug}}(\textcolor{stringliteral}{"{}Could not set '"{}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00096}00096             \mbox{\hyperlink{_debugger_8cpp_aee8aa821792dfa745cfffd6f8b03d529}{debug}}(\mbox{\hyperlink{config2_8h_acbd0b3def6b58577376d5c5edbc1f8d1}{DEFAULT\_HOSTNAME}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00097}00097             \mbox{\hyperlink{_debugger_8cpp_acc3264da13e660e155c411013e1e4bb4}{debugln}}(\textcolor{stringliteral}{"{}' as hostname."{}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00098}00098         \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00099}00099     \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00100}00100 \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00101}00101 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00102}00102 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00107}00107 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00108}\mbox{\hyperlink{hackable_esp_device_8ino_aad42151da76d6be3b12c356b4b2e74f6}{00108}} \textcolor{keywordtype}{void} \mbox{\hyperlink{hackable_esp_device_8ino_aad42151da76d6be3b12c356b4b2e74f6}{setupWifi}}() \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00109}00109     WiFiManager wifiManager;}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00110}00110     }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00111}00111     \textcolor{keywordflow}{if} (wifiManager.autoConnect(WIFI\_CONF\_AP\_NAME)) \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00112}00112         Serial.print(\textcolor{stringliteral}{"{}Connected to: "{}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00113}00113         Serial.println(WiFi.SSID());}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00114}00114         Serial.print(\textcolor{stringliteral}{"{}IP: "{}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00115}00115         Serial.println(WiFi.localIP());}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00116}00116     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00117}00117         Serial.println(\textcolor{stringliteral}{"{}Failed to connect, connect with AP"{}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00118}00118         ESP.restart();}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00119}00119     \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00120}00120 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00121}00121     \mbox{\hyperlink{_debugger_8cpp_aee8aa821792dfa745cfffd6f8b03d529}{debug}}(\textcolor{stringliteral}{"{}Copy and paste the following URL: http://"{}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00122}00122     }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00123}00123     \textcolor{keywordflow}{if} (WiFi.hostname(\mbox{\hyperlink{config2_8h_acbd0b3def6b58577376d5c5edbc1f8d1}{DEFAULT\_HOSTNAME}})) \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00124}00124         \mbox{\hyperlink{_debugger_8cpp_acc3264da13e660e155c411013e1e4bb4}{debugln}}(\mbox{\hyperlink{config2_8h_acbd0b3def6b58577376d5c5edbc1f8d1}{DEFAULT\_HOSTNAME}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00125}00125     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00126}00126         \mbox{\hyperlink{_debugger_8cpp_acc3264da13e660e155c411013e1e4bb4}{debugln}}(WiFi.hostname().c\_str());}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00127}00127     \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00128}00128 \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00129}00129 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00130}00130 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00134}00134 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00135}\mbox{\hyperlink{hackable_esp_device_8ino_a5ea6b44c795d4cc5929063f444147dba}{00135}} \textcolor{keywordtype}{void} \mbox{\hyperlink{hackable_esp_device_8ino_a5ea6b44c795d4cc5929063f444147dba}{initializeServer}}() \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00136}00136     \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00137}00137 \textcolor{comment}{    *  Routes for loading all the necessary files}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00138}00138 \textcolor{comment}{    */}    }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00139}00139     \textcolor{comment}{/* Route for home page */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00140}00140     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.on(\textcolor{stringliteral}{"{}/"{}}, HTTP\_GET, []() \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00141}00141         \mbox{\hyperlink{hackable_esp_device_8ino_a7ae585e44c0629645a31c6478417be65}{handleFileRequest}}(\textcolor{stringliteral}{"{}/index.html"{}}, \mbox{\hyperlink{config2_8h_a824e9b77b01c21dc817aa156bc98f319}{PERMISSION\_LVL\_ALL}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00142}00142     \});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00143}00143 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00144}00144     \textcolor{comment}{/* Route for admin controls */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00145}00145     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.on(\textcolor{stringliteral}{"{}/admin"{}}, HTTP\_GET, []() \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00146}00146         \mbox{\hyperlink{hackable_esp_device_8ino_a7ae585e44c0629645a31c6478417be65}{handleFileRequest}}(\textcolor{stringliteral}{"{}/admin.html"{}}, \mbox{\hyperlink{config2_8h_a59ce2a135fe3f47be79bf993d3413b59}{PERMISSION\_LVL\_ADMIN}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00147}00147     \});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00148}00148     }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00149}00149     \textcolor{comment}{/* Route for user controls */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00150}00150     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.on(\textcolor{stringliteral}{"{}/user"{}}, HTTP\_GET, []() \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00151}00151         \mbox{\hyperlink{hackable_esp_device_8ino_a7ae585e44c0629645a31c6478417be65}{handleFileRequest}}(\textcolor{stringliteral}{"{}/user.html"{}}, \mbox{\hyperlink{config2_8h_a35deba6f6b52d3fa55f87c2bc927b66b}{PERMISSION\_LVL\_USER}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00152}00152     \});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00153}00153     }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00154}00154     \textcolor{comment}{/* Route for file upload page */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00155}00155     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.on(\textcolor{stringliteral}{"{}/upload"{}}, HTTP\_GET, []() \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00156}00156         \mbox{\hyperlink{hackable_esp_device_8ino_a7ae585e44c0629645a31c6478417be65}{handleFileRequest}}(\textcolor{stringliteral}{"{}/upload.html"{}}, \mbox{\hyperlink{config2_8h_a59ce2a135fe3f47be79bf993d3413b59}{PERMISSION\_LVL\_ADMIN}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00157}00157     \});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00158}00158 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00159}00159     \textcolor{comment}{/* Route for file download page */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00160}00160     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.on(\textcolor{stringliteral}{"{}/download"{}}, HTTP\_GET, []() \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00161}00161         \mbox{\hyperlink{hackable_esp_device_8ino_a7ae585e44c0629645a31c6478417be65}{handleFileRequest}}(\textcolor{stringliteral}{"{}/download.html"{}}, \mbox{\hyperlink{config2_8h_a35deba6f6b52d3fa55f87c2bc927b66b}{PERMISSION\_LVL\_USER}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00162}00162     \});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00163}00163     }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00164}00164     \textcolor{comment}{/* Load style\_desktop.css file, styling for desktop version */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00165}00165     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.on(\textcolor{stringliteral}{"{}/style\_desktop.css"{}}, HTTP\_GET, []() \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00166}00166         \mbox{\hyperlink{hackable_esp_device_8ino_a7ae585e44c0629645a31c6478417be65}{handleFileRequest}}(\textcolor{stringliteral}{"{}/style\_desktop.css"{}}, \mbox{\hyperlink{config2_8h_a824e9b77b01c21dc817aa156bc98f319}{PERMISSION\_LVL\_ALL}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00167}00167     \});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00168}00168     }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00169}00169     \textcolor{comment}{/* Load style\_mobile.css file, styling for mobile version */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00170}00170     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.on(\textcolor{stringliteral}{"{}/style\_mobile.css"{}}, HTTP\_GET, []() \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00171}00171         \mbox{\hyperlink{hackable_esp_device_8ino_a7ae585e44c0629645a31c6478417be65}{handleFileRequest}}(\textcolor{stringliteral}{"{}/style\_mobile.css"{}}, \mbox{\hyperlink{config2_8h_a824e9b77b01c21dc817aa156bc98f319}{PERMISSION\_LVL\_ALL}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00172}00172     \});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00173}00173 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00174}00174     \textcolor{comment}{/* Load style\_switch.css file, styling for the on/off switch */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00175}00175     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.on(\textcolor{stringliteral}{"{}/style\_switch.css"{}}, HTTP\_GET, []() \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00176}00176         \mbox{\hyperlink{hackable_esp_device_8ino_a7ae585e44c0629645a31c6478417be65}{handleFileRequest}}(\textcolor{stringliteral}{"{}/style\_switch.css"{}}, \mbox{\hyperlink{config2_8h_a824e9b77b01c21dc817aa156bc98f319}{PERMISSION\_LVL\_ALL}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00177}00177     \});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00178}00178 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00179}00179     \textcolor{comment}{/* Load favicon.ico file, site icon */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00180}00180     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.on(\textcolor{stringliteral}{"{}/favicon.ico"{}}, HTTP\_GET, []() \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00181}00181         \mbox{\hyperlink{hackable_esp_device_8ino_a7ae585e44c0629645a31c6478417be65}{handleFileRequest}}(\textcolor{stringliteral}{"{}/favicon.ico"{}}, \mbox{\hyperlink{config2_8h_a824e9b77b01c21dc817aa156bc98f319}{PERMISSION\_LVL\_ALL}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00182}00182     \});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00183}00183 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00184}00184     \textcolor{comment}{/* Load jquery.min.js file, for ajax */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00185}00185     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.on(\textcolor{stringliteral}{"{}/jquery.min.js"{}}, HTTP\_GET, []() \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00186}00186         \mbox{\hyperlink{hackable_esp_device_8ino_a7ae585e44c0629645a31c6478417be65}{handleFileRequest}}(\textcolor{stringliteral}{"{}/jquery.min.js"{}}, \mbox{\hyperlink{config2_8h_a824e9b77b01c21dc817aa156bc98f319}{PERMISSION\_LVL\_ALL}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00187}00187     \});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00188}00188 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00189}00189     \textcolor{comment}{/* Load base.js file, JavaScript for site */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00190}00190     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.on(\textcolor{stringliteral}{"{}/base.js"{}}, HTTP\_GET, []() \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00191}00191         \mbox{\hyperlink{hackable_esp_device_8ino_a7ae585e44c0629645a31c6478417be65}{handleFileRequest}}(\textcolor{stringliteral}{"{}/base.js"{}}, \mbox{\hyperlink{config2_8h_a824e9b77b01c21dc817aa156bc98f319}{PERMISSION\_LVL\_ALL}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00192}00192     \});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00193}00193 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00194}00194     \textcolor{comment}{/* Load switch.js file, JavaScript for on/off switch */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00195}00195     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.on(\textcolor{stringliteral}{"{}/switch.js"{}}, HTTP\_GET, []() \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00196}00196         \mbox{\hyperlink{hackable_esp_device_8ino_a7ae585e44c0629645a31c6478417be65}{handleFileRequest}}(\textcolor{stringliteral}{"{}/switch.js"{}}, \mbox{\hyperlink{config2_8h_a824e9b77b01c21dc817aa156bc98f319}{PERMISSION\_LVL\_ALL}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00197}00197     \});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00198}00198     \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00199}00199 \textcolor{comment}{    * End of file loading}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00200}00200 \textcolor{comment}{    */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00201}00201 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00202}00202     \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00203}00203 \textcolor{comment}{    * Routes for JavaScript data receiving}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00204}00204 \textcolor{comment}{    */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00205}00205     \textcolor{comment}{/* Route for setting power */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00206}00206     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.on(\textcolor{stringliteral}{"{}/set\_power"{}}, HTTP\_GET, []() \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00207}00207         \textcolor{keywordflow}{if} (\mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.arg(\textcolor{stringliteral}{"{}state"{}})) \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00208}00208             \mbox{\hyperlink{hackable_esp_device_8ino_a9ed244b51c3b5335f72a7612b1293005}{ledState}} = atoi(\mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.arg(\textcolor{stringliteral}{"{}state"{}}).c\_str());}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00209}00209             digitalWrite(LED\_BUILTIN, !\mbox{\hyperlink{hackable_esp_device_8ino_a9ed244b51c3b5335f72a7612b1293005}{ledState}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00210}00210         \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00211}00211         \mbox{\hyperlink{hackable_esp_device_8ino_a7ae585e44c0629645a31c6478417be65}{handleFileRequest}}(\textcolor{stringliteral}{"{}/index.html"{}}, \mbox{\hyperlink{config2_8h_a824e9b77b01c21dc817aa156bc98f319}{PERMISSION\_LVL\_ALL}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00212}00212     \});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00213}00213 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00214}00214     \textcolor{comment}{/* Route for restarting the server */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00215}00215     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.on(\textcolor{stringliteral}{"{}/restart"{}}, HTTP\_GET, []() \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00216}00216         \mbox{\hyperlink{hackable_esp_device_8ino_a7ae585e44c0629645a31c6478417be65}{handleFileRequest}}(\textcolor{stringliteral}{"{}/"{}}, \mbox{\hyperlink{config2_8h_a824e9b77b01c21dc817aa156bc98f319}{PERMISSION\_LVL\_ALL}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00217}00217         ESP.restart();}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00218}00218     \});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00219}00219     \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00220}00220 \textcolor{comment}{    * End of JavaScript data receiving}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00221}00221 \textcolor{comment}{    */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00222}00222     \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00223}00223 \textcolor{comment}{    * Routes for file management}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00224}00224 \textcolor{comment}{    */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00225}00225     \textcolor{comment}{/* Route for file upload request */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00226}00226     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.on(\textcolor{stringliteral}{"{}/upload"{}}, HTTP\_POST, []() \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00227}00227         \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.send(200);                                                   \textcolor{comment}{//HTTP code 200 == OK}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00228}00228         \mbox{\hyperlink{_debugger_8cpp_acc3264da13e660e155c411013e1e4bb4}{debugln}}(\textcolor{stringliteral}{"{}Wait, something got uploaded"{}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00229}00229       \}, \mbox{\hyperlink{hackable_esp_device_8ino_a3ad222f20f56d154a7728c39310e6873}{handleFileUpload}}                                                   \textcolor{comment}{//Receive and save the file}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00230}00230     );}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00231}00231     \textcolor{comment}{/* Route for file upload request */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00232}00232     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.on(\textcolor{stringliteral}{"{}/download"{}}, HTTP\_POST, []() \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00233}00233         \mbox{\hyperlink{_debugger_8cpp_acc3264da13e660e155c411013e1e4bb4}{debugln}}(\textcolor{stringliteral}{"{}File download request"{}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00234}00234       \}, \mbox{\hyperlink{hackable_esp_device_8ino_a08eee08276e783a745b7db1ff57f690a}{handleFileDownload}}                                                 \textcolor{comment}{//Receive and save the file}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00235}00235     );}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00236}00236     \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00237}00237 \textcolor{comment}{    * End of routes for file management}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00238}00238 \textcolor{comment}{    */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00239}00239     \textcolor{comment}{/* Not found */}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00240}00240     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.onNotFound([]() \{                                                \textcolor{comment}{//If the client requests any URI}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00241}00241         \mbox{\hyperlink{hackable_esp_device_8ino_a7ae585e44c0629645a31c6478417be65}{handleFileRequest}}(\mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.uri(), \mbox{\hyperlink{config2_8h_a824e9b77b01c21dc817aa156bc98f319}{PERMISSION\_LVL\_ALL}});                \textcolor{comment}{//send it if it exists}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00242}00242         \mbox{\hyperlink{_debugger_8cpp_acc3264da13e660e155c411013e1e4bb4}{debugln}}(\textcolor{stringliteral}{"{}NOT\_FOUND?"{}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00243}00243     \});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00244}00244     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.begin();                                                         \textcolor{comment}{//Start server}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00245}00245 \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00246}00246 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00247}00247 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00251}00251 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00252}\mbox{\hyperlink{hackable_esp_device_8ino_afe461d27b9c48d5921c00d521181f12f}{00252}} \textcolor{keywordtype}{void} \mbox{\hyperlink{hackable_esp_device_8ino_afe461d27b9c48d5921c00d521181f12f}{loop}}() \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00253}00253   \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.handleClient();}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00254}00254   \textcolor{keywordflow}{if}(\mbox{\hyperlink{hackable_esp_device_8ino_a263d4649a3eeb71bc1b2e02c81be5236}{timer}}.repeat())\{                                                       \textcolor{comment}{//Prints WiFi password every 30 second on serial in the form of stars: "{}*****"{}, so it is not readable, it's a hint}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00255}00255       \textcolor{comment}{//debug("{}Wifi Password: "{});}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00256}00256       String wifipass = \textcolor{stringliteral}{"{}WiFi.password()?"{}};}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00257}00257       uint8\_t charCount = wifipass.length();                                \textcolor{comment}{//Count how many characters the WiFi password contains}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00258}00258       \textcolor{keywordflow}{for} (uint8\_t i = 0; i < charCount; i++) \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00259}00259         \textcolor{comment}{//Serial.print("{}*"{});                                                  //Print a "{}*"{} for each password character}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00260}00260       \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00261}00261       \textcolor{comment}{//Serial.println("{}"{});                                            }}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00262}00262   \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00263}00263 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00264}00264   \textcolor{keywordflow}{if}(Serial.available()) \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00265}00265     \mbox{\hyperlink{hackable_esp_device_8ino_a73eefd3b2f1f3d6d3dde51f8ce1f07f4}{cliExecuter}}.\mbox{\hyperlink{class_serial_command_executer_a3dd139732e3317ed68575d6f3c77e2d6}{executeCommand}}();}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00266}00266   \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00267}00267 \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00268}00268 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00269}00269 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00273}00273 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00274}\mbox{\hyperlink{hackable_esp_device_8ino_a0c021f9721c3b479757f8e1b40624b6c}{00274}} String \mbox{\hyperlink{hackable_esp_device_8ino_a0c021f9721c3b479757f8e1b40624b6c}{processor}}(\textcolor{keyword}{const} String\& var)\{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00275}00275     \textcolor{keywordflow}{if} (var == \textcolor{stringliteral}{"{}LED\_STATE"{}}) \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00276}00276         \textcolor{keywordflow}{return} (String) \mbox{\hyperlink{hackable_esp_device_8ino_a9ed244b51c3b5335f72a7612b1293005}{ledState}};}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00277}00277     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00278}00278         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{} placeholder\_error "{}};}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00279}00279     \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00280}00280     \textcolor{keywordflow}{return} String();}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00281}00281 \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00282}00282 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00283}00283 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00289}00289 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00290}\mbox{\hyperlink{hackable_esp_device_8ino_ac1311527864d9a4219f50d677608e538}{00290}} String \mbox{\hyperlink{hackable_esp_device_8ino_ac1311527864d9a4219f50d677608e538}{getContentType}}(String filename) \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00291}00291   \textcolor{keywordflow}{if} (filename.endsWith(\textcolor{stringliteral}{"{}.html"{}})) \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}text/html"{}};}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00292}00292   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (filename.endsWith(\textcolor{stringliteral}{"{}.css"{}})) \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}text/css"{}};}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00293}00293   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (filename.endsWith(\textcolor{stringliteral}{"{}.js"{}})) \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}application/javascript"{}};}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00294}00294   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (filename.endsWith(\textcolor{stringliteral}{"{}.ico"{}})) \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}image/x-\/icon"{}};}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00295}00295   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (filename.endsWith(\textcolor{stringliteral}{"{}.gz"{}})) \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}application/x-\/gzip"{}};}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00296}00296   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (filename.endsWith(\textcolor{stringliteral}{"{}.txt"{}})) \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}text/plain"{}};}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00297}00297   \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}text/plain"{}};}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00298}00298 \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00299}00299 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00300}00300 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00306}00306 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00307}\mbox{\hyperlink{hackable_esp_device_8ino_a7ae585e44c0629645a31c6478417be65}{00307}} \textcolor{keywordtype}{void} \mbox{\hyperlink{hackable_esp_device_8ino_a7ae585e44c0629645a31c6478417be65}{handleFileRequest}}(String path, uint8\_t permissionLevel) \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00308}00308     \textcolor{keywordflow}{if}(!userHandler.checkPermission(permissionLevel, \&\mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}})) \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00309}00309         \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.requestAuthentication();}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00310}00310         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00311}00311     \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00312}00312     }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00313}00313     \mbox{\hyperlink{_debugger_8cpp_acc3264da13e660e155c411013e1e4bb4}{debugln}}(String(\textcolor{stringliteral}{"{}Requested file: "{}}) + path);}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00314}00314     }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00315}00315     String contentType = \mbox{\hyperlink{hackable_esp_device_8ino_ac1311527864d9a4219f50d677608e538}{getContentType}}(path);                              \textcolor{comment}{//Get the MIME type}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00316}00316     String pathWithGz = path + \textcolor{stringliteral}{"{}.gz"{}};}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00317}00317     }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00318}00318     \textcolor{keywordflow}{if} (SPIFFS.exists(pathWithGz)) \{                                        \textcolor{comment}{//If there's a compressed version available}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00319}00319         path += \textcolor{stringliteral}{"{}.gz"{}};                                                      \textcolor{comment}{//Use the compressed verion}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00320}00320     \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00321}00321     }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00322}00322     \textcolor{keywordflow}{if} (SPIFFS.exists(path)) \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00323}00323         File file = SPIFFS.open(path, \textcolor{stringliteral}{"{}r"{}});                                 \textcolor{comment}{//Open the file}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00324}00324         \textcolor{keywordtype}{size\_t} sent = \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.streamFile(file, contentType);                 \textcolor{comment}{//Send it to the client}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00325}00325         file.close();                                                       \textcolor{comment}{//Close the file again}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00326}00326         \mbox{\hyperlink{_debugger_8cpp_acc3264da13e660e155c411013e1e4bb4}{debugln}}(String(\textcolor{stringliteral}{"{}Sent file: "{}}) + path);}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00327}00327         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00328}00328     \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00329}00329     }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00330}00330     \mbox{\hyperlink{_debugger_8cpp_acc3264da13e660e155c411013e1e4bb4}{debugln}}(String(\textcolor{stringliteral}{"{}File Not Found: "{}}) + path);                             \textcolor{comment}{//If the file doesn't exist, return false}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00331}00331     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.send(404, \textcolor{stringliteral}{"{}text/plain"{}}, \textcolor{stringliteral}{"{}404: Not Found"{}});                       \textcolor{comment}{//otherwise, respond with a 404 (Not Found) error}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00332}00332 \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00333}00333 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00334}00334 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00338}00338 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00339}\mbox{\hyperlink{hackable_esp_device_8ino_a3ad222f20f56d154a7728c39310e6873}{00339}} \textcolor{keywordtype}{void} \mbox{\hyperlink{hackable_esp_device_8ino_a3ad222f20f56d154a7728c39310e6873}{handleFileUpload}}() \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00340}00340     HTTPUpload\& upload = \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.upload();}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00341}00341     }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00342}00342     \textcolor{keywordflow}{if} (upload.status == UPLOAD\_FILE\_START) \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00343}00343         String filename = upload.filename;}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00344}00344         }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00345}00345         \textcolor{keywordflow}{if} (!filename.startsWith(\textcolor{stringliteral}{"{}/"{}})) \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00346}00346             filename = \textcolor{stringliteral}{"{}/"{}} + filename;}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00347}00347         \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00348}00348         }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00349}00349         \mbox{\hyperlink{_debugger_8cpp_acc3264da13e660e155c411013e1e4bb4}{debugln}}(String(\textcolor{stringliteral}{"{}Upload file named: "{}}) + filename);}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00350}00350         }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00351}00351         \mbox{\hyperlink{hackable_esp_device_8ino_a85a1845cd6671bcef69845032851013b}{fsUploadFile}} = SPIFFS.open(filename, \textcolor{stringliteral}{"{}w"{}});                          \textcolor{comment}{//Open the file for writing in SPIFFS (create if it doesn't exist)}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00352}00352 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00353}00353     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (upload.status == UPLOAD\_FILE\_WRITE \&\& \mbox{\hyperlink{hackable_esp_device_8ino_a85a1845cd6671bcef69845032851013b}{fsUploadFile}} ) \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00354}00354         \mbox{\hyperlink{hackable_esp_device_8ino_a85a1845cd6671bcef69845032851013b}{fsUploadFile}}.write(upload.buf, upload.currentSize);                 \textcolor{comment}{//Write the received bytes to the file}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00355}00355     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (upload.status == UPLOAD\_FILE\_END) \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00356}00356         \textcolor{keywordflow}{if} (\mbox{\hyperlink{hackable_esp_device_8ino_a85a1845cd6671bcef69845032851013b}{fsUploadFile}}) \{                                                 \textcolor{comment}{//If the file was successfully created}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00357}00357             \mbox{\hyperlink{hackable_esp_device_8ino_a85a1845cd6671bcef69845032851013b}{fsUploadFile}}.close();                                           \textcolor{comment}{//Close the file again}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00358}00358             \mbox{\hyperlink{_debugger_8cpp_acc3264da13e660e155c411013e1e4bb4}{debugln}}(String(\textcolor{stringliteral}{"{}handleFileUpload Size: "{}}) + upload.totalSize);}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00359}00359             \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.sendHeader(\textcolor{stringliteral}{"{}Location"{}},\textcolor{stringliteral}{"{}/success.html"{}});                  \textcolor{comment}{//Redirect the client to the success page}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00360}00360             \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.send(303);}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00361}00361             userHandler.\mbox{\hyperlink{class_user_handler_ab5267a38ddc76c3887e535fd02914370}{updateUsers}}();}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00362}00362             \mbox{\hyperlink{hackable_esp_device_8ino_a73eefd3b2f1f3d6d3dde51f8ce1f07f4}{cliExecuter}}.\mbox{\hyperlink{class_serial_command_executer_a810f7d1f90cbb55ae7e05d6a7cd14fee}{setUsers}}(userHandler.getUsers(), userHandler.getNumberOfUsers()); \textcolor{comment}{//Update users for cli as well}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00363}00363         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00364}00364             \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.send(500, \textcolor{stringliteral}{"{}text/plain"{}}, \textcolor{stringliteral}{"{}500: couldn't create file"{}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00365}00365         \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00366}00366     \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00367}00367 \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00368}00368 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00369}00369 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00373}00373 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00374}\mbox{\hyperlink{hackable_esp_device_8ino_a08eee08276e783a745b7db1ff57f690a}{00374}} \textcolor{keywordtype}{void} \mbox{\hyperlink{hackable_esp_device_8ino_a08eee08276e783a745b7db1ff57f690a}{handleFileDownload}}() \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00375}00375     String filename = \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.arg(\textcolor{stringliteral}{"{}filekey"{}});                                \textcolor{comment}{//Get user input for filename}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00376}00376 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00377}00377     \textcolor{keywordflow}{if}(!filename.startsWith(\textcolor{stringliteral}{"{}/"{}})) \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00378}00378         filename = \textcolor{stringliteral}{"{}/"{}} + filename;}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00379}00379     \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00380}00380 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00381}00381     \textcolor{keywordflow}{if} (!SPIFFS.exists(filename)) \{}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00382}00382         \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.send(404, \textcolor{stringliteral}{"{}text/plain"{}}, \textcolor{stringliteral}{"{}404: file not found!"{}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00383}00383         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00384}00384     \}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00385}00385 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00386}00386     File download = SPIFFS.open(filename, \textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00387}00387 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00388}00388     \mbox{\hyperlink{_debugger_8cpp_acc3264da13e660e155c411013e1e4bb4}{debugln}}(\textcolor{stringliteral}{"{}Start sending file"{}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00389}00389 }
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00390}00390     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.sendHeader(\textcolor{stringliteral}{"{}Content-\/Type"{}}, \textcolor{stringliteral}{"{}text/text"{}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00391}00391     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.sendHeader(\textcolor{stringliteral}{"{}Content-\/Disposition"{}}, \textcolor{stringliteral}{"{}attachment; filename="{}}+filename);}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00392}00392     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.sendHeader(\textcolor{stringliteral}{"{}Connection"{}}, \textcolor{stringliteral}{"{}close"{}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00393}00393     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.streamFile(download, \textcolor{stringliteral}{"{}application/octet-\/stream"{}});}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00394}00394     download.close();}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00395}00395     \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}.send(200);                                                       \textcolor{comment}{//HTTP code 200 == OK}}
+\DoxyCodeLine{\Hypertarget{hackable_esp_device_8ino_source_l00396}00396 \}}
+
+\end{DoxyCode}

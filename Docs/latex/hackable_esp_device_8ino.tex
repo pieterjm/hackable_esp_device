@@ -1,0 +1,306 @@
+\hypertarget{hackable_esp_device_8ino}{}\doxysection{hackable\+Esp\+Device/hackable\+Esp\+Device.ino File Reference}
+\label{hackable_esp_device_8ino}\index{hackableEspDevice/hackableEspDevice.ino@{hackableEspDevice/hackableEspDevice.ino}}
+{\ttfamily \#include $<$ESP8266\+Web\+Server.\+h$>$}\newline
+{\ttfamily \#include $<$FS.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$neotimer.\+h$>$}\newline
+{\ttfamily \#include $<$Wi\+Fi\+Manager.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}config.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}User\+Handler.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Serial\+Command\+Executer.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Debugger.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Hostname\+Write.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Startup\+Text.\+h\char`\"{}}\newline
+Include dependency graph for hackable\+Esp\+Device.\+ino\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{hackable_esp_device_8ino__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{hackable_esp_device_8ino_ad76d1750a6cdeebd506bfcd6752554d2}{ON}}~LOW
+\item 
+\#define \mbox{\hyperlink{hackable_esp_device_8ino_a29e413f6725b2ba32d165ffaa35b01e5}{OFF}}~HIGH
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+ESP8266\+Web\+Server \mbox{\hyperlink{hackable_esp_device_8ino_a58141c4f251beaa1fee89b632d87152f}{server}} (80)
+\item 
+void \mbox{\hyperlink{hackable_esp_device_8ino_a4fc01d736fe50cf5b977f755b675f11d}{setup}} ()
+\begin{DoxyCompactList}\small\item\em Setup microchip. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{hackable_esp_device_8ino_af9a7ef5ef61f50c11497d37c9ccda5b2}{initialize\+Hostname}} ()
+\begin{DoxyCompactList}\small\item\em Initializes hostname. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{hackable_esp_device_8ino_aad42151da76d6be3b12c356b4b2e74f6}{setup\+Wifi}} ()
+\begin{DoxyCompactList}\small\item\em Connects to Wi\+Fi if it can, otherwise starts as AP to configure Wi\+FI. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{hackable_esp_device_8ino_a5ea6b44c795d4cc5929063f444147dba}{initialize\+Server}} ()
+\begin{DoxyCompactList}\small\item\em Takes care of the webservices like pageloading. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{hackable_esp_device_8ino_afe461d27b9c48d5921c00d521181f12f}{loop}} ()
+\begin{DoxyCompactList}\small\item\em Mainloop. \end{DoxyCompactList}\item 
+String \mbox{\hyperlink{hackable_esp_device_8ino_a0c021f9721c3b479757f8e1b40624b6c}{processor}} (const String \&var)
+\begin{DoxyCompactList}\small\item\em Replaces placeholders with actual data in HTML page. \end{DoxyCompactList}\item 
+String \mbox{\hyperlink{hackable_esp_device_8ino_ac1311527864d9a4219f50d677608e538}{get\+Content\+Type}} (String filename)
+\begin{DoxyCompactList}\small\item\em Converts the file extension to the MIME type. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{hackable_esp_device_8ino_a7ae585e44c0629645a31c6478417be65}{handle\+File\+Request}} (String path, uint8\+\_\+t permission\+Level)
+\begin{DoxyCompactList}\small\item\em Sends the requested file if the user has permission. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{hackable_esp_device_8ino_a3ad222f20f56d154a7728c39310e6873}{handle\+File\+Upload}} ()
+\begin{DoxyCompactList}\small\item\em Handles the file upload to the SPIFFS. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{hackable_esp_device_8ino_a08eee08276e783a745b7db1ff57f690a}{handle\+File\+Download}} ()
+\begin{DoxyCompactList}\small\item\em Handles the file download to the SPIFFS. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+Neotimer \mbox{\hyperlink{hackable_esp_device_8ino_a263d4649a3eeb71bc1b2e02c81be5236}{timer}} = Neotimer(30000)
+\item 
+uint8\+\_\+t \mbox{\hyperlink{hackable_esp_device_8ino_a9ed244b51c3b5335f72a7612b1293005}{led\+State}} = \mbox{\hyperlink{hackable_esp_device_8ino_a29e413f6725b2ba32d165ffaa35b01e5}{OFF}}
+\item 
+\mbox{\hyperlink{class_user_handler}{User\+Handler}} user\+Handler \& \mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}
+\item 
+\mbox{\hyperlink{class_serial_command_executer}{Serial\+Command\+Executer}} \mbox{\hyperlink{hackable_esp_device_8ino_a73eefd3b2f1f3d6d3dde51f8ce1f07f4}{cli\+Executer}}
+\item 
+File \mbox{\hyperlink{hackable_esp_device_8ino_a85a1845cd6671bcef69845032851013b}{fs\+Upload\+File}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{hackable_esp_device_8ino_a29e413f6725b2ba32d165ffaa35b01e5}\label{hackable_esp_device_8ino_a29e413f6725b2ba32d165ffaa35b01e5}} 
+\index{hackableEspDevice.ino@{hackableEspDevice.ino}!OFF@{OFF}}
+\index{OFF@{OFF}!hackableEspDevice.ino@{hackableEspDevice.ino}}
+\doxysubsubsection{\texorpdfstring{OFF}{OFF}}
+{\footnotesize\ttfamily \#define OFF~HIGH}
+
+
+
+Definition at line \mbox{\hyperlink{hackable_esp_device_8ino_source_l00024}{24}} of file \mbox{\hyperlink{hackable_esp_device_8ino_source}{hackable\+Esp\+Device.\+ino}}.
+
+\mbox{\Hypertarget{hackable_esp_device_8ino_ad76d1750a6cdeebd506bfcd6752554d2}\label{hackable_esp_device_8ino_ad76d1750a6cdeebd506bfcd6752554d2}} 
+\index{hackableEspDevice.ino@{hackableEspDevice.ino}!ON@{ON}}
+\index{ON@{ON}!hackableEspDevice.ino@{hackableEspDevice.ino}}
+\doxysubsubsection{\texorpdfstring{ON}{ON}}
+{\footnotesize\ttfamily \#define ON~LOW}
+
+
+
+Definition at line \mbox{\hyperlink{hackable_esp_device_8ino_source_l00023}{23}} of file \mbox{\hyperlink{hackable_esp_device_8ino_source}{hackable\+Esp\+Device.\+ino}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{hackable_esp_device_8ino_ac1311527864d9a4219f50d677608e538}\label{hackable_esp_device_8ino_ac1311527864d9a4219f50d677608e538}} 
+\index{hackableEspDevice.ino@{hackableEspDevice.ino}!getContentType@{getContentType}}
+\index{getContentType@{getContentType}!hackableEspDevice.ino@{hackableEspDevice.ino}}
+\doxysubsubsection{\texorpdfstring{getContentType()}{getContentType()}}
+{\footnotesize\ttfamily String get\+Content\+Type (\begin{DoxyParamCaption}\item[{String}]{filename }\end{DoxyParamCaption})}
+
+
+
+Converts the file extension to the MIME type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Name of the file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+String MIME type of the file 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{hackable_esp_device_8ino_source_l00290}{290}} of file \mbox{\hyperlink{hackable_esp_device_8ino_source}{hackable\+Esp\+Device.\+ino}}.
+
+\mbox{\Hypertarget{hackable_esp_device_8ino_a08eee08276e783a745b7db1ff57f690a}\label{hackable_esp_device_8ino_a08eee08276e783a745b7db1ff57f690a}} 
+\index{hackableEspDevice.ino@{hackableEspDevice.ino}!handleFileDownload@{handleFileDownload}}
+\index{handleFileDownload@{handleFileDownload}!hackableEspDevice.ino@{hackableEspDevice.ino}}
+\doxysubsubsection{\texorpdfstring{handleFileDownload()}{handleFileDownload()}}
+{\footnotesize\ttfamily void handle\+File\+Download (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Handles the file download to the SPIFFS. 
+
+
+
+Definition at line \mbox{\hyperlink{hackable_esp_device_8ino_source_l00374}{374}} of file \mbox{\hyperlink{hackable_esp_device_8ino_source}{hackable\+Esp\+Device.\+ino}}.
+
+\mbox{\Hypertarget{hackable_esp_device_8ino_a7ae585e44c0629645a31c6478417be65}\label{hackable_esp_device_8ino_a7ae585e44c0629645a31c6478417be65}} 
+\index{hackableEspDevice.ino@{hackableEspDevice.ino}!handleFileRequest@{handleFileRequest}}
+\index{handleFileRequest@{handleFileRequest}!hackableEspDevice.ino@{hackableEspDevice.ino}}
+\doxysubsubsection{\texorpdfstring{handleFileRequest()}{handleFileRequest()}}
+{\footnotesize\ttfamily void handle\+File\+Request (\begin{DoxyParamCaption}\item[{String}]{path,  }\item[{uint8\+\_\+t}]{permission\+Level }\end{DoxyParamCaption})}
+
+
+
+Sends the requested file if the user has permission. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & Path to the file \\
+\hline
+{\em permission\+Level} & 0 = not logged in, 1 = user, 2 = admin \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{hackable_esp_device_8ino_source_l00307}{307}} of file \mbox{\hyperlink{hackable_esp_device_8ino_source}{hackable\+Esp\+Device.\+ino}}.
+
+\mbox{\Hypertarget{hackable_esp_device_8ino_a3ad222f20f56d154a7728c39310e6873}\label{hackable_esp_device_8ino_a3ad222f20f56d154a7728c39310e6873}} 
+\index{hackableEspDevice.ino@{hackableEspDevice.ino}!handleFileUpload@{handleFileUpload}}
+\index{handleFileUpload@{handleFileUpload}!hackableEspDevice.ino@{hackableEspDevice.ino}}
+\doxysubsubsection{\texorpdfstring{handleFileUpload()}{handleFileUpload()}}
+{\footnotesize\ttfamily void handle\+File\+Upload (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Handles the file upload to the SPIFFS. 
+
+
+
+Definition at line \mbox{\hyperlink{hackable_esp_device_8ino_source_l00339}{339}} of file \mbox{\hyperlink{hackable_esp_device_8ino_source}{hackable\+Esp\+Device.\+ino}}.
+
+\mbox{\Hypertarget{hackable_esp_device_8ino_af9a7ef5ef61f50c11497d37c9ccda5b2}\label{hackable_esp_device_8ino_af9a7ef5ef61f50c11497d37c9ccda5b2}} 
+\index{hackableEspDevice.ino@{hackableEspDevice.ino}!initializeHostname@{initializeHostname}}
+\index{initializeHostname@{initializeHostname}!hackableEspDevice.ino@{hackableEspDevice.ino}}
+\doxysubsubsection{\texorpdfstring{initializeHostname()}{initializeHostname()}}
+{\footnotesize\ttfamily void initialize\+Hostname (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initializes hostname. 
+
+
+
+Definition at line \mbox{\hyperlink{hackable_esp_device_8ino_source_l00077}{77}} of file \mbox{\hyperlink{hackable_esp_device_8ino_source}{hackable\+Esp\+Device.\+ino}}.
+
+\mbox{\Hypertarget{hackable_esp_device_8ino_a5ea6b44c795d4cc5929063f444147dba}\label{hackable_esp_device_8ino_a5ea6b44c795d4cc5929063f444147dba}} 
+\index{hackableEspDevice.ino@{hackableEspDevice.ino}!initializeServer@{initializeServer}}
+\index{initializeServer@{initializeServer}!hackableEspDevice.ino@{hackableEspDevice.ino}}
+\doxysubsubsection{\texorpdfstring{initializeServer()}{initializeServer()}}
+{\footnotesize\ttfamily void initialize\+Server (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Takes care of the webservices like pageloading. 
+
+
+
+Definition at line \mbox{\hyperlink{hackable_esp_device_8ino_source_l00135}{135}} of file \mbox{\hyperlink{hackable_esp_device_8ino_source}{hackable\+Esp\+Device.\+ino}}.
+
+\mbox{\Hypertarget{hackable_esp_device_8ino_afe461d27b9c48d5921c00d521181f12f}\label{hackable_esp_device_8ino_afe461d27b9c48d5921c00d521181f12f}} 
+\index{hackableEspDevice.ino@{hackableEspDevice.ino}!loop@{loop}}
+\index{loop@{loop}!hackableEspDevice.ino@{hackableEspDevice.ino}}
+\doxysubsubsection{\texorpdfstring{loop()}{loop()}}
+{\footnotesize\ttfamily void loop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Mainloop. 
+
+
+
+Definition at line \mbox{\hyperlink{hackable_esp_device_8ino_source_l00252}{252}} of file \mbox{\hyperlink{hackable_esp_device_8ino_source}{hackable\+Esp\+Device.\+ino}}.
+
+\mbox{\Hypertarget{hackable_esp_device_8ino_a0c021f9721c3b479757f8e1b40624b6c}\label{hackable_esp_device_8ino_a0c021f9721c3b479757f8e1b40624b6c}} 
+\index{hackableEspDevice.ino@{hackableEspDevice.ino}!processor@{processor}}
+\index{processor@{processor}!hackableEspDevice.ino@{hackableEspDevice.ino}}
+\doxysubsubsection{\texorpdfstring{processor()}{processor()}}
+{\footnotesize\ttfamily String processor (\begin{DoxyParamCaption}\item[{const String \&}]{var }\end{DoxyParamCaption})}
+
+
+
+Replaces placeholders with actual data in HTML page. 
+
+
+
+Definition at line \mbox{\hyperlink{hackable_esp_device_8ino_source_l00274}{274}} of file \mbox{\hyperlink{hackable_esp_device_8ino_source}{hackable\+Esp\+Device.\+ino}}.
+
+\mbox{\Hypertarget{hackable_esp_device_8ino_a58141c4f251beaa1fee89b632d87152f}\label{hackable_esp_device_8ino_a58141c4f251beaa1fee89b632d87152f}} 
+\index{hackableEspDevice.ino@{hackableEspDevice.ino}!server@{server}}
+\index{server@{server}!hackableEspDevice.ino@{hackableEspDevice.ino}}
+\doxysubsubsection{\texorpdfstring{server()}{server()}}
+{\footnotesize\ttfamily ESP8266\+Web\+Server server (\begin{DoxyParamCaption}\item[{80}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{hackable_esp_device_8ino_a4fc01d736fe50cf5b977f755b675f11d}\label{hackable_esp_device_8ino_a4fc01d736fe50cf5b977f755b675f11d}} 
+\index{hackableEspDevice.ino@{hackableEspDevice.ino}!setup@{setup}}
+\index{setup@{setup}!hackableEspDevice.ino@{hackableEspDevice.ino}}
+\doxysubsubsection{\texorpdfstring{setup()}{setup()}}
+{\footnotesize\ttfamily void setup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Setup microchip. 
+
+
+
+Definition at line \mbox{\hyperlink{hackable_esp_device_8ino_source_l00040}{40}} of file \mbox{\hyperlink{hackable_esp_device_8ino_source}{hackable\+Esp\+Device.\+ino}}.
+
+\mbox{\Hypertarget{hackable_esp_device_8ino_aad42151da76d6be3b12c356b4b2e74f6}\label{hackable_esp_device_8ino_aad42151da76d6be3b12c356b4b2e74f6}} 
+\index{hackableEspDevice.ino@{hackableEspDevice.ino}!setupWifi@{setupWifi}}
+\index{setupWifi@{setupWifi}!hackableEspDevice.ino@{hackableEspDevice.ino}}
+\doxysubsubsection{\texorpdfstring{setupWifi()}{setupWifi()}}
+{\footnotesize\ttfamily void setup\+Wifi (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Connects to Wi\+Fi if it can, otherwise starts as AP to configure Wi\+FI. 
+
+
+
+Definition at line \mbox{\hyperlink{hackable_esp_device_8ino_source_l00108}{108}} of file \mbox{\hyperlink{hackable_esp_device_8ino_source}{hackable\+Esp\+Device.\+ino}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{hackable_esp_device_8ino_a73eefd3b2f1f3d6d3dde51f8ce1f07f4}\label{hackable_esp_device_8ino_a73eefd3b2f1f3d6d3dde51f8ce1f07f4}} 
+\index{hackableEspDevice.ino@{hackableEspDevice.ino}!cliExecuter@{cliExecuter}}
+\index{cliExecuter@{cliExecuter}!hackableEspDevice.ino@{hackableEspDevice.ino}}
+\doxysubsubsection{\texorpdfstring{cliExecuter}{cliExecuter}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_serial_command_executer}{Serial\+Command\+Executer}} cli\+Executer}
+
+
+
+Definition at line \mbox{\hyperlink{hackable_esp_device_8ino_source_l00031}{31}} of file \mbox{\hyperlink{hackable_esp_device_8ino_source}{hackable\+Esp\+Device.\+ino}}.
+
+\mbox{\Hypertarget{hackable_esp_device_8ino_a85a1845cd6671bcef69845032851013b}\label{hackable_esp_device_8ino_a85a1845cd6671bcef69845032851013b}} 
+\index{hackableEspDevice.ino@{hackableEspDevice.ino}!fsUploadFile@{fsUploadFile}}
+\index{fsUploadFile@{fsUploadFile}!hackableEspDevice.ino@{hackableEspDevice.ino}}
+\doxysubsubsection{\texorpdfstring{fsUploadFile}{fsUploadFile}}
+{\footnotesize\ttfamily File fs\+Upload\+File}
+
+
+
+Definition at line \mbox{\hyperlink{hackable_esp_device_8ino_source_l00033}{33}} of file \mbox{\hyperlink{hackable_esp_device_8ino_source}{hackable\+Esp\+Device.\+ino}}.
+
+\mbox{\Hypertarget{hackable_esp_device_8ino_a9ed244b51c3b5335f72a7612b1293005}\label{hackable_esp_device_8ino_a9ed244b51c3b5335f72a7612b1293005}} 
+\index{hackableEspDevice.ino@{hackableEspDevice.ino}!ledState@{ledState}}
+\index{ledState@{ledState}!hackableEspDevice.ino@{hackableEspDevice.ino}}
+\doxysubsubsection{\texorpdfstring{ledState}{ledState}}
+{\footnotesize\ttfamily uint8\+\_\+t led\+State = \mbox{\hyperlink{hackable_esp_device_8ino_a29e413f6725b2ba32d165ffaa35b01e5}{OFF}}}
+
+
+
+Definition at line \mbox{\hyperlink{hackable_esp_device_8ino_source_l00028}{28}} of file \mbox{\hyperlink{hackable_esp_device_8ino_source}{hackable\+Esp\+Device.\+ino}}.
+
+\mbox{\Hypertarget{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}\label{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}} 
+\index{hackableEspDevice.ino@{hackableEspDevice.ino}!server@{server}}
+\index{server@{server}!hackableEspDevice.ino@{hackableEspDevice.ino}}
+\doxysubsubsection{\texorpdfstring{server}{server}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_user_handler}{User\+Handler}} user\+Handler\& server}
+
+
+
+Definition at line \mbox{\hyperlink{hackable_esp_device_8ino_source_l00030}{30}} of file \mbox{\hyperlink{hackable_esp_device_8ino_source}{hackable\+Esp\+Device.\+ino}}.
+
+\mbox{\Hypertarget{hackable_esp_device_8ino_a263d4649a3eeb71bc1b2e02c81be5236}\label{hackable_esp_device_8ino_a263d4649a3eeb71bc1b2e02c81be5236}} 
+\index{hackableEspDevice.ino@{hackableEspDevice.ino}!timer@{timer}}
+\index{timer@{timer}!hackableEspDevice.ino@{hackableEspDevice.ino}}
+\doxysubsubsection{\texorpdfstring{timer}{timer}}
+{\footnotesize\ttfamily Neotimer timer = Neotimer(30000)}
+
+
+
+Definition at line \mbox{\hyperlink{hackable_esp_device_8ino_source_l00027}{27}} of file \mbox{\hyperlink{hackable_esp_device_8ino_source}{hackable\+Esp\+Device.\+ino}}.
+
