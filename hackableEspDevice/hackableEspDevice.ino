@@ -20,17 +20,22 @@
 #include "StartupText.h"                                                    //For printing startup log files
 
 /* On and off are inverted because the built-in led is active low */
-#define ON                      LOW
-#define OFF                     HIGH
+#define ON                      HIGH
+#define OFF                     LOW
+
+#define MAX_BRIGHTNESS          1022
 
 ESP8266WebServer server(80);                                                //Object that listens for HTTP requests on port 80
 Neotimer timer = Neotimer(30000);                                           //Setup a 30 second timer, to execute code with a 30 interval
 uint8_t ledState = OFF;                                                     //Declare led state variable
+uint16_t brightness = 1023;                                                 //For LED brightnesss
 
 UserHandler userHandler(&server);                                           //For handling the authentication
 SerialCommandExecuter cliExecuter;
 
 File fsUploadFile;                                                          //A File object to temporarily store the received file
+
+
 
 /**************************************************************************/
 /*!
@@ -49,7 +54,7 @@ void setup() {
     debugln("Debug is enabled");
     
     /* If debug is enabled, the root password is printed in a big string of text */
-    if (getDebugEnabled()) {
+    if(getDebugEnabled()) {
       String mess = "ROOT: " + String(ROOT_PASSWORD);
       printStartupText(mess);
     }
@@ -58,7 +63,7 @@ void setup() {
     //debugln(WIFI_PASSWORD);                                               //Print WiFi password one time in plain text when debugger is enabled
     
     pinMode(LED_BUILTIN, OUTPUT);
-    digitalWrite(LED_BUILTIN, ledState);
+    analogWrite(LED_BUILTIN, 1023);
 
     initializeHostname();
     setupWifi();    
@@ -141,6 +146,14 @@ void initializeServer() {
         handleFileRequest("/index.html", PERMISSION_LVL_ALL);
     });
 
+    server.on("/state", HTTP_GET, []() {
+        sendToFrontend("ledState");
+    });
+
+    server.on("/brightness", HTTP_GET, []() {
+        sendToFrontend("brightness");
+    });
+    
     /* Route for admin controls */
     server.on("/admin", HTTP_GET, []() {
         handleFileRequest("/admin.html", PERMISSION_LVL_ADMIN);
@@ -162,13 +175,13 @@ void initializeServer() {
     });
     
     /* Load style_desktop.css file, styling for desktop version */
-    server.on("/style_desktop.css", HTTP_GET, []() {
-        handleFileRequest("/style_desktop.css", PERMISSION_LVL_ALL);
+    server.on("/styles.css", HTTP_GET, []() {
+        handleFileRequest("/styles.css", PERMISSION_LVL_ALL);
     });
     
     /* Load style_mobile.css file, styling for mobile version */
-    server.on("/style_mobile.css", HTTP_GET, []() {
-        handleFileRequest("/style_mobile.css", PERMISSION_LVL_ALL);
+    server.on("/styles_mobile.css", HTTP_GET, []() {
+        handleFileRequest("/styles_mobile.css", PERMISSION_LVL_ALL);
     });
 
     /* Load style_switch.css file, styling for the on/off switch */
@@ -206,10 +219,26 @@ void initializeServer() {
     server.on("/set_power", HTTP_GET, []() {
         if (server.arg("state")) {
             ledState = atoi(server.arg("state").c_str());
-            digitalWrite(LED_BUILTIN, !ledState);
+            if(ledState == ON) {
+                analogWrite(LED_BUILTIN, MAX_BRIGHTNESS-brightness);
+            } else {
+                analogWrite(LED_BUILTIN, 1023);
+            }
         }
         handleFileRequest("/index.html", PERMISSION_LVL_ALL);
     });
+    
+    /* Route for brightness */
+    server.on("/update_brightness", HTTP_GET, []() {
+        if (server.arg("brightness")) {
+            brightness = atoi(server.arg("brightness").c_str());
+            if(ledState == ON) {
+                analogWrite(LED_BUILTIN, 1023-brightness);
+            }
+        }
+        handleFileRequest("/index.html", PERMISSION_LVL_ALL);
+    });
+
 
     /* Route for restarting the server */
     server.on("/restart", HTTP_GET, []() {
@@ -246,6 +275,19 @@ void initializeServer() {
 
 /**************************************************************************/
 /*!
+  @brief    Replaces placeholders with actual data in HTML page.
+*/
+/**************************************************************************/
+void sendToFrontend(String var){
+    if (var == "ledState") {
+        server.send(200, "text/plain", String (ledState));
+    } else if (var == "brightness") {
+      server.send(200, "text/plain", String (brightness));
+    }
+}
+
+/**************************************************************************/
+/*!
     @brief    Mainloop.
 */
 /**************************************************************************/
@@ -264,20 +306,6 @@ void loop() {
   if(Serial.available()) {
     cliExecuter.executeCommand();
   }
-}
-
-/**************************************************************************/
-/*!
-  @brief    Replaces placeholders with actual data in HTML page.
-*/
-/**************************************************************************/
-String processor(const String& var){
-    if (var == "LED_STATE") {
-        return (String) ledState;
-    } else {
-        return " placeholder_error ";
-    }
-    return String();
 }
 
 /**************************************************************************/
