@@ -23,6 +23,7 @@
 #define COMMAND_RESTART         "reboot"
 #define COMMAND_USERS           "users"
 #define COMMAND_HOSTNAME        "hostname"
+#define COMMAND_WHOAMI          "whoami"
 
 /* Used for buffer overflow */
 #define COMMAND_LS              "ls"
