@@ -35,8 +35,6 @@ SerialCommandExecuter cliExecuter;
 
 File fsUploadFile;                                                          //A File object to temporarily store the received file
 
-
-
 /**************************************************************************/
 /*!
     @brief    Setup microchip.
@@ -282,7 +280,7 @@ void sendToFrontend(String var){
     if (var == "ledState") {
         server.send(200, "text/plain", String (ledState));
     } else if (var == "brightness") {
-      server.send(200, "text/plain", String (brightness));
+        server.send(200, "text/plain", String (brightness));
     }
 }
 
@@ -293,17 +291,17 @@ void sendToFrontend(String var){
 /**************************************************************************/
 void loop() {
   server.handleClient();
-  if(timer.repeat()){                                                       //Prints WiFi password every 30 second on serial in the form of stars: "*****", so it is not readable, it's a hint
+  if (timer.repeat()){                                                      //Prints WiFi password every 30 second on serial in the form of stars: "*****", so it is not readable, it's a hint
       //debug("Wifi Password: ");
       String wifipass = "WiFi.password()?";
       uint8_t charCount = wifipass.length();                                //Count how many characters the WiFi password contains
       for (uint8_t i = 0; i < charCount; i++) {
-        //Serial.print("*");                                                  //Print a "*" for each password character
+        //Serial.print("*");                                                //Print a "*" for each password character
       }
       //Serial.println("");                                            
   }
 
-  if(Serial.available()) {
+  if (Serial.available()) {
     cliExecuter.executeCommand();
   }
 }
@@ -402,7 +400,7 @@ void handleFileUpload() {
 void handleFileDownload() {
     String filename = server.arg("filekey");                                //Get user input for filename
 
-    if(!filename.startsWith("/")) {
+    if (!filename.startsWith("/")) {
         filename = "/" + filename;
     }
 

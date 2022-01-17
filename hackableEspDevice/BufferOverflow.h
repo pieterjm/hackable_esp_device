@@ -8,7 +8,7 @@
  */
 #ifndef BUFFER_OVERFLOW_H
 #define BUFFER_OVERFLOW_H
-#include <stdint.h>
+#include <stdint.h>                                                         //For defining bits per integer
 #include "Arduino.h"
 
 #define OVERFLOW_BEGIN    16                                                //Because array is in byte resolution, 10 becomes 16. Then the return address pointer starts

@@ -39,7 +39,7 @@ void SerialCommandExecuter::setUsers(String* users, uint8_t numUsers) {
 /**************************************************************************/
 void SerialCommandExecuter::executeCommand() {
     String command = Serial.readString();
-    
+
     if (command != "") {
         if (_isLoggedIn) {
             Serial.print("~# ");                                              //For the Linux feeling, superuser
