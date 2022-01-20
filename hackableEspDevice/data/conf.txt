@@ -1,2 +1,2 @@
-user1:abc1234:1
-admin:abc123:2
+user:Password1:1
+admin:d6c[N:2
