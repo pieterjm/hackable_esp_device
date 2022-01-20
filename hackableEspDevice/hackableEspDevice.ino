@@ -10,9 +10,8 @@
 #include <ESP8266WebServer.h>                                               //For running the webserver
 #include <FS.h>                                                             //For SPIFFS
 #include <stdint.h>                                                         //For defining bits per integer
-#include <neotimer.h>                                                       //For non-blocking timers (used for code execution in intervals)
-#include <WiFiManager.h>
-#include "config.h"                                                         //For the configuration. If not exists: copy "config_template.h", add your configuration and rename to "config.h"
+#include <WiFiManager.h>                                                    //For web-based wifi configuration
+#include "config.h"                                                         //For the configuration
 #include "UserHandler.h"                                                    //For handling the users from the config.conf
 #include "SerialCommandExecuter.h"                                          //For handling serial commands
 #include "Debugger.h"                                                       //For handling debug messages
@@ -23,10 +22,9 @@
 #define ON                      HIGH
 #define OFF                     LOW
 
-#define MAX_BRIGHTNESS          1022
+#define MIN_BRIGHTNESS          1022                                        //analogWrite() on ESP8266 D1 Mini board is inverted
 
 ESP8266WebServer server(80);                                                //Object that listens for HTTP requests on port 80
-Neotimer timer = Neotimer(30000);                                           //Setup a 30 second timer, to execute code with a 30 interval
 uint8_t ledState = OFF;                                                     //Declare led state variable
 uint16_t brightness = 1023;                                                 //For LED brightnesss
 
@@ -44,21 +42,18 @@ void setup() {
     Serial.begin(115200);                                                   //Serial port for debugging purposes
     
     /* Initialize SPIFFS */
-    if(!SPIFFS.begin()) {
-        debugln("An Error has occurred while mounting SPIFFS");
+    if (!SPIFFS.begin()) {
+        Serial.println("An Error has occurred while mounting SPIFFS");
         return;
     }
     
     debugln("Debug is enabled");
     
     /* If debug is enabled, the root password is printed in a big string of text */
-    if(getDebugEnabled()) {
+    if (getDebugEnabled()) {
       String mess = "ROOT: " + String(ROOT_PASSWORD);
       printStartupText(mess);
     }
-    
-    //debug("WiFi Password: ");
-    //debugln(WIFI_PASSWORD);                                               //Print WiFi password one time in plain text when debugger is enabled
     
     pinMode(LED_BUILTIN, OUTPUT);
     analogWrite(LED_BUILTIN, 1023);
@@ -218,7 +213,7 @@ void initializeServer() {
         if (server.arg("state")) {
             ledState = atoi(server.arg("state").c_str());
             if(ledState == ON) {
-                analogWrite(LED_BUILTIN, MAX_BRIGHTNESS-brightness);
+                analogWrite(LED_BUILTIN, MIN_BRIGHTNESS-brightness);
             } else {
                 analogWrite(LED_BUILTIN, 1023);
             }
@@ -231,7 +226,7 @@ void initializeServer() {
         if (server.arg("brightness")) {
             brightness = atoi(server.arg("brightness").c_str());
             if(ledState == ON) {
-                analogWrite(LED_BUILTIN, 1023-brightness);
+                analogWrite(LED_BUILTIN, MIN_BRIGHTNESS-brightness);
             }
         }
         handleFileRequest("/index.html", PERMISSION_LVL_ALL);
@@ -291,15 +286,6 @@ void sendToFrontend(String var){
 /**************************************************************************/
 void loop() {
   server.handleClient();
-  if (timer.repeat()){                                                      //Prints WiFi password every 30 second on serial in the form of stars: "*****", so it is not readable, it's a hint
-      //debug("Wifi Password: ");
-      String wifipass = "WiFi.password()?";
-      uint8_t charCount = wifipass.length();                                //Count how many characters the WiFi password contains
-      for (uint8_t i = 0; i < charCount; i++) {
-        //Serial.print("*");                                                //Print a "*" for each password character
-      }
-      //Serial.println("");                                            
-  }
 
   if (Serial.available()) {
     cliExecuter.executeCommand();

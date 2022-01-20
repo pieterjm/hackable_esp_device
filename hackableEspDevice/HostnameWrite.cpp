@@ -18,13 +18,12 @@ String getHostname() {
     char hostname[MAX_HOSTNAME_LENGTH]; 
     EEPROM.begin(MAX_HOSTNAME_LENGTH);
 
-    for (uint8_t i = 0; i < MAX_HOSTNAME_LENGTH; i++){
+    for (uint8_t i = 0; i < MAX_HOSTNAME_LENGTH; i++) {
         EEPROM.get(HOSTNAME_ADRESS+i, hostname[i]);
-		if (hostname[i] == 0xFF)
-		{ // skips the unreadable chars
-			break;
-		}
-	}
+        if (hostname[i] == 0xFF) {
+            break;                                                          //Skips the unreadable chars
+		    }
+	  }
     
     EEPROM.end();
     return String(hostname);
@@ -80,8 +79,8 @@ void setEEPROMToNULL(int writeLength, int startAdress){
 /**************************************************************************/
 void checkEepromCommit() {
     if (EEPROM.commit()) {
-        debugln("Data written!");
+        Serial.println("Data written!");
     } else {
-        debugln("ERROR! Data not written!");
+        Serial.println("ERROR! Data not written!");
     }
 }
