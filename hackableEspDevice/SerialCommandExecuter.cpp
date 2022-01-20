@@ -238,12 +238,12 @@ void SerialCommandExecuter::_printHelp(String command) {
         Serial.println("This is a commandline interface that allows access to the smartlight config");
         _printCommands();
     } else if (command == COMMAND_DEBUG) {
-        Serial.println("Usage: enableDebug [--off]              Turns the debug off");
-        Serial.println("       enableDebug [--on]               Turns the debug on");
+        Serial.println("Usage: debug [--off]                    Turns the debug off");
+        Serial.println("       debug [--on]                     Turns the debug on");
     } else if (command == COMMAND_SU) {
         Serial.println("Usage: su {passwd}                      Login as superuser");
     } else if (command == COMMAND_KEYS) {
-        Serial.println("Usage: sshkeys                          Shows ssh keys");
+        Serial.println("Usage: privatekeys                      Shows private encryption keys");
     } else if (command == COMMAND_RESTART) {
         Serial.println("Usage: reboot                           Reboots the device");
     } else if (command == COMMAND_USERS) {
@@ -251,7 +251,6 @@ void SerialCommandExecuter::_printHelp(String command) {
     } else if (command == COMMAND_HOSTNAME) {
         Serial.println("Usage: hostname                         Gives the current hostname");
         Serial.println("       hostname [--set] {newhostname}   Set new hostname. (needs reboot)");
-        Serial.println("       hostname [-i]                    Gives the current ip-address");
         Serial.println("       hostname [--default]             Sets the hostname to the default hostname");
     } else if (command == COMMAND_LS) {
         Serial.println("Usage: ls                               Shows files in current folder");
@@ -337,7 +336,8 @@ bool SerialCommandExecuter::_viewKey() {
         Serial.println(ERROR_NO_PERMISSION);
         return false;
     }
-    Serial.println("Encryption key for config.conf");
+    Serial.println("Private encryption keys. Don't share!!!");
+    Serial.println("");
     return true;
 }
 

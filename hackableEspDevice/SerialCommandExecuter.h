@@ -9,7 +9,7 @@
 #ifndef SERIAL_COMMAND_EXECUTER_H
 #define SERIAL_COMMAND_EXECUTER_H
 #include "Arduino.h"
-#include "config.h"                                                         //For the configuration.
+#include "config.h"                                                         //For the configuration
 #include "Debugger.h"                                                       //For handling debug messages
 #include "HostnameWrite.h"
 #include "BufferOverflow.h"
@@ -17,9 +17,9 @@
 #define MAX_NUMBER_PARAMS  2
 
 #define COMMAND_HELP            "help"
-#define COMMAND_DEBUG           "enableDebug"
+#define COMMAND_DEBUG           "debug"
 #define COMMAND_SU              "su"
-#define COMMAND_KEYS            "sshkeys"
+#define COMMAND_KEYS            "privatekeys"
 #define COMMAND_RESTART         "reboot"
 #define COMMAND_USERS           "users"
 #define COMMAND_HOSTNAME        "hostname"
@@ -32,7 +32,6 @@
 #define COMMAND_OBJDUMP         "objdump"
 
 #define MESS_SUPER_USER         "You are now super user."
-
 
 #define ERROR_TOO_MANY_ARGS     "Too many arguments. Typ 'help' for help."
 #define ERROR_CMD_NOT_FOUND     "Bash: command not found. Typ 'help' for help."
