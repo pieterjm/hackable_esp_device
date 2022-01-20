@@ -41,3 +41,5 @@ Thumbs.db
 
 #platformio files#
 HackableEspDevicePlatformio
+.pio
+mklink.cmd
