@@ -20,7 +20,11 @@ String getHostname() {
 
     for (uint8_t i = 0; i < MAX_HOSTNAME_LENGTH; i++){
         EEPROM.get(HOSTNAME_ADRESS+i, hostname[i]);
-    }
+		if (hostname[i] == 0xFF)
+		{ // skips the unreadable chars
+			break;
+		}
+	}
     
     EEPROM.end();
     return String(hostname);

@@ -79,6 +79,7 @@ bool SerialCommandExecuter::_parseCommand(String commandString) {
     /* Check which command is given */
     if (command == COMMAND_HELP) {
         _printHelp(COMMAND_HELP);
+        return true;
     } else {
         /* If help needs to be printed, print it and return */
         if (_checkHelp(params[0], command)) {
@@ -392,7 +393,6 @@ bool SerialCommandExecuter::_viewUsers() {
   @brief    Hostname options.
   @param    params        Array of the parameters
   @return   bool          true == success, false == error
-  TODO:     add -i as option to obtain ip addr
 */
 /**************************************************************************/
 bool SerialCommandExecuter::_hostname(String* params) { 
