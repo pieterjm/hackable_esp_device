@@ -3,7 +3,7 @@
 __version__ = '1.0 2021-12-23'
 
 def control(state, addr):
-    # Send the url request to the CSRF vulnerable function
+    # Send the url request to the LED control function
     # Hints: use the addr (IP) and state variables
 
     try:
@@ -58,17 +58,15 @@ if __name__ == '__main__':
         pool_size = (hostsnr + 1)  # Parallelness
         pool = Pool(pool_size)
 
-        # Every cycle takes around 20 seconds
+        # Every cycle takes around 20 seconds, this is due to urllib which waits 20 seconds
         # For every available host in the IP given range call the control function
         for addr in ipaddress.IPv4Network(hosts):
             # Send LED command to all available hosts on the network asynchronously (multi thread operation)
             contents = pool.apply_async(control, (str(state), addr,))
 
-
-            #print(addr)
-
-            # Debug purposes
+            # Debug purposes, turn the comment off to make use of it
             #print(contents)
+            #print(addr)
 
         print('')
         print('----------------------------------------')
@@ -83,6 +81,3 @@ if __name__ == '__main__':
 
         pool.close()
         pool.join()
-
-        # Het duurt 20 seconden totdat de LEDs weer aan of uit gaan vanwege deze loop. Ik verwacht dat het proces toch nog wacht op de finish van de urllib calls en hem dan pas als
-        # klaar aanschouwd, kijken of dit te negeren is en te versnellen is

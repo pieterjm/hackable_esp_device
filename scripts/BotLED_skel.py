@@ -3,7 +3,7 @@
 __version__ = '1.0 2021-12-23'
 
 def control(state, addr):
-    # Send the url request to the CSRF vulnerable function
+    # Send the url request to the LED control function
     # Hints: use url library and the addr (IP) and state variables
     try:
         # Trainee work {{
