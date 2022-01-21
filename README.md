@@ -1,5 +1,5 @@
 # Hackable ESP8266 device
-Firmware for ESP8266 based device (D1 Mini board) with designed vunerabilities to practice ethical hacking. The software is tested on the following boards:
+Firmware for ESP8266 based device (D1 Mini board) with designed vulnerabilities to practice ethical hacking. The software is tested on the following boards:
 
 * [D1 Mini](https://www.berrybase.de/en/dev.-boards/esp8266-esp32-d1-mini/)
 ## Getting Started
@@ -10,10 +10,10 @@ These instructions will get you a copy of the project up and running on your D1 
 
 The software is written, compiled and uploaded using the [Arduino IDE](https://www.arduino.cc/en/software). Platform.io and Visual Studio Code can be used as well. Use the script to convert the project to a Platform.io.
 
-### Dependecies
+### Dependencies
 
 
-#### Libaries
+#### Libraries
 
 - ESP for Arduino IDE
 - ESP Async WebServer V1.2.3
@@ -34,7 +34,7 @@ There are multiple ways to upload the program files to the board. The two ways l
 <b>Arduino IDE</b>
 
 1. Install the [Arduino IDE](https://www.arduino.cc/en/software)
-2. [Add the esp8266 libaries to Arduino IDE](https://www.nonscio.com/blog/installing-esp8266-libraries-to-the-arduino-ide)
+2. [Add the esp8266 libraries to Arduino IDE](https://www.nonscio.com/blog/installing-esp8266-libraries-to-the-arduino-ide)
 3. Follow [this](https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide) tutorial about the SPIFFS.
 4. Navigate to the `hackableEspDevice` folder.
 5. Open `hackableEspDevice.ino`.
@@ -44,10 +44,12 @@ There are multiple ways to upload the program files to the board. The two ways l
 
 <b>Visual Studio Code + Platformio</b>
 1. Install the [Platformio](https://platformio.org/install/ide?install=vscode) plugin.
-2. Perpare files for platformio
-   - Run the `toPlatformio.ps1` script and select the copy or sybolic option
+2. Prepare files for platformio
+   - Run the `toPlatformio.ps1` script and select the copy or symbolic option
+        - Symbolic changes the original ideal for editing the files
+        - Copy simply copies the files to a new location for platformio files
    - Run the `toPlatformio.ps1` script and select fix
-   - Or perpare the files manualy see manual prep platformio
+   - Or prepare the files manually see manual prep platformio
 3. Open visual studio code in the `HackableEspDevicePlatformio` directory
 4. In visual studio code open the project in the platformio addon. `(Platoformio > Projects > open HackableEspDevicePlatformio)`
 5. Upload the program `(project tasks > General> Upload)`
@@ -55,7 +57,7 @@ There are multiple ways to upload the program files to the board. The two ways l
 7.  Done the device should now be ready for use
 
 ### Manual platformio prep
-1. create the correct hiarchy 
+1. create the correct hierarchy 
 
     |HackableEspDevicePlatformio\ \
     |--- platformio.ini \
@@ -65,7 +67,7 @@ There are multiple ways to upload the program files to the board. The two ways l
 
 1. the src dir needs to contain all the files from the `hackableEspDevice` directory except the data directory
 2. rename the `hackableEspDevice.ino` to `main.cpp`
-3. in `main.cpp` add a reference to all functions in main eg.\
+3. in `main.cpp` add a reference to all functions in main e.g.\
 void setup();\
 void setup();\
 void initializeHostname();\
