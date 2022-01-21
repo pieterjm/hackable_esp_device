@@ -63,9 +63,9 @@ https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide
 6. Upload the filesystem Image `(Project tasks > Platform > Upload filesystem Image)`
 7.  Done the device should now be ready for use
 
-<b>First start</b>
-1. Start up the device
-2. Connect to the `Configure Smartlight Wifi` Access point
+<b>First Steps</b>
+1. Start up the device 
+2. Connect to the `Configure Smartlight Wifi` via Access point
 3. Go to the ip address listed in the serial monitor most of the time this is [http://192.168.4.1](http://192.168.4.1)
 4. Follow the steps on the website to configure a wifi connection
 5. The device should now restart, connect to the selected wifi network and be ready for use
