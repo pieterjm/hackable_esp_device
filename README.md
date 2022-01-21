@@ -24,7 +24,7 @@ The software is written, compiled and uploaded using the [Arduino IDE](https://w
 
 ### Installing
 
-<b>General install</b>
+<b>General Install</b>
 1. Install the [driver](https://github.com/HobbyComponents/CH340-Drivers) for the esp8266.
 2. Clone the repository.
 
@@ -63,14 +63,14 @@ There are multiple ways to upload the program files to the board. The two ways l
 6. Upload the filesystem Image `(Project tasks > Platform > Upload filesystem Image)`.
 7.  Done the device should now be ready for use.
 
-<b>Wifi manager first boot</b>
+<b>Wifi Manager First Boot</b>
 1. Start up the device.
 2. Connect to the `Configure Smartlight Wifi` via a mobile device.
 3. Go to the ip address listed in the serial monitor most of the time this is [http://192.168.4.1](http://192.168.4.1).
 4. Follow the steps on the website to configure a wifi connection.
 5. The device should now restart, connect to the selected wifi network and be ready for use.
 
-### Manual platformio prep
+### Manual Platformio Prep
 1. create the correct hierarchy.
 
     |HackableEspDevicePlatformio\ \
@@ -96,7 +96,7 @@ void handleFileDownload();
 4. Move the platoformio.ini file from the root dir to the `hackableEspDevicePlatoformio` dir.
 5. Copy all files from `hackableEspDevice\data` to `hackableEspDevicePlatformio\data`.
 
-### Customization of hackable ESP (Contains spoilers)(Look in code of readme.md)
+### Customization of Hackable ESP (Contains spoilers)(Look in code of readme.md)
 <!--
 Default user and passwd
 It is possible to change the default username and password for the users on the webpage.
@@ -118,7 +118,7 @@ The settings that can be changed are the:
 * 1x D1 Mini Board
 * 1x USB to USB-mini cable
 
-## Questions or feedback?
+## Questions or Feedback?
 
 There is technical documentation available if you want to contribute to this project. There is an user manual as well, contact us for information. You can open an issue if you have questions or feedback for this repository.
 
