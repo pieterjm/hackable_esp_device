@@ -31,7 +31,7 @@ The software is written, compiled and uploaded using the [Arduino IDE](https://w
 There are multiple ways to upload the program files to the board. The two ways listed here are using Arduino IDE and Platformio on visual studio code.
 
 
-<b>Arduino IDE</b>
+<b>Option 1: Arduino IDE</b>
 
 1. Install the [Arduino IDE](https://www.arduino.cc/en/software)
 2. [Add the esp8266 libraries to Arduino IDE](https://www.nonscio.com/blog/installing-esp8266-libraries-to-the-arduino-ide)
@@ -49,7 +49,7 @@ There are multiple ways to upload the program files to the board. The two ways l
 3. The file should be unpacked at `<home_dir>/Arduino-<version>/tools/ESP8266FS/tools/`.
    - If the directory `tools` does not exist you should create it. You have to create a new file named "tools" if it doesn't exist already inside of [Arduino file](https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide).
 
-<b>Visual Studio Code + Platformio</b>
+<b>Option 2: Visual Studio Code + Platformio</b>
 1. Install the [Platformio](https://platformio.org/install/ide?install=vscode) plugin.
 2. Prepare files for platformio.
    - Run the `toPlatformio.ps1` script and select the copy or symbolic option.
@@ -127,7 +127,7 @@ There is technical documentation available if you want to contribute to this pro
 * **Luke de Munk** - *Head author* - [LinkedIn](https://www.linkedin.com/in/luke-de-munk/)
 * **Thijs Takken** - *Head author* - [LinkedIn](https://www.linkedin.com/in/)
 * **Christina Kostine** - *Head author* - [LinkedIn](https://www.linkedin.com/in/christine-kostine)
-* **Twenne Elffers** - *Head author* - [LinkedIn](https://www.linkedin.com/in/)
+* **Twenne Elffers** - *Head author* - [LinkedIn](https://www.linkedin.com/in/twenne-elffers/)
 
 <!-- ## License
 
