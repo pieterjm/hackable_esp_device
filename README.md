@@ -25,11 +25,11 @@ The software is written, compiled and uploaded using the [Arduino IDE](https://w
 ### Installing
 
 <b>General install</b>
-1. Install the [driver](https://github.com/HobbyComponents/CH340-Drivers) for the esp8266
-2. Clone the repository
+1. Install the [driver](https://github.com/HobbyComponents/CH340-Drivers) for the esp8266.
+2. Clone the repository.
 
-There are multiple ways to upload the program files to the board. The two ways listed here are using Arduino IDE and Platformio on visual studio code
-https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide
+There are multiple ways to upload the program files to the board. The two ways listed here are using Arduino IDE and Platformio on visual studio code.
+
 
 <b>Arduino IDE</b>
 
@@ -44,34 +44,34 @@ https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide
 
 <b>ESP8266 Sketch Data Upload</b>
 
-1. Some Arduino's IDE won't have the option 'ESP8266 Sketch Data Upload' 
-2. You can download it from this link (https://github.com/esp8266/arduino-esp8266fs-plugin/releases/tag/0.5.0)
-3. You have to create a new file named "tools" if it doesn't exist already inside of Arduino file
-4. The final step is download .zip content inside of it 
+1. Some installations of the Arduino IDE won't have the option 'ESP8266 Sketch Data Upload'.
+2. You can download it from this [link](https://github.com/esp8266/arduino-esp8266fs-plugin/releases/tag/0.5.0).
+3. The file should be unpacked at `<home_dir>/Arduino-<version>/tools/ESP8266FS/tools/`.
+   - If the directory `tools` does not exist you should create it. You have to create a new file named "tools" if it doesn't exist already inside of [Arduino file](https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide).
 
 <b>Visual Studio Code + Platformio</b>
 1. Install the [Platformio](https://platformio.org/install/ide?install=vscode) plugin.
-2. Prepare files for platformio
-   - Run the `toPlatformio.ps1` script and select the copy or symbolic option
-        - Symbolic changes the original ideal for editing the files
-        - Copy simply copies the files to a new location for platformio files
-   - Run the `toPlatformio.ps1` script and select fix
-   - Or prepare the files manually see manual prep platformio
-3. Open visual studio code in the `HackableEspDevicePlatformio` directory
-4. In visual studio code open the project in the platformio addon. `(Platoformio > Projects > open HackableEspDevicePlatformio)`
-5. Upload the program `(project tasks > General> Upload)`
-6. Upload the filesystem Image `(Project tasks > Platform > Upload filesystem Image)`
-7.  Done the device should now be ready for use
+2. Prepare files for platformio.
+   - Run the `toPlatformio.ps1` script and select the copy or symbolic option.
+        - Symbolic changes the original ideal for editing the files.
+        - Copy simply copies the files to a new location for platformio files.
+   - Run the `toPlatformio.ps1` script and select fix.
+   - Or prepare the files manually see manual prep platformio.
+3. Open visual studio code in the `HackableEspDevicePlatformio` directory.
+4. In visual studio code open the project in the platformio addon. `(Platoformio > Projects > open HackableEspDevicePlatformio)`.
+5. Upload the program `(project tasks > General> Upload)`.
+6. Upload the filesystem Image `(Project tasks > Platform > Upload filesystem Image)`.
+7.  Done the device should now be ready for use.
 
-<b>First Steps</b>
-1. Start up the device 
-2. Connect to the `Configure Smartlight Wifi` via Access point
-3. Go to the ip address listed in the serial monitor most of the time this is [http://192.168.4.1](http://192.168.4.1)
-4. Follow the steps on the website to configure a wifi connection
-5. The device should now restart, connect to the selected wifi network and be ready for use
+<b>Wifi manager first boot</b>
+1. Start up the device.
+2. Connect to the `Configure Smartlight Wifi` via a mobile device.
+3. Go to the ip address listed in the serial monitor most of the time this is [http://192.168.4.1](http://192.168.4.1).
+4. Follow the steps on the website to configure a wifi connection.
+5. The device should now restart, connect to the selected wifi network and be ready for use.
 
 ### Manual platformio prep
-1. create the correct hierarchy 
+1. create the correct hierarchy.
 
     |HackableEspDevicePlatformio\ \
     |--- platformio.ini \
@@ -79,8 +79,8 @@ https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide
     |--- src\main.cpp\
     |--- data\ 
 
-1. the src dir needs to contain all the files from the `hackableEspDevice` directory except the data directory
-2. rename the `hackableEspDevice.ino` to `main.cpp`
+1. the src dir needs to contain all the files from the `hackableEspDevice` directory except the data directory.
+2. rename the `hackableEspDevice.ino` to `main.cpp`.
 3. in `main.cpp` add a reference to all functions in main e.g.\
 void setup();\
 void setup();\
@@ -93,8 +93,8 @@ String getContentType(String filename);\
 void handleFileRequest(String path, uint8_t permissionLevel);\
 void handleFileUpload();\
 void handleFileDownload();
-4. Move the platoformio.ini file from the root dir to the `hackableEspDevicePlatoformio` dir
-5. Copy all files from `hackableEspDevice\data` to `hackableEspDevicePlatformio\data`
+4. Move the platoformio.ini file from the root dir to the `hackableEspDevicePlatoformio` dir.
+5. Copy all files from `hackableEspDevice\data` to `hackableEspDevicePlatformio\data`.
 
 ### Customization of hackable ESP (Contains spoilers)(Look in code of readme.md)
 <!--
