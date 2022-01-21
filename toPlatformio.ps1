@@ -12,30 +12,14 @@
     made for hackableESP project
 
 #>
-$global:symbolicLinkCheck = $false  #change this to $true if you want a mklink.cmd for editing does require platformio dir to be empty
-                            #change this to $false if you want to just copy all files
 
-$doCheck = $true # do check to see if user would like copy or symbolic
-if ($doCheck){
-    $symbolicLinkInput = Read-Host -Prompt "would you would like to create symbolic links or just copy the files ((S)ymbolic/(C)opy)`nSymbolic links updates the files in the home dir as you edit them    ((S)ymbolic/(C)opy)"
-    if ($symbolicLinkInput.ToLower()-eq "c" -or $symbolicLinkInput.ToLower()-eq "copy"){
-        $symbolicLinkCheck = $false
-    }
-    elseif ($symbolicLinkInput.ToLower()-eq "s" -or $symbolicLinkInput.ToLower()-eq "symbolic"){
-        $symbolicLinkCheck = $true
-    }
-    else{ #if input is not understood stop program
-        write-host "input not understood"
-        pause
-        exit
-    }
-}
 
 $global:currentDir = (Get-Location).toString()
 $global:SketchDirName = ($currentDir+"\hackableEspDevice\")
 $global:platfomrmioDirName = ($currentDir+"\HackableEspDevicePlatformio")
 $global:platformioIniName = ($currentDir+"\platformio.ini")
 $global:mklinkName = ($currentDir+"\mklink.cmd")
+$global:platformioHFilename = "platformio.h"
 
 $platformioDirCheck= Test-Path $platfomrmioDirName
 $sketchCheck = Test-Path $SketchDirName
@@ -113,6 +97,48 @@ function getDir($dir){
     }
     return $dirList
 }
+function NewMainFile ($file, $outfile,$platformioH) {
+    $platformioIncludeCounter = 0
+    $platformioHContents = "
+    #ifndef PLATFORMIO_H
+    #define PLATFORMIO_H`n"
+    $platformioHContentsEnd = "`n#endif"
+    $fileContents = Get-Content $file
+    $mainfile = ""
+    foreach ($line in $fileContents){
+        if ($line.toLower() -match "(void|String|bool)\s\w+\("){
+            $mainfile += ($line +"`n")
+            if ($line -match "({|{\s*})$"){
+                $line = $line.replace("{",";")
+                while ($line -match "\)(\s+);"){
+                    $line = $line.replace(" ;", ";")
+                }
+            }
+            $platformioHContents += ($line +"`n")
+            write-host $line
+        }
+        elseif ($line.tolower() -match '^#include "'){ #TODO:Fix the dubble add
+            if ($line.tolower() -match ('^#include "'+$platformioHFilename+'"')){
+                write-host (('^#include "'+$platformioHFilename+'"'))
+                write-host $line.tolower()
+                $platformioIncludeCounter += 1
+            }
+            elseif ($platformioIncludeCounter -eq 0 ){
+                $mainfile += '#include "'+$platformioHFilename+'"'+"`n"+($line +"`n")
+                $platformioIncludeCounter += 1
+            }
+            else {
+                $mainfile += ($line +"`n")
+            }
+        }
+        else {
+            $mainfile += ($line +"`n")
+        }
+    }
+    $platformioHContents += $platformioHContentsEnd
+    Set-Content -Path $outfile -Value $mainfile
+    Set-Content -Path $platformioH -Value $platformioHContents 
+}
 function CreateSymLinkFile(){
         <#
     .Description
@@ -150,12 +176,44 @@ Function CopyFiles(){
         if ($file.fullName -match ".*\\data\\.*"){ #check for all files in data folder
             copy-item $file.Fullname ($platfomrmioDirName+'\data\'+$file.name)
         }
-        elseif ($file.FullName -match ".*ino"){ #Check for the ino sketch file use main.cpp for easier identification
-            copy-item $file.Fullname ($platfomrmioDirName+'\src\main.cpp')
+        elseif ($file.FullName -match ".*ino$"){ #Check for the ino sketch file use main.cpp for easier identification
+            NewMainFile -file $file.Fullname -outfile ($platfomrmioDirName+'\src\main.cpp') -platformioH ($platfomrmioDirName+'\src\'+$platformioHFilename)
+            #copy-item $file.Fullname ($platfomrmioDirName+'\src\main.cpp')
         }
         else{
             copy-item $file.Fullname ($platfomrmioDirName+'\src\'+$file.name)
         }
+    }
+}
+
+
+$global:symbolicLinkCheck = $false  #change this to $true if you want a mklink.cmd for editing does require platformio dir to be empty
+                            #change this to $false if you want to just copy all files
+
+$doCheck = $true # do check to see if user would like copy or symbolic
+if ($doCheck){
+    $symbolicLinkInput = Read-Host -Prompt "would you would like to create symbolic links or just copy the files ((S)ymbolic/(C)opy/(F)ix)`nSymbolic links updates the files in the home dir as you edit them    ((S)ymbolic/(C)opy/(F)ix)`nOr would you like to fix the main file                               ((S)ymbolic/(C)opy/(F)ix)"
+    if ($symbolicLinkInput.ToLower()-eq "c" -or $symbolicLinkInput.ToLower()-eq "copy"){
+        $symbolicLinkCheck = $false
+    }
+    elseif ($symbolicLinkInput.ToLower()-eq "s" -or $symbolicLinkInput.ToLower()-eq "symbolic"){
+        $symbolicLinkCheck = $true
+    }
+    elseif ($symbolicLinkInput.ToLower()-eq "f" -or $symbolicLinkInput.ToLower()-eq "fix"){
+        $dirFiles = getDir $SketchDirName
+        foreach ($file in $dirFiles){
+            if ($file.FullName -match ".*ino$"){ #Check for the ino sketch file use main.cpp for easier identification
+                write-host $file.FullName
+                NewMainFile -file $file.Fullname -outfile ($platfomrmioDirName+'\src\main.cpp') -platformioH ($platfomrmioDirName+'\src\'+$platformioHFilename)
+                #copy-item $file.Fullname ($platfomrmioDirName+'\src\main.cpp')
+            }
+        }
+        exit
+    }
+    else{ #if input is not understood stop program
+        write-host "input not understood"
+        pause
+        exit
     }
 }
 

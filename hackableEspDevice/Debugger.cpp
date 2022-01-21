@@ -16,9 +16,11 @@
 void debug(String text) {
     EEPROM.begin(1);
     bool isEnabled = EEPROM.read(ENABLE_DEBUG_FLAG_ADDRESS);
+    
     if(isEnabled) {
         Serial.print(text);
     }
+    EEPROM.end();
 }
 
 /**************************************************************************/
@@ -28,10 +30,12 @@ void debug(String text) {
 */
 /**************************************************************************/
 void debugln(String text) {
+    EEPROM.begin(1);
     bool isEnabled = EEPROM.read(ENABLE_DEBUG_FLAG_ADDRESS);
     if(isEnabled) {
         Serial.println(text);
     }
+    EEPROM.end();
 }
 
 /**************************************************************************/
@@ -41,7 +45,9 @@ void debugln(String text) {
 */
 /**************************************************************************/
 bool getDebugEnabled() {
+    EEPROM.begin(1);
     bool isEnabled = EEPROM.read(ENABLE_DEBUG_FLAG_ADDRESS);
+    EEPROM.end();
     return isEnabled;
 }
 
@@ -52,6 +58,8 @@ bool getDebugEnabled() {
 */
 /**************************************************************************/
 void setDebugEnabled(bool isEnabled) {
+    EEPROM.begin(1);
     EEPROM.write(ENABLE_DEBUG_FLAG_ADDRESS, (uint8_t) isEnabled);           //Set the debug flag
     EEPROM.commit();                                                        //Write to EEPROM
+    EEPROM.end();
 }

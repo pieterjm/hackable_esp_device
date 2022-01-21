@@ -8,7 +8,7 @@
  */
 #ifndef USER_HANDLER_H
 #define USER_HANDLER_H
-#include <stdint.h>
+#include <stdint.h>                                                         //For defining bits per integer
 #include <ESP8266WebServer.h>                                               //For running the webserver
 #include <FS.h>                                                             //For SPIFFS
 #include "config.h"                                                         //For the configuration

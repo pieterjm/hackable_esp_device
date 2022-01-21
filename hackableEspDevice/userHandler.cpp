@@ -108,13 +108,13 @@ bool UserHandler::checkPermission(uint8_t permissionLevel, ESP8266WebServer *ser
 */
 /**************************************************************************/
 String* UserHandler::_parseLine(String line) {
-  static String userInfo[3];
-
-  uint8_t indexForUsername = line.indexOf(":");                             //gets loc of first ":"
-  uint8_t indexForPassword = line.indexOf(":", indexForUsername+1);         //gets loc of second ":"
-
-  userInfo[0] = line.substring(0, indexForUsername);                        //Selects xxxx from xxxx:yyyy:zzzz, username
-  userInfo[1] = line.substring(indexForUsername+1, indexForPassword);       //Selects yyyy from xxxx:yyyy:zzzz, password
-  userInfo[2] = line.substring(indexForPassword+1);                         //Selects zzzz from xxxx:yyyy:zzzz, usertype
-  return userInfo;
+    static String userInfo[3];
+  
+    uint8_t indexForUsername = line.indexOf(":");                             //gets loc of first ":"
+    uint8_t indexForPassword = line.indexOf(":", indexForUsername+1);         //gets loc of second ":"
+  
+    userInfo[0] = line.substring(0, indexForUsername);                        //Selects xxxx from xxxx:yyyy:zzzz, username
+    userInfo[1] = line.substring(indexForUsername+1, indexForPassword);       //Selects yyyy from xxxx:yyyy:zzzz, password
+    userInfo[2] = line.substring(indexForPassword+1);                         //Selects zzzz from xxxx:yyyy:zzzz, usertype
+    return userInfo;
 }

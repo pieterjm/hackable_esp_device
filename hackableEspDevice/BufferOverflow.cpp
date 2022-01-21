@@ -126,6 +126,7 @@ void BufferOverflow::objectDump() {
 /**************************************************************************/
 bool BufferOverflow::runCProgram(String arg) {
     _formatInput(arg);
+    
     if (_numChars < OVERFLOW_BEGIN) {
         Serial.println("You are now super user.");
         Serial.print("Hello ");
@@ -133,7 +134,7 @@ bool BufferOverflow::runCProgram(String arg) {
         Serial.println("You are not longer super user.");
     } else {
         if (_checkBufferOverflow()) {
-          return true;
+            return true;
         }
     }
     return false;
@@ -146,12 +147,12 @@ bool BufferOverflow::runCProgram(String arg) {
 */
 /**************************************************************************/
 bool BufferOverflow::_checkBufferOverflow() {
-  if(_getOverflowPortion() == RETURN_ADDRESS) {
-    return true;
-  }
-  
-  _printOverflowError();                                                    //If the overflow is not correctly, print value of the return address pointer
-  return false;
+    if(_getOverflowPortion() == RETURN_ADDRESS) {
+        return true;
+    }
+    
+    _printOverflowError();                                                    //If the overflow is not correctly, print value of the return address pointer
+    return false;
 }
 
 /**************************************************************************/
@@ -160,10 +161,10 @@ bool BufferOverflow::_checkBufferOverflow() {
 */
 /**************************************************************************/
 void BufferOverflow::_printOverflowError() {
-  Serial.println("Program received signal SIGSEGV, Segmentation fault.");
-  Serial.print("0x");
-  _getOverflowPortion(true);
-  Serial.println(" in ?? ()");
+    Serial.println("Program received signal SIGSEGV, Segmentation fault.");
+    Serial.print("0x");
+    _getOverflowPortion(true);
+    Serial.println(" in ?? ()");
 }
 
 /**************************************************************************/
@@ -209,7 +210,7 @@ void BufferOverflow::_formatInput(String input) {
 String BufferOverflow::_getOverflowPortion(bool print) {
     String overflowPortion = "";
     
-    if(_numChars < OVERFLOW_LENGTH) {
+    if (_numChars < OVERFLOW_LENGTH) {
         uint8_t numMissingBytes = OVERFLOW_LENGTH - _numChars;
         overflowPortion += _generateRandomBytes(numMissingBytes);
         

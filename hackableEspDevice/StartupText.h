@@ -306,21 +306,23 @@ bool printStringInBytes(String str) {
     if (messLength > LENGTH) {
       return false;
     }
+    
     unsigned char messBytes[messLength];
     str.getBytes(messBytes, messLength);
     uint8_t i;
+    
     for (i = 0; i < messLength; i++) {
-      if (messBytes[i] != 0) {
-        Serial.print(messBytes[i], HEX);
-        Serial.print(" ");
-      }
+        if (messBytes[i] != 0) {
+            Serial.print(messBytes[i], HEX);
+            Serial.print(" ");
+        }
     }
     Serial.print("0A ");
     i++;
     /* Print . (2E) until end of line, to match random data */
     while (i < LENGTH-1) {
-      Serial.print("2E ");
-      i++;
+        Serial.print("2E ");
+        i++;
     }
     Serial.println("2E");
     return true;

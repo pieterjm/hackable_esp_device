@@ -10,9 +10,8 @@
 #include <ESP8266WebServer.h>                                               //For running the webserver
 #include <FS.h>                                                             //For SPIFFS
 #include <stdint.h>                                                         //For defining bits per integer
-#include <neotimer.h>                                                       //For non-blocking timers (used for code execution in intervals)
-#include <WiFiManager.h>
-#include "config.h"                                                         //For the configuration. If not exists: copy "config_template.h", add your configuration and rename to "config.h"
+#include <WiFiManager.h>                                                    //For web-based wifi configuration
+#include "config.h"                                                         //For the configuration
 #include "UserHandler.h"                                                    //For handling the users from the config.conf
 #include "SerialCommandExecuter.h"                                          //For handling serial commands
 #include "Debugger.h"                                                       //For handling debug messages
@@ -20,12 +19,14 @@
 #include "StartupText.h"                                                    //For printing startup log files
 
 /* On and off are inverted because the built-in led is active low */
-#define ON                      LOW
-#define OFF                     HIGH
+#define ON                      HIGH
+#define OFF                     LOW
+
+#define MIN_BRIGHTNESS          1022                                        //analogWrite() on ESP8266 D1 Mini board is inverted
 
 ESP8266WebServer server(80);                                                //Object that listens for HTTP requests on port 80
-Neotimer timer = Neotimer(30000);                                           //Setup a 30 second timer, to execute code with a 30 interval
 uint8_t ledState = OFF;                                                     //Declare led state variable
+uint16_t brightness = 1023;                                                 //For LED brightnesss
 
 UserHandler userHandler(&server);                                           //For handling the authentication
 SerialCommandExecuter cliExecuter;
@@ -41,8 +42,8 @@ void setup() {
     Serial.begin(115200);                                                   //Serial port for debugging purposes
     
     /* Initialize SPIFFS */
-    if(!SPIFFS.begin()) {
-        debugln("An Error has occurred while mounting SPIFFS");
+    if (!SPIFFS.begin()) {
+        Serial.println("An Error has occurred while mounting SPIFFS");
         return;
     }
     
@@ -54,11 +55,8 @@ void setup() {
       printStartupText(mess);
     }
     
-    //debug("WiFi Password: ");
-    //debugln(WIFI_PASSWORD);                                               //Print WiFi password one time in plain text when debugger is enabled
-    
     pinMode(LED_BUILTIN, OUTPUT);
-    digitalWrite(LED_BUILTIN, ledState);
+    analogWrite(LED_BUILTIN, 1023);
 
     initializeHostname();
     setupWifi();    
@@ -141,6 +139,14 @@ void initializeServer() {
         handleFileRequest("/index.html", PERMISSION_LVL_ALL);
     });
 
+    server.on("/state", HTTP_GET, []() {
+        sendToFrontend("ledState");
+    });
+
+    server.on("/brightness", HTTP_GET, []() {
+        sendToFrontend("brightness");
+    });
+    
     /* Route for admin controls */
     server.on("/admin", HTTP_GET, []() {
         handleFileRequest("/admin.html", PERMISSION_LVL_ADMIN);
@@ -162,13 +168,13 @@ void initializeServer() {
     });
     
     /* Load style_desktop.css file, styling for desktop version */
-    server.on("/style_desktop.css", HTTP_GET, []() {
-        handleFileRequest("/style_desktop.css", PERMISSION_LVL_ALL);
+    server.on("/styles.css", HTTP_GET, []() {
+        handleFileRequest("/styles.css", PERMISSION_LVL_ALL);
     });
     
     /* Load style_mobile.css file, styling for mobile version */
-    server.on("/style_mobile.css", HTTP_GET, []() {
-        handleFileRequest("/style_mobile.css", PERMISSION_LVL_ALL);
+    server.on("/styles_mobile.css", HTTP_GET, []() {
+        handleFileRequest("/styles_mobile.css", PERMISSION_LVL_ALL);
     });
 
     /* Load style_switch.css file, styling for the on/off switch */
@@ -206,10 +212,26 @@ void initializeServer() {
     server.on("/set_power", HTTP_GET, []() {
         if (server.arg("state")) {
             ledState = atoi(server.arg("state").c_str());
-            digitalWrite(LED_BUILTIN, !ledState);
+            if(ledState == ON) {
+                analogWrite(LED_BUILTIN, MIN_BRIGHTNESS-brightness);
+            } else {
+                analogWrite(LED_BUILTIN, 1023);
+            }
         }
         handleFileRequest("/index.html", PERMISSION_LVL_ALL);
     });
+    
+    /* Route for brightness */
+    server.on("/update_brightness", HTTP_GET, []() {
+        if (server.arg("brightness")) {
+            brightness = atoi(server.arg("brightness").c_str());
+            if(ledState == ON) {
+                analogWrite(LED_BUILTIN, MIN_BRIGHTNESS-brightness);
+            }
+        }
+        handleFileRequest("/index.html", PERMISSION_LVL_ALL);
+    });
+
 
     /* Route for restarting the server */
     server.on("/restart", HTTP_GET, []() {
@@ -246,38 +268,28 @@ void initializeServer() {
 
 /**************************************************************************/
 /*!
+  @brief    Replaces placeholders with actual data in HTML page.
+*/
+/**************************************************************************/
+void sendToFrontend(String var){
+    if (var == "ledState") {
+        server.send(200, "text/plain", String (ledState));
+    } else if (var == "brightness") {
+        server.send(200, "text/plain", String (brightness));
+    }
+}
+
+/**************************************************************************/
+/*!
     @brief    Mainloop.
 */
 /**************************************************************************/
 void loop() {
   server.handleClient();
-  if(timer.repeat()){                                                       //Prints WiFi password every 30 second on serial in the form of stars: "*****", so it is not readable, it's a hint
-      //debug("Wifi Password: ");
-      String wifipass = "WiFi.password()?";
-      uint8_t charCount = wifipass.length();                                //Count how many characters the WiFi password contains
-      for (uint8_t i = 0; i < charCount; i++) {
-        //Serial.print("*");                                                  //Print a "*" for each password character
-      }
-      //Serial.println("");                                            
-  }
 
-  if(Serial.available()) {
+  if (Serial.available()) {
     cliExecuter.executeCommand();
   }
-}
-
-/**************************************************************************/
-/*!
-  @brief    Replaces placeholders with actual data in HTML page.
-*/
-/**************************************************************************/
-String processor(const String& var){
-    if (var == "LED_STATE") {
-        return (String) ledState;
-    } else {
-        return " placeholder_error ";
-    }
-    return String();
 }
 
 /**************************************************************************/
@@ -374,7 +386,7 @@ void handleFileUpload() {
 void handleFileDownload() {
     String filename = server.arg("filekey");                                //Get user input for filename
 
-    if(!filename.startsWith("/")) {
+    if (!filename.startsWith("/")) {
         filename = "/" + filename;
     }
 

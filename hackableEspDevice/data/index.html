@@ -2,8 +2,8 @@
 <html>
     <head>
         <title>Smart lights system</title>
-        <link rel="stylesheet" media="screen and (min-device-width: 700px)" href="style_desktop.css">
-        <link rel="stylesheet" media="screen and (max-device-width: 699px)" href="style_mobile.css">
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" media="screen and (max-device-width: 699px)" href="styles_mobile.css">
         <link rel="stylesheet" href="style_switch.css"/>
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
         <meta charset="utf-8" />
@@ -12,9 +12,6 @@
     </head>
     <body>
         <script src="jquery.min.js"></script>
-        <script src="switch.js"></script>
-        
-        <input type="hidden" id="on_off" value="%LED_STATE%"/>
 
         <div class="page">
             <h2>Smart lights system</h2>
@@ -27,6 +24,15 @@
                             <input type="checkbox" name="cb_power" id="cb_power" class="ios-toggle" onclick="setPower()"/>
                             <label for="cb_power" class="checkbox-label" data-off="off" data-on="on"></label>
                         </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="container-form">
+                <div class="wrap-form">
+                    <form class="form">
+                        <span class="form-title">Brightness</span>
+                        <input class="brgtSlider" style="background: transparent;" type="range" min="0" max="1023" value="1023" name="brightness" id="brightness"/>
                     </form>
                 </div>
             </div>
