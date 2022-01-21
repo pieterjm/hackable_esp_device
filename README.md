@@ -126,7 +126,7 @@ There is technical documentation available if you want to contribute to this pro
 
 * **Luke de Munk** - *Head author* - [LinkedIn](https://www.linkedin.com/in/luke-de-munk/)
 * **Thijs Takken** - *Head author* - [LinkedIn](https://www.linkedin.com/in/)
-* **Christina Kostine** - *Head author* - [LinkedIn](https://www.linkedin.com/in/)
+* **Christina Kostine** - *Head author* - [LinkedIn](https://www.linkedin.com/in/christine-kostine)
 * **Twenne Elffers** - *Head author* - [LinkedIn](https://www.linkedin.com/in/)
 
 <!-- ## License
