@@ -71,7 +71,7 @@ There are multiple ways to upload the program files to the board. The two ways l
 5. The device should now restart, connect to the selected wifi network and be ready for use.
 
 ### Manual Platformio Prep
-1. create the correct hierarchy.
+1. Create the correct hierarchy.
 
     |HackableEspDevicePlatformio\ \
     |--- platformio.ini \
@@ -79,9 +79,9 @@ There are multiple ways to upload the program files to the board. The two ways l
     |--- src\main.cpp\
     |--- data\ 
 
-1. the src dir needs to contain all the files from the `hackableEspDevice` directory except the data directory.
-2. rename the `hackableEspDevice.ino` to `main.cpp`.
-3. in `main.cpp` add a reference to all functions in main e.g.\
+1. The src dir needs to contain all the files from the `hackableEspDevice` directory except the data directory.
+2. Rename the `hackableEspDevice.ino` to `main.cpp`.
+3. In `main.cpp` add a reference to all functions in main e.g.\
 void setup();\
 void setup();\
 void initializeHostname();\
