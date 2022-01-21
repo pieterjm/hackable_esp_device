@@ -14,7 +14,7 @@
 #define MAX_HOSTNAME_LENGTH     32
 #define WIFI_CONF_AP_NAME       "Configure Smartlight WiFi"
 
-#define HTTP_CONFIG_LOCATION    "/conf.txt"
+#define HTTP_CONFIG_LOCATION    "/config.conf"
 
 /* Permission levels */
 #define PERMISSION_LVL_ALL      0
@@ -25,4 +25,11 @@
 #define MAX_NUMBER_USERS        10
 
 #define ROOT_PASSWORD           "p@$Sw0rd"                                  //For serial debug
+
+/* Encryption */
+#define AES_KEY                 "ThisIsNotTheKey!"                          //Key to encrypt and decript
+#define CBC_INIT_VECTOR         36753562                                    //For CBC (encryption) padding
+
+#define AES_KEY_SIZE            16
+#define AES_BIT_SIZE            128
 #endif
