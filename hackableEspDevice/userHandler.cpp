@@ -29,8 +29,14 @@ void UserHandler::updateUsers() {
         _numberUsers = 0;
         return;
     }
+    
+    //Decrypt the file before reading
+    if (!cryptor.decryptFile(HTTP_CONFIG_LOCATION)) {
+        return;
+    }
 
     File configFile = SPIFFS.open(HTTP_CONFIG_LOCATION, "r");
+    
     String line;
     String* user;
 
@@ -49,6 +55,11 @@ void UserHandler::updateUsers() {
         _numberUsers = i-1;
     }
     configFile.close();
+    
+    /* Encrypt the file again */
+    if (!cryptor.encryptFile(HTTP_CONFIG_LOCATION)) {
+        return;
+    }
 }
 
 /**************************************************************************/

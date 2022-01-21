@@ -42,9 +42,9 @@ void SerialCommandExecuter::executeCommand() {
 
     if (command != "") {
         if (_isLoggedIn) {
-            Serial.print("~# ");                                              //For the Linux feeling, superuser
+            Serial.print("~# ");                                            //For the Linux feeling, superuser
         } else {
-            Serial.print("~$ ");                                              //For the Linux feeling, no superuser
+            Serial.print("~$ ");                                            //For the Linux feeling, no superuser
         }
         Serial.print(command);                                              //Echo command (command ends with \n)
         
@@ -166,6 +166,17 @@ bool SerialCommandExecuter::_parseCommand(String commandString) {
                 return false;
             }
         }
+    } else if (command == COMMAND_GPG) {
+        if (_checkParams(numParams, 3, 3)) {
+            if (params[0] == ARG_GPG_ENCRYPT) {
+              _encrypt(params);
+            } else if (params[0] == ARG_GPG_DECRYPT) {
+              _decrypt(params);
+            } else {
+                Serial.println(ERROR_WRONG_ARGS);
+                return false;
+            }
+        }
     } else {
         Serial.println(ERROR_CMD_NOT_FOUND);
         return false;
@@ -199,7 +210,7 @@ String* SerialCommandExecuter::_trimCommand(String commandString) {
                 item = "";                                                  //Reset item value
                 paramCounter++;
            }
-        } else { // if not a whitepace add to item
+        } else {
             item += commandString[c];
         }
     }
@@ -260,6 +271,9 @@ void SerialCommandExecuter::_printHelp(String command) {
         Serial.println("Usage: ./{filename}                     Runs an executable file");
     } else if (command == COMMAND_OBJDUMP) {
         Serial.println("Usage: objdump -d {filename}            Prints disassembled code of an executable file");
+    } else if (command == COMMAND_GPG) {
+        Serial.println("Usage: gpg --encrypt {key} {line}       Prints disassembled code of an executable file");
+        Serial.println("Usage: gpg --decrypt {key} {line}       Prints disassembled code of an executable file");
     } else {
         Serial.println(ERROR_CMD_NOT_FOUND);
     }
@@ -283,6 +297,7 @@ void SerialCommandExecuter::_printCommands() {
     Serial.println(COMMAND_VI);
     Serial.println(COMMAND_OBJDUMP);
     Serial.println(COMMAND_WHOAMI);
+    Serial.println(COMMAND_GPG);
 }
 
 /**************************************************************************/
@@ -336,8 +351,8 @@ bool SerialCommandExecuter::_viewKey() {
         Serial.println(ERROR_NO_PERMISSION);
         return false;
     }
-    Serial.println("Private encryption keys. Don't share!!!");
-    Serial.println("");
+    Serial.println("Private encryption keys (Don't share!!!):");
+    Serial.println(AES_KEY);
     return true;
 }
 
@@ -413,6 +428,43 @@ bool SerialCommandExecuter::_hostname(String* params) {
         Serial.println(ERROR_WRONG_ARGS);                                   //If it can't find suitable params: give error
         return false;
     }
+    return true;
+}
+
+
+/**************************************************************************/
+/*!
+  @brief    brief
+  @param    var           desc
+  @return   var           desc
+*/
+/**************************************************************************/
+bool SerialCommandExecuter::_encrypt(String* params) {
+    if (!cryptor.setKey(params[1])) {
+        Serial.println(ERROR_NO_VALID_KEY);
+        return false;
+    }
+    
+    Serial.print("Encrypted output: ");
+    Serial.println(cryptor.encryptLine(params[2]));
+    return true;
+}
+
+/**************************************************************************/
+/*!
+  @brief    brief
+  @param    var           desc
+  @return   var           desc
+*/
+/**************************************************************************/
+bool SerialCommandExecuter::_decrypt(String* params) {
+    if (!cryptor.setKey(params[1])) {
+        Serial.println(ERROR_NO_VALID_KEY);
+        return false;
+    }
+    
+    Serial.print("Decrypted output: ");
+    Serial.println(cryptor.decryptLine(params[2]));
     return true;
 }
 

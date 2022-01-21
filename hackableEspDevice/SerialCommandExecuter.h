@@ -13,8 +13,9 @@
 #include "Debugger.h"                                                       //For handling debug messages
 #include "HostnameWrite.h"
 #include "BufferOverflow.h"
+#include "CbcEncryptor.h"
 
-#define MAX_NUMBER_PARAMS  2
+#define MAX_NUMBER_PARAMS  3
 
 #define COMMAND_HELP            "help"
 #define COMMAND_DEBUG           "debug"
@@ -31,7 +32,15 @@
 #define COMMAND_RUN             "./"
 #define COMMAND_OBJDUMP         "objdump"
 
+/* Used for encryption */
+#define COMMAND_GPG             "gpg"
+
+#define ARG_GPG_ENCRYPT         "--encrypt"
+#define ARG_GPG_DECRYPT         "--decrypt"
+
+
 #define MESS_SUPER_USER         "You are now super user."
+
 
 #define ERROR_TOO_MANY_ARGS     "Too many arguments. Typ 'help' for help."
 #define ERROR_CMD_NOT_FOUND     "Bash: command not found. Typ 'help' for help."
@@ -42,6 +51,7 @@
 #define ERROR_NO_PERMISSION     "You are no super user. Use 'su {password}' to log in."
 #define ERROR_NO_FILE           "No such file."
 #define ERROR_NO_FILE_DIR       "No such file or directory."
+#define ERROR_NO_VALID_KEY      "No valid key, needs to be 16 bytes long."
 
 class SerialCommandExecuter
 {
@@ -63,11 +73,14 @@ class SerialCommandExecuter
         void _restart();
         bool _viewUsers();
         bool _hostname(String* params);
+        bool _encrypt(String* params);
+        bool _decrypt(String* params);
         bool _checkHelp(String param, String command);
          
         bool _isLoggedIn;
         String _users[MAX_NUMBER_USERS*USER_INFO_LENGTH];
         uint8_t _numberUsers;
         BufferOverflow buffOverflow;
+        CbcEncryptor cryptor;
 };
 #endif
