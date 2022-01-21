@@ -30,6 +30,7 @@ The software is written, compiled and uploaded using the [Arduino IDE](https://w
 
 There are multiple ways to upload the program files to the board. The two ways listed here are using Arduino IDE and Platformio on visual studio code
 https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide
+
 <b>Arduino IDE</b>
 
 1. Install the [Arduino IDE](https://www.arduino.cc/en/software)
