@@ -17,8 +17,7 @@ The software is written, compiled and uploaded using the [Arduino IDE](https://w
 
 - ESP for Arduino IDE
 - ESP Async WebServer V1.2.3
-- ESPAsyncWebServer-esphome V2.1.0
-- Neotimer V1.1.6
+- Wifimanager V0.16.0
 
 #### Files
 - config.h
@@ -56,6 +55,13 @@ There are multiple ways to upload the program files to the board. The two ways l
 6. Upload the filesystem Image `(Project tasks > Platform > Upload filesystem Image)`
 7.  Done the device should now be ready for use
 
+<b>First start</b>
+1. Start up the device
+2. Connect to the `Configure Smartlight Wifi` Access point
+3. Go to the ip address listed in the serial monitor most of the time this is [http://192.168.4.1](http://192.168.4.1)
+4. Follow the steps on the website to configure a wifi connection
+5. The device should now restart, connect to the selected wifi network and be ready for use
+
 ### Manual platformio prep
 1. create the correct hierarchy 
 
@@ -81,6 +87,23 @@ void handleFileUpload();\
 void handleFileDownload();
 4. Move the platoformio.ini file from the root dir to the `hackableEspDevicePlatoformio` dir
 5. Copy all files from `hackableEspDevice\data` to `hackableEspDevicePlatformio\data`
+
+### Customization of hackable ESP (Contains spoilers)(Look in code of readme.md)
+<!--
+Default user and passwd
+It is possible to change the default username and password for the users on the webpage.
+The file for this is /hackableEspDevice/data/conf.txt. 
+Here the username and password is stored and can be changed to increase or decrease the challenge. the format is “<Username>:<Password>:<authorization level (1|2)>” 
+Level 1 is a normal user, level 2 is an admin user.
+
+
+config.h
+/hackableEspDevice/config.h also contains a few interesting possible settings.
+The settings that can be changed are the:
+* The default hostname for the device (DEFAULT_HOSTNAME)
+* Access Point name for the configuration phase (WIFI_CONF_AP_NAME)
+* The root password for the Serial interface (ROOT_PASSWORD)
+-->
 
 ## Hardware
 
