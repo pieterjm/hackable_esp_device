@@ -29,7 +29,7 @@ The software is written, compiled and uploaded using the [Arduino IDE](https://w
 2. Clone the repository
 
 There are multiple ways to upload the program files to the board. The two ways listed here are using Arduino IDE and Platformio on visual studio code
-
+https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide
 <b>Arduino IDE</b>
 
 1. Install the [Arduino IDE](https://www.arduino.cc/en/software)
@@ -40,6 +40,10 @@ There are multiple ways to upload the program files to the board. The two ways l
 6. Upload the files in the `data` folder (see the tutorial).
 7. Upload the program to the device.
 8. Connect to the `Configure Smartlight Wifi` AP to configure the wifi.
+
+* Some Arduino's IDE won't have the option 'ESP8266 Sketch Data Upload' 
+* You can download it from this link (https://github.com/esp8266/arduino-esp8266fs-plugin/releases/tag/0.5.0)
+* You have to create a new file named "tools" if doesn't exist already inside of Arduino file
 
 <b>Visual Studio Code + Platformio</b>
 1. Install the [Platformio](https://platformio.org/install/ide?install=vscode) plugin.
