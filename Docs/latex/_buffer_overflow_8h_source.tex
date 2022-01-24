@@ -12,12 +12,12 @@
 \DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00008}00008 \textcolor{comment}{ */}}
 \DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00009}00009 \textcolor{preprocessor}{\#ifndef BUFFER\_OVERFLOW\_H}}
 \DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00010}00010 \textcolor{preprocessor}{\#define BUFFER\_OVERFLOW\_H}}
-\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00011}00011 \textcolor{preprocessor}{\#include <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00011}00011 \textcolor{preprocessor}{\#include <stdint.h>}                                                         \textcolor{comment}{//For defining bits per integer}}
 \DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00012}00012 \textcolor{preprocessor}{\#include "{}Arduino.h"{}}}
 \DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00013}00013 }
 \DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00014}\mbox{\hyperlink{_buffer_overflow_8h_a3cdf9d8c4b9dc5307c7f1b37917659e6}{00014}} \textcolor{preprocessor}{\#define OVERFLOW\_BEGIN    16                                                }\textcolor{comment}{//Because array is in byte resolution, 10 becomes 16. Then the return address pointer starts}}
 \DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00015}\mbox{\hyperlink{_buffer_overflow_8h_a8beaa5b28cf9a48a1df357d25ec9704e}{00015}} \textcolor{preprocessor}{\#define ADDRESS\_LENGTH    4                                                 }\textcolor{comment}{//Address is 32 bits long, so 4 bytes}}
-\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00016}\mbox{\hyperlink{_buffer_overflow_8h_a8c0a18f677499293525b066fb30b1eba}{00016}} \textcolor{preprocessor}{\#define OVERFLOW\_LENGTH   20}\textcolor{comment}{//OVERFLOW\_BEGIN + ADDRESS\_LENGTH}}
+\DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00016}\mbox{\hyperlink{_buffer_overflow_8h_a8c0a18f677499293525b066fb30b1eba}{00016}} \textcolor{preprocessor}{\#define OVERFLOW\_LENGTH   20                                                }\textcolor{comment}{//OVERFLOW\_BEGIN + ADDRESS\_LENGTH}}
 \DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00017}\mbox{\hyperlink{_buffer_overflow_8h_af5443d79986ee048fa56e0cb9db6ff6e}{00017}} \textcolor{preprocessor}{\#define RETURN\_ADDRESS    "{}00010488"{}}                                        \textcolor{comment}{//0x00010488 == address of login function.}}
 \DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00018}\mbox{\hyperlink{_buffer_overflow_8h_af920d5958cab009756375b7c0e3fa9dc}{00018}} \textcolor{preprocessor}{\#define MAX\_NUM\_CHARS     256}}
 \DoxyCodeLine{\Hypertarget{_buffer_overflow_8h_source_l00019}00019 }

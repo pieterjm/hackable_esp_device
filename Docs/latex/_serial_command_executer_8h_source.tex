@@ -13,7 +13,7 @@
 \DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00009}00009 \textcolor{preprocessor}{\#ifndef SERIAL\_COMMAND\_EXECUTER\_H}}
 \DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00010}00010 \textcolor{preprocessor}{\#define SERIAL\_COMMAND\_EXECUTER\_H}}
 \DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00011}00011 \textcolor{preprocessor}{\#include "{}Arduino.h"{}}}
-\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00012}00012 \textcolor{preprocessor}{\#include "{}config.h"{}}                                                         \textcolor{comment}{//For the configuration.}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00012}00012 \textcolor{preprocessor}{\#include "{}config.h"{}}                                                         \textcolor{comment}{//For the configuration}}
 \DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00013}00013 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_debugger_8h}{Debugger.h}}"{}}                                                       \textcolor{comment}{//For handling debug messages}}
 \DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00014}00014 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_hostname_write_8h}{HostnameWrite.h}}"{}}}
 \DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00015}00015 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_buffer_overflow_8h}{BufferOverflow.h}}"{}}}
@@ -21,21 +21,21 @@
 \DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00017}\mbox{\hyperlink{_serial_command_executer_8h_ac3c1be4a81c254ff0ffff58e4aa474e3}{00017}} \textcolor{preprocessor}{\#define MAX\_NUMBER\_PARAMS  2}}
 \DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00018}00018 }
 \DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00019}\mbox{\hyperlink{_serial_command_executer_8h_aee9e8b97ac4a5cdc1c371da35a579210}{00019}} \textcolor{preprocessor}{\#define COMMAND\_HELP            "{}help"{}}}
-\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00020}\mbox{\hyperlink{_serial_command_executer_8h_a4271519e9ee5565b70175ae766253c65}{00020}} \textcolor{preprocessor}{\#define COMMAND\_DEBUG           "{}enableDebug"{}}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00020}\mbox{\hyperlink{_serial_command_executer_8h_a4271519e9ee5565b70175ae766253c65}{00020}} \textcolor{preprocessor}{\#define COMMAND\_DEBUG           "{}debug"{}}}
 \DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00021}\mbox{\hyperlink{_serial_command_executer_8h_a7e0cf8d05523e31cb48f7acf4ef8e832}{00021}} \textcolor{preprocessor}{\#define COMMAND\_SU              "{}su"{}}}
-\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00022}\mbox{\hyperlink{_serial_command_executer_8h_af998daeb22b38baa1ccbf04bd88dfe31}{00022}} \textcolor{preprocessor}{\#define COMMAND\_KEYS            "{}sshkeys"{}}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00022}\mbox{\hyperlink{_serial_command_executer_8h_af998daeb22b38baa1ccbf04bd88dfe31}{00022}} \textcolor{preprocessor}{\#define COMMAND\_KEYS            "{}privatekeys"{}}}
 \DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00023}\mbox{\hyperlink{_serial_command_executer_8h_a4b0eeaf40a8a79d1a17d2506909a1d07}{00023}} \textcolor{preprocessor}{\#define COMMAND\_RESTART         "{}reboot"{}}}
 \DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00024}\mbox{\hyperlink{_serial_command_executer_8h_a9db5fb18d2bcb32925d11bd5e9ed758d}{00024}} \textcolor{preprocessor}{\#define COMMAND\_USERS           "{}users"{}}}
 \DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00025}\mbox{\hyperlink{_serial_command_executer_8h_a17435a155b6388f6992f108f4946ad95}{00025}} \textcolor{preprocessor}{\#define COMMAND\_HOSTNAME        "{}hostname"{}}}
-\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00026}00026 }
-\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00027}00027 \textcolor{comment}{/* Used for buffer overflow */}}
-\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00028}\mbox{\hyperlink{_serial_command_executer_8h_a1ec42af5209fa6fe2a3ab53031e4c67a}{00028}} \textcolor{preprocessor}{\#define COMMAND\_LS              "{}ls"{}}}
-\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00029}\mbox{\hyperlink{_serial_command_executer_8h_afec90b1f39bd61f392adbfcbe61229a0}{00029}} \textcolor{preprocessor}{\#define COMMAND\_VI              "{}vi"{}}}
-\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00030}\mbox{\hyperlink{_serial_command_executer_8h_a2e3c1635a22898c9e1ec48b57d7f3d99}{00030}} \textcolor{preprocessor}{\#define COMMAND\_RUN             "{}./"{}}}
-\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00031}\mbox{\hyperlink{_serial_command_executer_8h_a7610a1d9786ba66a0def94c2a284cb30}{00031}} \textcolor{preprocessor}{\#define COMMAND\_OBJDUMP         "{}objdump"{}}}
-\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00032}00032 }
-\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00033}\mbox{\hyperlink{_serial_command_executer_8h_acbff4260ca589ed186c925def0941191}{00033}} \textcolor{preprocessor}{\#define MESS\_SUPER\_USER         "{}You are now super user."{}}}
-\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00026}\mbox{\hyperlink{_serial_command_executer_8h_a275155a2e16b59de496b532a924bc2c9}{00026}} \textcolor{preprocessor}{\#define COMMAND\_WHOAMI          "{}whoami"{}}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00028}00028 \textcolor{comment}{/* Used for buffer overflow */}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00029}\mbox{\hyperlink{_serial_command_executer_8h_a1ec42af5209fa6fe2a3ab53031e4c67a}{00029}} \textcolor{preprocessor}{\#define COMMAND\_LS              "{}ls"{}}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00030}\mbox{\hyperlink{_serial_command_executer_8h_afec90b1f39bd61f392adbfcbe61229a0}{00030}} \textcolor{preprocessor}{\#define COMMAND\_VI              "{}vi"{}}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00031}\mbox{\hyperlink{_serial_command_executer_8h_a2e3c1635a22898c9e1ec48b57d7f3d99}{00031}} \textcolor{preprocessor}{\#define COMMAND\_RUN             "{}./"{}}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00032}\mbox{\hyperlink{_serial_command_executer_8h_a7610a1d9786ba66a0def94c2a284cb30}{00032}} \textcolor{preprocessor}{\#define COMMAND\_OBJDUMP         "{}objdump"{}}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00034}\mbox{\hyperlink{_serial_command_executer_8h_acbff4260ca589ed186c925def0941191}{00034}} \textcolor{preprocessor}{\#define MESS\_SUPER\_USER         "{}You are now super user."{}}}
 \DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00035}00035 }
 \DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00036}\mbox{\hyperlink{_serial_command_executer_8h_ac8560b756d43b741a4163b7cb2e6a582}{00036}} \textcolor{preprocessor}{\#define ERROR\_TOO\_MANY\_ARGS     "{}Too many arguments. Typ 'help' for help."{}}}
 \DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00037}\mbox{\hyperlink{_serial_command_executer_8h_a4070e23710bad905213da8fd295a36ed}{00037}} \textcolor{preprocessor}{\#define ERROR\_CMD\_NOT\_FOUND     "{}Bash: command not found. Typ 'help' for help."{}}}
@@ -70,7 +70,7 @@
 \DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00066}00066         \textcolor{keywordtype}{bool} \_checkHelp(String param, String command);}
 \DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00067}00067          }
 \DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00068}00068         \textcolor{keywordtype}{bool} \_isLoggedIn;}
-\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00069}00069         String \_users[\mbox{\hyperlink{config2_8h_aa5df64e0df4fb1fd5822282ff1972e74}{MAX\_NUMBER\_USERS}}*\mbox{\hyperlink{config2_8h_a422d4595c282537965ffb1db954d2046}{USER\_INFO\_LENGTH}}];}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00069}00069         String \_users[MAX\_NUMBER\_USERS*USER\_INFO\_LENGTH];}
 \DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00070}00070         uint8\_t \_numberUsers;}
 \DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00071}00071         \mbox{\hyperlink{class_buffer_overflow}{BufferOverflow}} buffOverflow;}
 \DoxyCodeLine{\Hypertarget{_serial_command_executer_8h_source_l00072}00072 \};}

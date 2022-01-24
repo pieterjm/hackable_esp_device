@@ -12,7 +12,7 @@
 \DoxyCodeLine{\Hypertarget{user_handler_8h_source_l00008}00008 \textcolor{comment}{ */}}
 \DoxyCodeLine{\Hypertarget{user_handler_8h_source_l00009}00009 \textcolor{preprocessor}{\#ifndef USER\_HANDLER\_H}}
 \DoxyCodeLine{\Hypertarget{user_handler_8h_source_l00010}00010 \textcolor{preprocessor}{\#define USER\_HANDLER\_H}}
-\DoxyCodeLine{\Hypertarget{user_handler_8h_source_l00011}00011 \textcolor{preprocessor}{\#include <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{user_handler_8h_source_l00011}00011 \textcolor{preprocessor}{\#include <stdint.h>}                                                         \textcolor{comment}{//For defining bits per integer}}
 \DoxyCodeLine{\Hypertarget{user_handler_8h_source_l00012}00012 \textcolor{preprocessor}{\#include <ESP8266WebServer.h>}                                               \textcolor{comment}{//For running the webserver}}
 \DoxyCodeLine{\Hypertarget{user_handler_8h_source_l00013}00013 \textcolor{preprocessor}{\#include <FS.h>}                                                             \textcolor{comment}{//For SPIFFS}}
 \DoxyCodeLine{\Hypertarget{user_handler_8h_source_l00014}00014 \textcolor{preprocessor}{\#include "{}config.h"{}}                                                         \textcolor{comment}{//For the configuration}}
@@ -28,7 +28,7 @@
 \DoxyCodeLine{\Hypertarget{user_handler_8h_source_l00024}00024     }
 \DoxyCodeLine{\Hypertarget{user_handler_8h_source_l00025}00025     \textcolor{keyword}{private}:}
 \DoxyCodeLine{\Hypertarget{user_handler_8h_source_l00026}00026         String* \_parseLine(String line);}
-\DoxyCodeLine{\Hypertarget{user_handler_8h_source_l00027}00027         String \_users[\mbox{\hyperlink{config2_8h_aa5df64e0df4fb1fd5822282ff1972e74}{MAX\_NUMBER\_USERS}}*\mbox{\hyperlink{config2_8h_a422d4595c282537965ffb1db954d2046}{USER\_INFO\_LENGTH}}];}
+\DoxyCodeLine{\Hypertarget{user_handler_8h_source_l00027}00027         String \_users[MAX\_NUMBER\_USERS*USER\_INFO\_LENGTH];}
 \DoxyCodeLine{\Hypertarget{user_handler_8h_source_l00028}00028         uint8\_t \_numberUsers;}
 \DoxyCodeLine{\Hypertarget{user_handler_8h_source_l00029}00029 \};}
 \DoxyCodeLine{\Hypertarget{user_handler_8h_source_l00030}00030 \textcolor{preprocessor}{\#endif}}

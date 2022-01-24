@@ -401,26 +401,28 @@ $(document).ready(function(){initNavTree('_startup_text_8h_source.html',''); ini
 <div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>    <span class="keywordflow">if</span> (messLength &gt; <a class="code hl_define" href="_startup_text_8h.html#a30362161c93e3f1a4ee4c673f535b5a8">LENGTH</a>) {</div>
 <div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>    }</div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> messBytes[messLength];</div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>    str.getBytes(messBytes, messLength);</div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>    uint8_t i;</div>
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>    <span class="keywordflow">for</span> (i = 0; i &lt; messLength; i++) {</div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>      <span class="keywordflow">if</span> (messBytes[i] != 0) {</div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>        Serial.print(messBytes[i], HEX);</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>        Serial.print(<span class="stringliteral">&quot; &quot;</span>);</div>
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>      }</div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>    }</div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>    Serial.print(<span class="stringliteral">&quot;0A &quot;</span>);</div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>    i++;</div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>    <span class="comment">/* Print . (2E) until end of line, to match random data */</span></div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>    <span class="keywordflow">while</span> (i &lt; <a class="code hl_define" href="_startup_text_8h.html#a30362161c93e3f1a4ee4c673f535b5a8">LENGTH</a>-1) {</div>
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>      Serial.print(<span class="stringliteral">&quot;2E &quot;</span>);</div>
-<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>      i++;</div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>    }</div>
-<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>    Serial.println(<span class="stringliteral">&quot;2E&quot;</span>);</div>
-<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>}</div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>    </div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> messBytes[messLength];</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>    str.getBytes(messBytes, messLength);</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>    uint8_t i;</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>    </div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>    <span class="keywordflow">for</span> (i = 0; i &lt; messLength; i++) {</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>        <span class="keywordflow">if</span> (messBytes[i] != 0) {</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>            Serial.print(messBytes[i], HEX);</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>            Serial.print(<span class="stringliteral">&quot; &quot;</span>);</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>        }</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>    }</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>    Serial.print(<span class="stringliteral">&quot;0A &quot;</span>);</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>    i++;</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>    <span class="comment">/* Print . (2E) until end of line, to match random data */</span></div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>    <span class="keywordflow">while</span> (i &lt; <a class="code hl_define" href="_startup_text_8h.html#a30362161c93e3f1a4ee4c673f535b5a8">LENGTH</a>-1) {</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>        Serial.print(<span class="stringliteral">&quot;2E &quot;</span>);</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>        i++;</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>    }</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>    Serial.println(<span class="stringliteral">&quot;2E&quot;</span>);</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>}</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="a_startup_text_8h_html_a30362161c93e3f1a4ee4c673f535b5a8"><div class="ttname"><a href="_startup_text_8h.html#a30362161c93e3f1a4ee4c673f535b5a8">LENGTH</a></div><div class="ttdeci">#define LENGTH</div><div class="ttdef"><b>Definition:</b> <a href="_startup_text_8h_source.html#l00012">StartupText.h:12</a></div></div>
 <div class="ttc" id="a_startup_text_8h_html_a45dc6bfc087176c6584f99a170b78bb3"><div class="ttname"><a href="_startup_text_8h.html#a45dc6bfc087176c6584f99a170b78bb3">printStartupText</a></div><div class="ttdeci">bool printStartupText(String hiddenMess)</div><div class="ttdoc">Prints bytes of information with a message wrapped in it.</div><div class="ttdef"><b>Definition:</b> <a href="_startup_text_8h_source.html#l00025">StartupText.h:25</a></div></div>
 <div class="ttc" id="a_startup_text_8h_html_ae5504868e73bd4271a911416f20b049d"><div class="ttname"><a href="_startup_text_8h.html#ae5504868e73bd4271a911416f20b049d">printStringInBytes</a></div><div class="ttdeci">bool printStringInBytes(String str)</div><div class="ttdoc">Converts message in bytes and prints it.</div><div class="ttdef"><b>Definition:</b> <a href="_startup_text_8h_source.html#l00303">StartupText.h:303</a></div></div>

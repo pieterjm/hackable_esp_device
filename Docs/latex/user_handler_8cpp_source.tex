@@ -22,17 +22,17 @@
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00025}00025 \textcolor{comment}{/**************************************************************************/}}
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00026}\mbox{\hyperlink{class_user_handler_ab5267a38ddc76c3887e535fd02914370}{00026}} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_user_handler_ab5267a38ddc76c3887e535fd02914370}{UserHandler::updateUsers}}() \{}
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00027}00027     \textcolor{comment}{/* If there is no file, return 0 users */}}
-\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00028}00028     \textcolor{keywordflow}{if} (!SPIFFS.exists(\mbox{\hyperlink{config2_8h_a0f35d3b3a0b89c7b2b3285936c4d41a7}{HTTP\_CONFIG\_LOCATION}})) \{}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00028}00028     \textcolor{keywordflow}{if} (!SPIFFS.exists(HTTP\_CONFIG\_LOCATION)) \{}
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00029}00029         \_numberUsers = 0;}
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00030}00030         \textcolor{keywordflow}{return};}
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00031}00031     \}}
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00032}00032 }
-\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00033}00033     File configFile = SPIFFS.open(\mbox{\hyperlink{config2_8h_a0f35d3b3a0b89c7b2b3285936c4d41a7}{HTTP\_CONFIG\_LOCATION}}, \textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00033}00033     File configFile = SPIFFS.open(HTTP\_CONFIG\_LOCATION, \textcolor{stringliteral}{"{}r"{}});}
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00034}00034     String line;}
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00035}00035     String* user;}
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00036}00036 }
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00037}00037     \textcolor{comment}{/* Extract user information line by line */}}
-\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00038}00038     \textcolor{keywordflow}{for}(uint8\_t i = 0; i < \mbox{\hyperlink{config2_8h_aa5df64e0df4fb1fd5822282ff1972e74}{MAX\_NUMBER\_USERS}}*\mbox{\hyperlink{config2_8h_a422d4595c282537965ffb1db954d2046}{USER\_INFO\_LENGTH}}; i+=\mbox{\hyperlink{config2_8h_a422d4595c282537965ffb1db954d2046}{USER\_INFO\_LENGTH}}) \{}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00038}00038     \textcolor{keywordflow}{for}(uint8\_t i = 0; i < MAX\_NUMBER\_USERS*USER\_INFO\_LENGTH; i+=USER\_INFO\_LENGTH) \{}
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00039}00039         line = configFile.readStringUntil(\textcolor{charliteral}{'\(\backslash\)n'});                            \textcolor{comment}{//Read a line from the file}}
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00040}00040         \textcolor{keywordflow}{if} (line != \textcolor{stringliteral}{"{}"{}} \&\& line.indexOf(\textcolor{stringliteral}{"{}:"{}}) != -\/1) \{}
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00041}00041             user = \_parseLine(line);}
@@ -67,7 +67,7 @@
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00082}00082     \textcolor{keywordtype}{bool} hasPermission = \textcolor{keyword}{false};}
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00083}00083     uint8\_t userIndex = 0;}
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00084}00084     }
-\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00085}00085     \textcolor{keywordflow}{if} (permissionLevel == \mbox{\hyperlink{config2_8h_a824e9b77b01c21dc817aa156bc98f319}{PERMISSION\_LVL\_ALL}}) \{}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00085}00085     \textcolor{keywordflow}{if} (permissionLevel == PERMISSION\_LVL\_ALL) \{}
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00086}00086         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00087}00087     \} \textcolor{keywordflow}{else} \{}
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00088}00088         \textcolor{keywordflow}{for} (uint8\_t i = 0; i < \_numberUsers; i += 3) \{}
@@ -88,15 +88,15 @@
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00103}00103 \textcolor{comment}{/**************************************************************************/}}
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00109}00109 \textcolor{comment}{/**************************************************************************/}}
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00110}00110 String* UserHandler::\_parseLine(String line) \{}
-\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00111}00111   \textcolor{keyword}{static} String userInfo[3];}
-\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00112}00112 }
-\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00113}00113   uint8\_t indexForUsername = line.indexOf(\textcolor{stringliteral}{"{}:"{}});                             \textcolor{comment}{//gets loc of first "{}:"{}}}
-\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00114}00114   uint8\_t indexForPassword = line.indexOf(\textcolor{stringliteral}{"{}:"{}}, indexForUsername+1);         \textcolor{comment}{//gets loc of second "{}:"{}}}
-\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00115}00115 }
-\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00116}00116   userInfo[0] = line.substring(0, indexForUsername);                        \textcolor{comment}{//Selects xxxx from xxxx:yyyy:zzzz, username}}
-\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00117}00117   userInfo[1] = line.substring(indexForUsername+1, indexForPassword);       \textcolor{comment}{//Selects yyyy from xxxx:yyyy:zzzz, password}}
-\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00118}00118   userInfo[2] = line.substring(indexForPassword+1);                         \textcolor{comment}{//Selects zzzz from xxxx:yyyy:zzzz, usertype}}
-\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00119}00119   \textcolor{keywordflow}{return} userInfo;}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00111}00111     \textcolor{keyword}{static} String userInfo[3];}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00112}00112   }
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00113}00113     uint8\_t indexForUsername = line.indexOf(\textcolor{stringliteral}{"{}:"{}});                             \textcolor{comment}{//gets loc of first "{}:"{}}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00114}00114     uint8\_t indexForPassword = line.indexOf(\textcolor{stringliteral}{"{}:"{}}, indexForUsername+1);         \textcolor{comment}{//gets loc of second "{}:"{}}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00115}00115   }
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00116}00116     userInfo[0] = line.substring(0, indexForUsername);                        \textcolor{comment}{//Selects xxxx from xxxx:yyyy:zzzz, username}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00117}00117     userInfo[1] = line.substring(indexForUsername+1, indexForPassword);       \textcolor{comment}{//Selects yyyy from xxxx:yyyy:zzzz, password}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00118}00118     userInfo[2] = line.substring(indexForPassword+1);                         \textcolor{comment}{//Selects zzzz from xxxx:yyyy:zzzz, usertype}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00119}00119     \textcolor{keywordflow}{return} userInfo;}
 \DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00120}00120 \}}
 
 \end{DoxyCode}

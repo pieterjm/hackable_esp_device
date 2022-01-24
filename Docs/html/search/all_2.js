@@ -16,5 +16,5 @@ var searchData=
   ['command_5fsu_13',['COMMAND_SU',['../_serial_command_executer_8h.html#a7e0cf8d05523e31cb48f7acf4ef8e832',1,'SerialCommandExecuter.h']]],
   ['command_5fusers_14',['COMMAND_USERS',['../_serial_command_executer_8h.html#a9db5fb18d2bcb32925d11bd5e9ed758d',1,'SerialCommandExecuter.h']]],
   ['command_5fvi_15',['COMMAND_VI',['../_serial_command_executer_8h.html#afec90b1f39bd61f392adbfcbe61229a0',1,'SerialCommandExecuter.h']]],
-  ['config2_2eh_16',['config2.h',['../config2_8h.html',1,'']]]
+  ['command_5fwhoami_16',['COMMAND_WHOAMI',['../_serial_command_executer_8h.html#a275155a2e16b59de496b532a924bc2c9',1,'SerialCommandExecuter.h']]]
 ];

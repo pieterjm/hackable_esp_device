@@ -103,9 +103,9 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
   <div class="headertitle"><div class="title">Hackable ESP8266 device </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p ><a class="anchor" id="md_README"></a>Firmware for ESP8266 based device (D1 Mini board) with designed vunerabilities to practice ethical hacking. The software is tested on the following boards:</p>
+<div class="textblock"><p ><a class="anchor" id="md_README"></a>Firmware for ESP8266 based device (D1 Mini board) with designed vulnerabilities to practice ethical hacking. The software is tested on the following boards:</p>
 <ul>
-<li><a href="https://www.berrybase.de/en/dev.-boards/esp8266-esp32-d1-mini/">D1 Mini</a> </li>
+<li><a href="https://www.berrybase.de/en/dev.-boards/esp8266-esp32-d1-mini/">D1 Mini</a></li>
 </ul>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Getting Started</h1>
@@ -114,82 +114,117 @@ Getting Started</h1>
 Prerequisites</h2>
 <p >The software is written, compiled and uploaded using the <a href="https://www.arduino.cc/en/software">Arduino IDE</a>. Platform.io and Visual Studio Code can be used as well. Use the script to convert the project to a Platform.io.</p>
 <h2><a class="anchor" id="autotoc_md3"></a>
-Dependecies</h2>
-<h3><a class="anchor" id="autotoc_md4"></a>
-Libaries</h3>
+Dependencies</h2>
 <ul>
 <li>ESP for Arduino IDE</li>
 <li>ESP Async WebServer V1.2.3</li>
-<li>ESPAsyncWebServer-esphome V2.1.0</li>
-<li>Neotimer V1.1.6</li>
+<li>Wifimanager V0.16.0</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md5"></a>
-Files</h3>
-<ul>
-<li>config.h</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md6"></a>
+<h2><a class="anchor" id="autotoc_md4"></a>
 Installing</h2>
-<p ><b>General install</b></p><ol type="1">
-<li>Install the <a href="https://github.com/HobbyComponents/CH340-Drivers">driver</a> for the esp8266</li>
-<li>Clone the repository</li>
+<p ><b>General Install</b></p><ol type="1">
+<li>Install the <a href="https://github.com/HobbyComponents/CH340-Drivers">driver</a> for the esp8266.</li>
+<li>Clone the repository.</li>
 </ol>
-<p >There are multiple ways to upload the program files to the board. The two ways listed here are using Arduino IDE and Platformio on visual studio code</p>
-<p ><b>Arduino IDE</b></p>
+<p >There are multiple ways to upload the program files to the board. The two ways listed here are using Arduino IDE and Platformio on Visual Studio Code.</p>
+<h3><a class="anchor" id="autotoc_md5"></a>
+&lt;b&gt;Option 1: Arduino IDE&lt;/b&gt;</h3>
 <ol type="1">
 <li>Install the <a href="https://www.arduino.cc/en/software">Arduino IDE</a></li>
-<li><a href="https://www.nonscio.com/blog/installing-esp8266-libraries-to-the-arduino-ide">Add the esp8266 libaries to Arduino IDE</a></li>
+<li><a href="https://www.nonscio.com/blog/installing-esp8266-libraries-to-the-arduino-ide">Add the esp8266 libraries to Arduino IDE</a>.</li>
 <li>Follow <a href="https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide">this</a> tutorial about the SPIFFS.</li>
 <li>Navigate to the <code>hackableEspDevice</code> folder.</li>
 <li>Open <code><a class="el" href="hackable_esp_device_8ino.html">hackableEspDevice.ino</a></code>.</li>
 <li>Upload the files in the <code>data</code> folder (see the tutorial).</li>
 <li>Upload the program to the device.</li>
-<li>Connect to the <code>Configure Smartlight Wifi</code> AP to configure the wifi.</li>
-</ol>
-<p ><b>Visual Studio Code + Platformio</b></p><ol type="1">
-<li>Install the <a href="https://platformio.org/install/ide?install=vscode">Platformio</a> plugin.</li>
-<li>Perpare files for platformio<ul>
-<li>Run the <code>toPlatformio.ps1</code> script and select the copy or sybolic option</li>
-<li>Run the <code>toPlatformio.ps1</code> script and select fix</li>
-<li>Or perpare the files manualy see manual prep platformio</li>
+<li><p class="startli">Connect to the <code>Configure Smartlight Wifi</code> AP to configure the wifi.</p>
+<p class="startli"><b>ESP8266 Sketch Data Upload</b></p><ol type="a">
+<li>The Arduino IDE won't have the option 'ESP8266 Sketch Data Upload'.</li>
+<li>You can download it from this <a href="https://github.com/esp8266/arduino-esp8266fs-plugin/releases/tag/0.5.0">link</a>.</li>
+<li>The file should be unpacked at <code>&lt;home_dir&gt;/Arduino-&lt;version&gt;/tools/ESP8266FS/tools/</code>.<ul>
+<li>If the directory <code>tools</code> does not exist you should create it. You have to create a new file named "tools" if it doesn't exist already inside of <a href="https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide">Arduino file</a>.</li>
 </ul>
 </li>
-<li>Open visual studio code in the <code>HackableEspDevicePlatformio</code> directory</li>
-<li>In visual studio code open the project in the platformio addon. <code>(Platoformio &gt; Projects &gt; open HackableEspDevicePlatformio)</code></li>
-<li>Upload the program <code>(project tasks &gt; General&gt; Upload)</code></li>
-<li>Upload the filesystem Image <code>(Project tasks &gt; Platform &gt; Upload filesystem Image)</code></li>
-<li>Done the device should now be ready for use</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md7"></a>
-Manual platformio prep</h2>
-<ol type="1">
-<li><p class="startli">create the correct hiarchy</p>
-<p class="startli">|HackableEspDevicePlatformio\ \ |&mdash; platformio.ini \ |&mdash; src\ \ |&mdash; src\main.cpp\ |&mdash; data\</p>
 </li>
 </ol>
+<h3><a class="anchor" id="autotoc_md6"></a>
+&lt;b&gt;Option 2: Visual Studio Code + Platformio&lt;/b&gt;</h3>
 <ol type="1">
-<li>the src dir needs to contain all the files from the <code>hackableEspDevice</code> directory except the data directory</li>
-<li>rename the <code><a class="el" href="hackable_esp_device_8ino.html">hackableEspDevice.ino</a></code> to <code>main.cpp</code></li>
-<li>in <code>main.cpp</code> add a reference to all functions in main eg.\ void <a class="el" href="hackable_esp_device_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title="Setup microchip.">setup()</a>;\ void <a class="el" href="hackable_esp_device_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title="Setup microchip.">setup()</a>;\ void <a class="el" href="hackable_esp_device_8ino.html#af9a7ef5ef61f50c11497d37c9ccda5b2" title="Initializes hostname.">initializeHostname()</a>;\ void connectWifi();\ void <a class="el" href="hackable_esp_device_8ino.html#a5ea6b44c795d4cc5929063f444147dba" title="Takes care of the webservices like pageloading.">initializeServer()</a>;\ void <a class="el" href="hackable_esp_device_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="Mainloop.">loop()</a>;\ String <a class="el" href="hackable_esp_device_8ino.html#a0c021f9721c3b479757f8e1b40624b6c" title="Replaces placeholders with actual data in HTML page.">processor(const String&amp; var)</a>;\ String <a class="el" href="hackable_esp_device_8ino.html#ac1311527864d9a4219f50d677608e538" title="Converts the file extension to the MIME type.">getContentType(String filename)</a>;\ void <a class="el" href="hackable_esp_device_8ino.html#a7ae585e44c0629645a31c6478417be65" title="Sends the requested file if the user has permission.">handleFileRequest(String path, uint8_t permissionLevel)</a>;\ void <a class="el" href="hackable_esp_device_8ino.html#a3ad222f20f56d154a7728c39310e6873" title="Handles the file upload to the SPIFFS.">handleFileUpload()</a>;\ void <a class="el" href="hackable_esp_device_8ino.html#a08eee08276e783a745b7db1ff57f690a" title="Handles the file download to the SPIFFS.">handleFileDownload()</a>;</li>
-<li>Move the platoformio.ini file from the root dir to the <code>hackableEspDevicePlatoformio</code> dir</li>
-<li>Copy all files from <code>hackableEspDevice\data</code> to <code>hackableEspDevicePlatformio\data</code></li>
+<li>Install the <a href="https://platformio.org/install/ide?install=vscode">Platformio</a> plugin.</li>
+<li>Prepare files for platformio.<ul>
+<li>Run the <code>toPlatformio.ps1</code> script and select the copy or symbolic option.<ul>
+<li>Symbolic changes the original ideal for editing the files.</li>
+<li>Copy simply copies the files to a new location for platformio files.</li>
+</ul>
+</li>
+<li>Run the <code>toPlatformio.ps1</code> script and select fix.</li>
+<li>Or prepare the files manually see manual prep platformio.</li>
+</ul>
+</li>
+<li>Open visual studio code in the <code>HackableEspDevicePlatformio</code> directory.</li>
+<li>In visual studio code open the project in the platformio addon. <code>(Platoformio &gt; Projects &gt; open HackableEspDevicePlatformio)</code>.</li>
+<li>Upload the program <code>(project tasks &gt; General&gt; Upload)</code>.</li>
+<li>Upload the filesystem Image <code>(Project tasks &gt; Platform &gt; Upload filesystem Image)</code>.</li>
+<li>Done. The device should now be ready for use.</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md8"></a>
+<h2><a class="anchor" id="autotoc_md7"></a>
+Manual Platformio Prep</h2>
+<ol type="1">
+<li>Create the correct hierarchy.</li>
+</ol>
+<div class="fragment"><div class="line">|HackableEspDevicePlatformio\</div>
+<div class="line">|--- platformio.ini</div>
+<div class="line">|--- src\</div>
+<div class="line">|--- src\main.cpp\</div>
+<div class="line">|--- data\</div>
+</div><!-- fragment --><ol type="1">
+<li>The src dir needs to contain all the files from the <code>hackableEspDevice</code> directory except the data directory.</li>
+<li>Rename the <code><a class="el" href="hackable_esp_device_8ino.html">hackableEspDevice.ino</a></code> to <code>main.cpp</code>.</li>
+<li>In <code>main.cpp</code> add a reference to all functions in main e.g. <div class="fragment"><div class="line">void setup();</div>
+<div class="line">void setup();</div>
+<div class="line">void initializeHostname();</div>
+<div class="line">void connectWifi();</div>
+<div class="line">void initializeServer();</div>
+<div class="line">void loop();</div>
+<div class="line">String getContentType(String filename);</div>
+<div class="line">void handleFileRequest(String path, uint8_t permissionLevel);</div>
+<div class="line">void handleFileUpload();</div>
+<div class="line">void handleFileDownload();</div>
+</div><!-- fragment --></li>
+<li>Move the <code>platformio.ini</code> file from the root dir to the <code>hackableEspDevicePlatformio</code> dir.</li>
+<li>Copy all files from <code>hackableEspDevice\data</code> to <code>hackableEspDevicePlatformio\data</code>.</li>
+</ol>
+<h2><a class="anchor" id="autotoc_md8"></a>
+&lt;b&gt;Running&lt;/b&gt;</h2>
+<h3><a class="anchor" id="autotoc_md9"></a>
+&lt;b&gt;Wifi Manager First Boot&lt;/b&gt;</h3>
+<ol type="1">
+<li>Start up the device.</li>
+<li>Connect to the <code>Configure Smartlight Wifi</code> via a mobile device.</li>
+<li>Go to the IP address listed in the serial monitor. Most of the time this is <a href="http://192.168.4.1">http://192.168.4.1</a>.</li>
+<li>Follow the steps on the website to configure a wifi connection.</li>
+<li>The device should now restart, connect to the selected wifi network and be ready for use.</li>
+</ol>
+<h2><a class="anchor" id="autotoc_md10"></a>
+Customization of Hackable ESP (Contains spoilers) (Look in raw version of readme.md)</h2>
+<h1><a class="anchor" id="autotoc_md11"></a>
 Hardware</h1>
 <ul>
 <li>1x D1 Mini Board</li>
 <li>1x USB to USB-mini cable</li>
+<li>1x ESP8266 casing</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md9"></a>
-Questions or feedback?</h1>
-<p >There is technical documentation available if you want to contribute to this project. There is an user manual as well, contact us for information. You can open an issue if you have questions or feedback for this repository.</p>
-<h1><a class="anchor" id="autotoc_md10"></a>
+<h1><a class="anchor" id="autotoc_md12"></a>
+Questions or Feedback?</h1>
+<p >There is technical documentation available if you want to contribute to this project. There is a user manual as well, contact us for information. You can open an issue if you have questions or feedback for this repository.</p>
+<h1><a class="anchor" id="autotoc_md13"></a>
 Authors</h1>
 <ul>
 <li><b>Luke de Munk</b> - <em>Head author</em> - <a href="https://www.linkedin.com/in/luke-de-munk/">LinkedIn</a></li>
-<li><b>Thijs Takken</b> - <em>Head author</em> - <a href="https://www.linkedin.com/in/">LinkedIn</a></li>
-<li><b>Christina Kostine</b> - <em>Head author</em> - <a href="https://www.linkedin.com/in/">LinkedIn</a></li>
-<li><b>Twenne Elffers</b> - <em>Head author</em> - <a href="https://www.linkedin.com/in/">LinkedIn</a> </li>
+<li><b>Thijs Takken</b> - <em>Head author</em> - <a href="https://www.linkedin.com/in/thijstakken">LinkedIn</a></li>
+<li><b>Christina Kostine</b> - <em>Head author</em> - <a href="https://www.linkedin.com/in/christine-kostine">LinkedIn</a></li>
+<li><b>Twenne Elffers</b> - <em>Head author</em> - <a href="https://www.linkedin.com/in/twenne-elffers/">LinkedIn</a> </li>
 </ul>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->

@@ -300,25 +300,27 @@
 \DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00306}00306     \textcolor{keywordflow}{if} (messLength > \mbox{\hyperlink{_startup_text_8h_a30362161c93e3f1a4ee4c673f535b5a8}{LENGTH}}) \{}
 \DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00307}00307       \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
 \DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00308}00308     \}}
-\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00309}00309     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} messBytes[messLength];}
-\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00310}00310     str.getBytes(messBytes, messLength);}
-\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00311}00311     uint8\_t i;}
-\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00312}00312     \textcolor{keywordflow}{for} (i = 0; i < messLength; i++) \{}
-\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00313}00313       \textcolor{keywordflow}{if} (messBytes[i] != 0) \{}
-\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00314}00314         Serial.print(messBytes[i], HEX);}
-\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00315}00315         Serial.print(\textcolor{stringliteral}{"{} "{}});}
-\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00316}00316       \}}
-\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00317}00317     \}}
-\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00318}00318     Serial.print(\textcolor{stringliteral}{"{}0A "{}});}
-\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00319}00319     i++;}
-\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00320}00320     \textcolor{comment}{/* Print . (2E) until end of line, to match random data */}}
-\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00321}00321     \textcolor{keywordflow}{while} (i < \mbox{\hyperlink{_startup_text_8h_a30362161c93e3f1a4ee4c673f535b5a8}{LENGTH}}-\/1) \{}
-\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00322}00322       Serial.print(\textcolor{stringliteral}{"{}2E "{}});}
-\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00323}00323       i++;}
-\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00324}00324     \}}
-\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00325}00325     Serial.println(\textcolor{stringliteral}{"{}2E"{}});}
-\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00326}00326     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
-\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00327}00327 \}}
-\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00328}00328 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00309}00309     }
+\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00310}00310     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} messBytes[messLength];}
+\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00311}00311     str.getBytes(messBytes, messLength);}
+\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00312}00312     uint8\_t i;}
+\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00313}00313     }
+\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00314}00314     \textcolor{keywordflow}{for} (i = 0; i < messLength; i++) \{}
+\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00315}00315         \textcolor{keywordflow}{if} (messBytes[i] != 0) \{}
+\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00316}00316             Serial.print(messBytes[i], HEX);}
+\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00317}00317             Serial.print(\textcolor{stringliteral}{"{} "{}});}
+\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00318}00318         \}}
+\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00319}00319     \}}
+\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00320}00320     Serial.print(\textcolor{stringliteral}{"{}0A "{}});}
+\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00321}00321     i++;}
+\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00322}00322     \textcolor{comment}{/* Print . (2E) until end of line, to match random data */}}
+\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00323}00323     \textcolor{keywordflow}{while} (i < \mbox{\hyperlink{_startup_text_8h_a30362161c93e3f1a4ee4c673f535b5a8}{LENGTH}}-\/1) \{}
+\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00324}00324         Serial.print(\textcolor{stringliteral}{"{}2E "{}});}
+\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00325}00325         i++;}
+\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00326}00326     \}}
+\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00327}00327     Serial.println(\textcolor{stringliteral}{"{}2E"{}});}
+\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00328}00328     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00329}00329 \}}
+\DoxyCodeLine{\Hypertarget{_startup_text_8h_source_l00330}00330 \textcolor{preprocessor}{\#endif}}
 
 \end{DoxyCode}

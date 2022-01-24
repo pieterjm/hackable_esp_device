@@ -28,16 +28,20 @@ var NAVTREE =
     [ "Hackable ESP8266 device", "index.html", [
       [ "Getting Started", "index.html#autotoc_md1", [
         [ "Prerequisites", "index.html#autotoc_md2", null ],
-        [ "Dependecies", "index.html#autotoc_md3", [
-          [ "Libaries", "index.html#autotoc_md4", null ],
-          [ "Files", "index.html#autotoc_md5", null ]
+        [ "Dependencies", "index.html#autotoc_md3", null ],
+        [ "Installing", "index.html#autotoc_md4", [
+          [ "<b>Option 1: Arduino IDE</b>", "index.html#autotoc_md5", null ],
+          [ "<b>Option 2: Visual Studio Code + Platformio</b>", "index.html#autotoc_md6", null ]
         ] ],
-        [ "Installing", "index.html#autotoc_md6", null ],
-        [ "Manual platformio prep", "index.html#autotoc_md7", null ]
+        [ "Manual Platformio Prep", "index.html#autotoc_md7", null ],
+        [ "<b>Running</b>", "index.html#autotoc_md8", [
+          [ "<b>Wifi Manager First Boot</b>", "index.html#autotoc_md9", null ]
+        ] ],
+        [ "Customization of Hackable ESP (Contains spoilers) (Look in raw version of readme.md)", "index.html#autotoc_md10", null ]
       ] ],
-      [ "Hardware", "index.html#autotoc_md8", null ],
-      [ "Questions or feedback?", "index.html#autotoc_md9", null ],
-      [ "Authors", "index.html#autotoc_md10", null ]
+      [ "Hardware", "index.html#autotoc_md11", null ],
+      [ "Questions or Feedback?", "index.html#autotoc_md12", null ],
+      [ "Authors", "index.html#autotoc_md13", null ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],

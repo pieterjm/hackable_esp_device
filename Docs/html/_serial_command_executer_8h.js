@@ -12,6 +12,7 @@ var _serial_command_executer_8h =
     [ "COMMAND_SU", "_serial_command_executer_8h.html#a7e0cf8d05523e31cb48f7acf4ef8e832", null ],
     [ "COMMAND_USERS", "_serial_command_executer_8h.html#a9db5fb18d2bcb32925d11bd5e9ed758d", null ],
     [ "COMMAND_VI", "_serial_command_executer_8h.html#afec90b1f39bd61f392adbfcbe61229a0", null ],
+    [ "COMMAND_WHOAMI", "_serial_command_executer_8h.html#a275155a2e16b59de496b532a924bc2c9", null ],
     [ "ERROR_CMD_NOT_FOUND", "_serial_command_executer_8h.html#a4070e23710bad905213da8fd295a36ed", null ],
     [ "ERROR_NO_FILE", "_serial_command_executer_8h.html#ad4cbe103a5753a90ea14fd0e30b5c650", null ],
     [ "ERROR_NO_FILE_DIR", "_serial_command_executer_8h.html#a8f836310ffa2d75f973995730a9f92bb", null ],

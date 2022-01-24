@@ -10,5 +10,6 @@ var searchData=
   ['command_5frun_7',['COMMAND_RUN',['../_serial_command_executer_8h.html#a2e3c1635a22898c9e1ec48b57d7f3d99',1,'SerialCommandExecuter.h']]],
   ['command_5fsu_8',['COMMAND_SU',['../_serial_command_executer_8h.html#a7e0cf8d05523e31cb48f7acf4ef8e832',1,'SerialCommandExecuter.h']]],
   ['command_5fusers_9',['COMMAND_USERS',['../_serial_command_executer_8h.html#a9db5fb18d2bcb32925d11bd5e9ed758d',1,'SerialCommandExecuter.h']]],
-  ['command_5fvi_10',['COMMAND_VI',['../_serial_command_executer_8h.html#afec90b1f39bd61f392adbfcbe61229a0',1,'SerialCommandExecuter.h']]]
+  ['command_5fvi_10',['COMMAND_VI',['../_serial_command_executer_8h.html#afec90b1f39bd61f392adbfcbe61229a0',1,'SerialCommandExecuter.h']]],
+  ['command_5fwhoami_11',['COMMAND_WHOAMI',['../_serial_command_executer_8h.html#a275155a2e16b59de496b532a924bc2c9',1,'SerialCommandExecuter.h']]]
 ];
