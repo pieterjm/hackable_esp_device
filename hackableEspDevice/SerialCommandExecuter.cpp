@@ -2,7 +2,7 @@
  * File:      SerialCommandExecuter.cpp
  * Author:    Luke de Munk & Twenne Elffers
  * Class:     SerialCommandExecuter
- * Version:   0.1
+ * Version:   1.0
  * 
  * Parses and executes serial terminal commands.
  */
@@ -42,9 +42,9 @@ void SerialCommandExecuter::executeCommand() {
 
     if (command != "") {
         if (_isLoggedIn) {
-            Serial.print("~# ");                                              //For the Linux feeling, superuser
+            Serial.print("~# ");                                            //For the Linux feeling, superuser
         } else {
-            Serial.print("~$ ");                                              //For the Linux feeling, no superuser
+            Serial.print("~$ ");                                            //For the Linux feeling, no superuser
         }
         Serial.print(command);                                              //Echo command (command ends with \n)
         
@@ -120,7 +120,7 @@ bool SerialCommandExecuter::_parseCommand(String commandString) {
         buffOverflow.ls();
     } else if (command == COMMAND_VI) {
         if (_checkParams(numParams, 1, 1)) {
-            if (params[0] == "./testprogram.c" || params[0] == "testprogram.c") {
+            if (params[0] == ARG_LS_FILE_1_1 || params[0] == ARG_LS_FILE_1_2) {
                 buffOverflow.vi();
             } else {
                 Serial.println(ERROR_NO_FILE);
@@ -129,14 +129,14 @@ bool SerialCommandExecuter::_parseCommand(String commandString) {
         }
     } else if (command.substring(0, 2) == COMMAND_RUN) {                    //Substring == "./" the rest is filename
         if (_checkParams(numParams, 0, 1)) {
-            String filename = command.substring(2);                           //The rest of the command is filename
+            String filename = command.substring(2);                         //The rest of the command is filename
           
-            if (filename == "testprogram.c") {
+            if (filename == ARG_LS_FILE_1_1) {
                 Serial.println(ERROR_PERM_DENIED);
                 return false;
             }
             
-            if (filename != "testprogram") {
+            if (filename != ARG_LS_FILE_2_1) {
                 Serial.println(ERROR_NO_FILE_DIR);
                 return false;
             }
@@ -159,10 +159,21 @@ bool SerialCommandExecuter::_parseCommand(String commandString) {
                 Serial.println(ERROR_WRONG_ARGS);
                 return false;
             }
-            if (params[1] == "./testprogram" || params[1] == "testprogram") {
+            if (params[1] == ARG_LS_FILE_2_1 || params[1] == ARG_LS_FILE_2_2) {
                 buffOverflow.objectDump();
             } else {
                 Serial.println(ERROR_NO_FILE);
+                return false;
+            }
+        }
+    } else if (command == COMMAND_GPG) {
+        if (_checkParams(numParams, 3, 3)) {
+            if (params[0] == ARG_GPG_ENCRYPT) {
+              _encrypt(params);
+            } else if (params[0] == ARG_GPG_DECRYPT) {
+              _decrypt(params);
+            } else {
+                Serial.println(ERROR_WRONG_ARGS);
                 return false;
             }
         }
@@ -199,7 +210,7 @@ String* SerialCommandExecuter::_trimCommand(String commandString) {
                 item = "";                                                  //Reset item value
                 paramCounter++;
            }
-        } else { // if not a whitepace add to item
+        } else {
             item += commandString[c];
         }
     }
@@ -211,7 +222,7 @@ String* SerialCommandExecuter::_trimCommand(String commandString) {
   @brief    Checks if parameters are valid.
   @param    numParams     Number of given parameters
   @param    checkValue    Number of needed parameters
-  @return   bool          true == valid, false == error
+  @return   bool          True if parameters are valid
 */
 /**************************************************************************/
 bool SerialCommandExecuter::_checkParams(uint8_t numParams, uint8_t minNumberParams, uint8_t maxNumberParams) {
@@ -227,8 +238,8 @@ bool SerialCommandExecuter::_checkParams(uint8_t numParams, uint8_t minNumberPar
 
 /**************************************************************************/
 /*!
-  @brief    Gives help based on command put in
-  @param    command       contains the command that help is given about
+  @brief    Gives help based on command put in.
+  @param    command       Contains the command that help is given about
 */
 /**************************************************************************/
 void SerialCommandExecuter::_printHelp(String command) {
@@ -260,6 +271,9 @@ void SerialCommandExecuter::_printHelp(String command) {
         Serial.println("Usage: ./{filename}                     Runs an executable file");
     } else if (command == COMMAND_OBJDUMP) {
         Serial.println("Usage: objdump -d {filename}            Prints disassembled code of an executable file");
+    } else if (command == COMMAND_GPG) {
+        Serial.println("Usage: gpg --encrypt {key} {line}       Prints disassembled code of an executable file");
+        Serial.println("Usage: gpg --decrypt {key} {line}       Prints disassembled code of an executable file");
     } else {
         Serial.println(ERROR_CMD_NOT_FOUND);
     }
@@ -283,6 +297,7 @@ void SerialCommandExecuter::_printCommands() {
     Serial.println(COMMAND_VI);
     Serial.println(COMMAND_OBJDUMP);
     Serial.println(COMMAND_WHOAMI);
+    Serial.println(COMMAND_GPG);
 }
 
 /**************************************************************************/
@@ -290,14 +305,14 @@ void SerialCommandExecuter::_printCommands() {
   @brief    Executes 'debugEnable [--off|--on]' command, enables or disables
             debug info.
   @param    enable        If the debug is enabled
-  @return   bool          true == success, false == error
+  @return   bool          True if is successfull
 */
 /**************************************************************************/
 bool SerialCommandExecuter::_enableDebug(String enable) {
-    if (enable == "--on") {
+    if (enable == ARG_DEBUG_ON) {
         setDebugEnabled(true);
         Serial.println("debug = true");
-    } else if (enable == "--off") {
+    } else if (enable == ARG_DEBUG_OFF) {
         setDebugEnabled(false);
         Serial.println("debug = false");
     } else {
@@ -309,9 +324,9 @@ bool SerialCommandExecuter::_enableDebug(String enable) {
 
 /**************************************************************************/
 /*!
-  @brief    Executes 'su {passwrd' command, checks authentication.
+  @brief    Executes superuser command, checks authentication.
   @param    password      Password for the superuser
-  @return   bool          true == success, false == error
+  @return   bool          True if is successfull
 */
 /**************************************************************************/
 bool SerialCommandExecuter::_superUserLogin(String password) {
@@ -327,8 +342,8 @@ bool SerialCommandExecuter::_superUserLogin(String password) {
 
 /**************************************************************************/
 /*!
-  @brief    Executes 'viewKey' command, prints encryption keys.
-  @return   bool          true == success, false == error
+  @brief    Executes keys command, prints encryption keys.
+  @return   bool          True if is successfull
 */
 /**************************************************************************/
 bool SerialCommandExecuter::_viewKey() {
@@ -336,14 +351,14 @@ bool SerialCommandExecuter::_viewKey() {
         Serial.println(ERROR_NO_PERMISSION);
         return false;
     }
-    Serial.println("Private encryption keys. Don't share!!!");
-    Serial.println("");
+    Serial.println("Private encryption keys (Don't share!!!):");
+    Serial.println(AES_KEY);
     return true;
 }
 
 /**************************************************************************/
 /*!
-  @brief    Executes 'restart' command, restarts the ESP.
+  @brief    Executes restart command, restarts the ESP.
 */
 /**************************************************************************/
 void SerialCommandExecuter::_restart() {
@@ -360,8 +375,8 @@ void SerialCommandExecuter::_restart() {
 
 /**************************************************************************/
 /*!
-  @brief    Executes 'users' command, prints userlist of webpage.
-  @return   bool          true == success, false == error
+  @brief    Executes users command, prints userlist of webpage.
+  @return   bool          True if is successfull
 */
 /**************************************************************************/
 bool SerialCommandExecuter::_viewUsers() {
@@ -372,7 +387,7 @@ bool SerialCommandExecuter::_viewUsers() {
         return false;
     }
     
-    Serial.println("|-USERNAME------|-PASSWORD------|-ROLE--|");
+    Serial.println("|-USERNAME-------|-PASSWORD-------|-ROLE---|");
   
     for (uint8_t i = 0; i < _numberUsers; i += 3) {
         userPrints[0] = _users[i].c_str();                                  //Username
@@ -383,16 +398,16 @@ bool SerialCommandExecuter::_viewUsers() {
             userPrints[1] = "******";                                       //Password, not printed
             userPrints[2] = "Admin";                                        //Permission level/role
         }
-        Serial.printf("| %s\t| %s\t| %s\t|\n", userPrints[0].c_str(), userPrints[1].c_str(), userPrints[2].c_str());
+        Serial.printf("| %-15s| %-15s| %-7s|\n", userPrints[0].c_str(), userPrints[1].c_str(), userPrints[2].c_str());
     }
     return true;
 }
 
 /**************************************************************************/
 /*!
-  @brief    Hostname options.
+  @brief    Executes hostname command, prints userlist of webpage.
   @param    params        Array of the parameters
-  @return   bool          true == success, false == error
+  @return   bool          True if is successfull
 */
 /**************************************************************************/
 bool SerialCommandExecuter::_hostname(String* params) { 
@@ -403,16 +418,53 @@ bool SerialCommandExecuter::_hostname(String* params) {
         return true;
     }
     
-    if (params[0] == "--set" && params[1] != "") {                          //If parameter == "--set" check if next value is not empty
+    if (params[0] ==  ARG_HOSTNAME_SET && params[1] != "") {                //If parameter 'set' check if next value is not empty
         char newHostname[MAX_HOSTNAME_LENGTH];
         params[1].toCharArray(newHostname, MAX_HOSTNAME_LENGTH);
         writeHostname(newHostname);
-    } else if (params[0] == "--default"){
+    } else if (params[0] == ARG_HOSTNAME_DEFAULT) {
         writeHostname(DEFAULT_HOSTNAME);
     } else {
         Serial.println(ERROR_WRONG_ARGS);                                   //If it can't find suitable params: give error
         return false;
     }
+    return true;
+}
+
+
+/**************************************************************************/
+/*!
+  @brief    Executes encrypt command, prints encrypted output.
+  @param    params        Array of the parameters
+  @return   bool          True if is successfull
+*/
+/**************************************************************************/
+bool SerialCommandExecuter::_encrypt(String* params) {
+    if (!cryptor.setKey(params[1])) {
+        Serial.println(ERROR_NO_VALID_KEY);
+        return false;
+    }
+    
+    Serial.print("Encrypted output: ");
+    Serial.println(cryptor.encryptLine(params[2]));
+    return true;
+}
+
+/**************************************************************************/
+/*!
+  @brief    Executes decrypt command, prints decrypted output.
+  @param    params        Array of the parameters
+  @return   bool          True if is successfull
+*/
+/**************************************************************************/
+bool SerialCommandExecuter::_decrypt(String* params) {
+    if (!cryptor.setKey(params[1])) {
+        Serial.println(ERROR_NO_VALID_KEY);
+        return false;
+    }
+    
+    Serial.print("Decrypted output: ");
+    Serial.println(cryptor.decryptLine(params[2]));
     return true;
 }
 
@@ -426,7 +478,7 @@ bool SerialCommandExecuter::_hostname(String* params) {
 */
 /**************************************************************************/
 bool SerialCommandExecuter::_checkHelp(String param, String command) {
-    if (param == "-h" || param == "--help") {
+    if (param == ARG_HELP_SHORT || param == ARG_HELP_LONG) {
         _printHelp(command);
         return true;
     }

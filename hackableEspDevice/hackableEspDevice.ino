@@ -1,7 +1,7 @@
 /*
  * File:      hackableEspDevice.ino
  * Authors:   ESPinoza (Team 1)
- * Version:   0.1
+ * Version:   1.0
  * 
  * The main file of the firmware of a vunerable-by-design ESP8266 controller.
  * For more information, go to: https://gitlab.fdmci.hva.nl/munkl/hackable_esp_device
@@ -18,18 +18,17 @@
 #include "HostnameWrite.h"                                                  //For handling the hostname changes
 #include "StartupText.h"                                                    //For printing startup log files
 
-/* On and off are inverted because the built-in led is active low */
 #define ON                      HIGH
 #define OFF                     LOW
 
 #define MIN_BRIGHTNESS          1022                                        //analogWrite() on ESP8266 D1 Mini board is inverted
 
 ESP8266WebServer server(80);                                                //Object that listens for HTTP requests on port 80
-uint8_t ledState = OFF;                                                     //Declare led state variable
-uint16_t brightness = 1023;                                                 //For LED brightnesss
+uint8_t ledState = OFF;                                                     //For led state variable
+uint16_t brightness = 1023;                                                 //For led brightness
 
 UserHandler userHandler(&server);                                           //For handling the authentication
-SerialCommandExecuter cliExecuter;
+SerialCommandExecuter cliExecuter;                                          //For handling serial commands
 
 File fsUploadFile;                                                          //A File object to temporarily store the received file
 
@@ -40,7 +39,7 @@ File fsUploadFile;                                                          //A 
 /**************************************************************************/
 void setup() {
     Serial.begin(115200);                                                   //Serial port for debugging purposes
-    
+
     /* Initialize SPIFFS */
     if (!SPIFFS.begin()) {
         Serial.println("An Error has occurred while mounting SPIFFS");
@@ -62,9 +61,9 @@ void setup() {
     setupWifi();    
     initializeServer();
     userHandler.updateUsers();
-    cliExecuter.setUsers(userHandler.getUsers(), userHandler.getNumberOfUsers());
+    cliExecuter.setUsers(userHandler.getUsers(), userHandler.getNumberOfUsers()); //Send users to the command executer for the 'users' command
     
-    debugln("Serial commands available. Typ 'help' for help.");
+    Serial.println("Serial commands available. Typ 'help' for help.");
 }
 
 /**************************************************************************/
@@ -100,7 +99,7 @@ void initializeHostname() {
 /**************************************************************************/
 /*!
     @brief    Connects to WiFi if it can, otherwise starts as AP to
-              configure WiFI.
+              configure WiFi.
 */
 /**************************************************************************/
 void setupWifi() {
@@ -139,10 +138,12 @@ void initializeServer() {
         handleFileRequest("/index.html", PERMISSION_LVL_ALL);
     });
 
+    /* Route for sending c++ variables */
     server.on("/state", HTTP_GET, []() {
         sendToFrontend("ledState");
     });
 
+    /* Route for sending c++ variables */
     server.on("/brightness", HTTP_GET, []() {
         sendToFrontend("brightness");
     });
@@ -167,12 +168,12 @@ void initializeServer() {
         handleFileRequest("/download.html", PERMISSION_LVL_USER);
     });
     
-    /* Load style_desktop.css file, styling for desktop version */
+    /* Load styles.css file, styling for desktop version */
     server.on("/styles.css", HTTP_GET, []() {
         handleFileRequest("/styles.css", PERMISSION_LVL_ALL);
     });
     
-    /* Load style_mobile.css file, styling for mobile version */
+    /* Load styles_mobile.css file, styling for mobile version */
     server.on("/styles_mobile.css", HTTP_GET, []() {
         handleFileRequest("/styles_mobile.css", PERMISSION_LVL_ALL);
     });
@@ -221,8 +222,8 @@ void initializeServer() {
         handleFileRequest("/index.html", PERMISSION_LVL_ALL);
     });
     
-    /* Route for brightness */
-    server.on("/update_brightness", HTTP_GET, []() {
+    /* Route for setting brightness */
+    server.on("/set_brightness", HTTP_GET, []() {
         if (server.arg("brightness")) {
             brightness = atoi(server.arg("brightness").c_str());
             if(ledState == ON) {
@@ -241,6 +242,7 @@ void initializeServer() {
     /*
     * End of JavaScript data receiving
     */
+    
     /*
     * Routes for file management
     */
@@ -260,8 +262,8 @@ void initializeServer() {
     */
     /* Not found */
     server.onNotFound([]() {                                                //If the client requests any URI
-        handleFileRequest(server.uri(), PERMISSION_LVL_ALL);                //send it if it exists
-        debugln("NOT_FOUND?");
+        handleFileRequest(server.uri(), PERMISSION_LVL_ALL);                //Send it if it exists
+        debugln("Route not found");
     });
     server.begin();                                                         //Start server
 }

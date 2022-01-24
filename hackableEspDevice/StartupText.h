@@ -1,7 +1,7 @@
 /*
  * File:      startupText.h
  * Author:    Luke de Munk
- * Version:   0.1
+ * Version:   1.0
  * 
  * Static text in bytes that is printed when debug is on, to show
  * vulnerable information packed in it.

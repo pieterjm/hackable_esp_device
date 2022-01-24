@@ -2,7 +2,7 @@
  * File:      UserHandler.h
  * Author:    Luke de Munk
  * Class:     UserHandler
- * Version:   0.1
+ * Version:   1.0
  * 
  * Class for the http authentication process.
  */
@@ -12,6 +12,7 @@
 #include <ESP8266WebServer.h>                                               //For running the webserver
 #include <FS.h>                                                             //For SPIFFS
 #include "config.h"                                                         //For the configuration
+#include "CbcEncryptor.h"                                                   //For decrypting file to obtain users
 
 class UserHandler
 {
@@ -26,5 +27,6 @@ class UserHandler
         String* _parseLine(String line);
         String _users[MAX_NUMBER_USERS*USER_INFO_LENGTH];
         uint8_t _numberUsers;
+        CbcEncryptor cryptor;
 };
 #endif
