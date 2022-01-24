@@ -23,12 +23,12 @@ The software is written, compiled and uploaded using the [Arduino IDE](https://w
 1. Install the [driver](https://github.com/HobbyComponents/CH340-Drivers) for the esp8266.
 2. Clone the repository.
 
-There are multiple ways to upload the program files to the board. The two ways listed here are using Arduino IDE and Platformio on Visual Dtudio Code.
+There are multiple ways to upload the program files to the board. The two ways listed here are using Arduino IDE and Platformio on Visual Studio Code.
 
 #### <b>Option 1: Arduino IDE</b>
 
 1. Install the [Arduino IDE](https://www.arduino.cc/en/software)
-2. [Add the esp8266 libraries to Arduino IDE](https://www.nonscio.com/blog/installing-esp8266-libraries-to-the-arduino-ide)
+2. [Add the esp8266 libraries to Arduino IDE](https://www.nonscio.com/blog/installing-esp8266-libraries-to-the-arduino-ide).
 3. Follow [this](https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide) tutorial about the SPIFFS.
 4. Navigate to the `hackableEspDevice` folder.
 5. Open `hackableEspDevice.ino`.
@@ -60,25 +60,29 @@ There are multiple ways to upload the program files to the board. The two ways l
 ### Manual Platformio Prep
 1. Create the correct hierarchy.
 
-    |HackableEspDevicePlatformio\ \
-    |--- platformio.ini \
-    |--- src\ \
+```
+    |HackableEspDevicePlatformio\
+    |--- platformio.ini
+    |--- src\
     |--- src\main.cpp\
-    |--- data\ 
+    |--- data\
+```
 
 1. The src dir needs to contain all the files from the `hackableEspDevice` directory except the data directory.
 2. Rename the `hackableEspDevice.ino` to `main.cpp`.
-3. In `main.cpp` add a reference to all functions in main e.g.\
-void setup();\
-void setup();\
-void initializeHostname();\
-void connectWifi();\
-void initializeServer();\
-void loop();\
-String getContentType(String filename);\
-void handleFileRequest(String path, uint8_t permissionLevel);\
-void handleFileUpload();\
+3. In `main.cpp` add a reference to all functions in main e.g.
+```
+void setup();
+void setup();
+void initializeHostname();
+void connectWifi();
+void initializeServer();
+void loop();
+String getContentType(String filename);
+void handleFileRequest(String path, uint8_t permissionLevel);
+void handleFileUpload();
 void handleFileDownload();
+```
 4. Move the `platformio.ini` file from the root dir to the `hackableEspDevicePlatformio` dir.
 5. Copy all files from `hackableEspDevice\data` to `hackableEspDevicePlatformio\data`.
 
@@ -95,8 +99,10 @@ void handleFileDownload();
 <!--
 Default user and passwd
 It is possible to change the default username and password for the users on the webpage.
-The file for this is /hackableEspDevice/data/conf.txt. 
+The file for this is /hackableEspDevice/data/config.conf. 
 Here the username and password is stored and can be changed to increase or decrease the challenge. the format is “<Username>:<Password>:<authorization level (1|2)>” 
+The file is encrypted using the ecnryption command in the serial interface of the device. `gpg --encrypt "key" "string"`
+They key is found with the `privatekeys` command
 Level 1 is a normal user, level 2 is an admin user.
 
 
