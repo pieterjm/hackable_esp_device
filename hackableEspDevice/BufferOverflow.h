@@ -2,9 +2,10 @@
  * File:      BufferOverflow.h
  * Author:    Luke de Munk
  * Class:     BufferOverflow
- * Version:   0.1
+ * Version:   1.0
  * 
- * Buffer flow simulator. All elements of the bufferflow are in this class.
+ * Buffer overflow simulator based on a Linux cli.
+ * All elements of the bufferflow are in this class.
  */
 #ifndef BUFFER_OVERFLOW_H
 #define BUFFER_OVERFLOW_H

@@ -1,7 +1,7 @@
 /*
  * File:      Debugger.h
  * Author:    Luke de Munk
- * Version:   0.1
+ * Version:   1.0
  * 
  * Class for handling the debug prints.
  */

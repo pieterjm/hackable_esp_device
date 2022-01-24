@@ -1,10 +1,9 @@
 /*
  * File:      HostnameWrite.h
  * Author:    Twenne Elffers
- * Class:     HostnameWrite
- * Version:   0.1
+ * Version:   1.0
  * 
- * Writes hostname to the EEPROM.
+ * Handles hostname saving and reading to EEPROM.
  */
 #ifndef HOSTNAME_WRITE_H
 #define HOSTNAME_WRITE_H
@@ -15,6 +14,6 @@
 
 String getHostname();
 void writeHostname(char hostname[32]);
-void setEEPROMToNULL(int writeLength, int startAdress);
+void setEepromToNull(uint8_t writeLength, uint8_t startAdress);
 void checkEepromCommit();
 #endif

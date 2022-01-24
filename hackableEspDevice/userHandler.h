@@ -2,7 +2,7 @@
  * File:      UserHandler.h
  * Author:    Luke de Munk
  * Class:     UserHandler
- * Version:   0.1
+ * Version:   1.0
  * 
  * Class for the http authentication process.
  */

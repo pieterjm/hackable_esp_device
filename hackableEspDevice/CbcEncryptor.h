@@ -2,7 +2,7 @@
  * File:      CbcEncryptor.h
  * Author:    Luke de Munk
  * Class:     CbcEncryptor
- * Version:   0.1
+ * Version:   1.0
  * 
  * Handles encryption and decryption of files. Uses AES encryption.
  */
@@ -23,7 +23,7 @@ class CbcEncryptor
         bool setKey(String key);
     
     private:
-        byte _hexCharToByte(char *in);
+        byte _hexCharToByte(char hexChar);
 
         String _aesKeyString;
         byte _aesKey[AES_KEY_SIZE];

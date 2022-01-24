@@ -2,7 +2,7 @@
  * File:      SerialCommandExecuter.h
  * Author:    Luke de Munk & Twenne Elffers
  * Class:     SerialCommandExecuter
- * Version:   0.1
+ * Version:   1.0
  * 
  * Parses and executes serial terminal commands.
  */
@@ -35,18 +35,28 @@
 /* Used for encryption */
 #define COMMAND_GPG             "gpg"
 
+#define ARG_HELP_LONG           "--help"
+#define ARG_HELP_SHORT          "-h"
+#define ARG_DEBUG_ON            "--on"
+#define ARG_DEBUG_OFF           "--off"
+#define ARG_HOSTNAME_SET        "--set"
+#define ARG_HOSTNAME_DEFAULT    "--default"
 #define ARG_GPG_ENCRYPT         "--encrypt"
 #define ARG_GPG_DECRYPT         "--decrypt"
+#define ARG_LS_FILE_1_1         "testprogram.c"
+#define ARG_LS_FILE_1_2         "./testprogram.c"
+#define ARG_LS_FILE_2_1         "testprogram"
+#define ARG_LS_FILE_2_2         "./testprogram"
 
 
 #define MESS_SUPER_USER         "You are now super user."
 
 
-#define ERROR_TOO_MANY_ARGS     "Too many arguments. Typ 'help' for help."
-#define ERROR_CMD_NOT_FOUND     "Bash: command not found. Typ 'help' for help."
+#define ERROR_TOO_MANY_ARGS     "Too many arguments. Add '-h' or '--help' to the command for help."
+#define ERROR_CMD_NOT_FOUND     "Bash: command not found. Type 'help' for help."
 #define ERROR_PERM_DENIED       "Bash: Permission denied"
 #define ERROR_WRONG_ARGS        "Wrong argument(s). Add '-h' or '--help' to the command for help."
-#define ERROR_TOO_FEW_ARGS      "Too few arguments. Typ 'help' for help."
+#define ERROR_TOO_FEW_ARGS      "Too few arguments. Add '-h' or '--help' to the command for help."
 #define ERROR_WRONG_PWD         "Wrong password."
 #define ERROR_NO_PERMISSION     "You are no super user. Use 'su {password}' to log in."
 #define ERROR_NO_FILE           "No such file."

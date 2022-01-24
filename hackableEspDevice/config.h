@@ -2,8 +2,7 @@
  * File:      config.h
  * Author:    Luke de Munk
  * 
- * Configuration options can be configured here. This file
- * is in the .gitignore list, so this file will not be pushed.
+ * Configuration options can be configured here.
  */
 #ifndef CONFIG_H
 #define CONFIG_H

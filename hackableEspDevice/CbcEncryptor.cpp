@@ -2,7 +2,7 @@
  * File:      CbcEncryptor.cpp
  * Author:    Luke de Munk
  * Class:     CbcEncryptor
- * Version:   0.1
+ * Version:   1.0
  * 
  * Handles encryption and decryption of files. Uses AES encryption.
  */
@@ -10,13 +10,14 @@
 
 /**************************************************************************/
 /*!
-  @brief    Constructor
+  @brief    Constructor.
 */
 /**************************************************************************/
 CbcEncryptor::CbcEncryptor() {
     _aesInitVecInt = CBC_INIT_VECTOR;
     _aesKeyString = AES_KEY;
-    
+
+    /* Convert key string to bytes */
     for (uint8_t i = 0; i < AES_KEY_SIZE; i++) {
         _aesKey[i] = (byte) _aesKeyString[i];
     }
@@ -24,9 +25,9 @@ CbcEncryptor::CbcEncryptor() {
 
 /**************************************************************************/
 /*!
-  @brief    brief
-  @param    var           desc
-  @return   var           desc
+  @brief    Encrypts the SPIFFS file if it exists.
+  @param    filename      Name of the file to encrypt
+  @return   bool          True if encryption is successfull
 */
 /**************************************************************************/
 bool CbcEncryptor::encryptFile(String filename) {
@@ -66,9 +67,9 @@ bool CbcEncryptor::encryptFile(String filename) {
 
 /**************************************************************************/
 /*!
-  @brief    brief
-  @param    var           desc
-  @return   var           desc
+  @brief    Decrypts the SPIFFS file if it exists.
+  @param    filename      Name of the file to decrypt
+  @return   bool          True if decryption is successfull
 */
 /**************************************************************************/
 bool CbcEncryptor::decryptFile(String filename) {
@@ -106,18 +107,20 @@ bool CbcEncryptor::decryptFile(String filename) {
 
 /**************************************************************************/
 /*!
-  @brief    brief
-  @param    var           desc
-  @return   var           desc
+  @brief    Sets the encryption key.
+  @param    key           Encryption key
+  @return   bool          True if is successfull
 */
 /**************************************************************************/
 bool CbcEncryptor::setKey(String key) {
     _aesKeyString = key;
-    
+
+    /* Check if key is the right length */
     if (key.length() != AES_KEY_SIZE) {
         return false;
     }
-    
+
+    /* Convert key string to bytes */
     for (uint8_t i = 0; i < AES_KEY_SIZE; i++) {
         _aesKey[i] = (byte) key[i];
     }
@@ -126,17 +129,17 @@ bool CbcEncryptor::setKey(String key) {
 
 /**************************************************************************/
 /*!
-  @brief    brief
-  @param    var           desc
-  @return   var           desc
+  @brief    Encrypts a line of text.
+  @param    line          Line to encrypt
+  @return   String        Encrypted string
 */
 /**************************************************************************/
 String CbcEncryptor::encryptLine(String line) {
     uint16_t len = line.length();
-    byte plain[len];
-    uint8_t paddedLength = len + N_BLOCK - len % N_BLOCK;
-    byte encrypted[paddedLength];
-    char encryptedString[paddedLength*2+1];                                   //To store return value
+    byte plain[len];                                                        //To store plain bytes
+    uint8_t paddedLength = len + N_BLOCK - len % N_BLOCK;                   //Calculate total length when padded
+    byte encrypted[paddedLength];                                           //To store encrypted bytes
+    char encryptedString[paddedLength*2+1];                                 //To store return value
   
     /* Convert string to bytes */
     for (uint8_t i = 0; i < len; i++) {
@@ -145,7 +148,6 @@ String CbcEncryptor::encryptLine(String line) {
   
     _aes.set_IV(_aesInitVecInt);
     _aes.get_IV(_aesInitVector);
-    
     _aes.do_aes_encrypt(plain, len, encrypted, _aesKey, 128, _aesInitVector);
   
     /* Convert bytes to string */
@@ -158,27 +160,28 @@ String CbcEncryptor::encryptLine(String line) {
 
 /**************************************************************************/
 /*!
-  @brief    brief
-  @param    var           desc
-  @return   var           desc
+  @brief    Decrypts a line of text.
+  @param    line          Line to decrypt
+  @return   String        Decrypted string
 */
 /**************************************************************************/
 String CbcEncryptor::decryptLine(String line) {
     uint16_t len = line.length()/2;
-    byte encrypted[len];
-    byte decrypted[len];
-    uint8_t outputLen = 0;
+    byte encrypted[len];                                                    //To store encrypted bytes
+    byte decrypted[len];                                                    //To store decrypted bytes
+    uint8_t outputLen = 0;                                                  //To store plaintext length
     char decryptedString[len];                                              //To store return value
 
     /* Convert hex string to bytes */
     for (uint8_t i = 0; i < len; i++) {
-        encrypted[i] = _hexCharToByte(&line[i*2])<<4 | _hexCharToByte(&line[i*2+1]);
+        encrypted[i] = _hexCharToByte(line[i*2])<<4 | _hexCharToByte(line[i*2+1]);
     }
     
     _aes.set_IV(_aesInitVecInt);
     _aes.get_IV(_aesInitVector);
     _aes.do_aes_decrypt(encrypted, len, decrypted, _aesKey, 128, _aesInitVector);
 
+    /* Convert bytes to string */
     for (uint8_t i = 0; i < len; i++) {
         /* If decrypted is printable character, save */
         if (decrypted[i] < 127 && decrypted[i] > 32) {
@@ -197,13 +200,13 @@ String CbcEncryptor::decryptLine(String line) {
 
 /**************************************************************************/
 /*!
-  @brief    brief
-  @param    var           desc
-  @return   var           desc
+  @brief    Converts a hexidecimal stored in a char to a byte
+  @param    hexChar       Character to convert
+  @return   byte          Value in a byte variable
 */
 /**************************************************************************/
-byte CbcEncryptor::_hexCharToByte(char *in) {
-    uint8_t c = in[0];
+byte CbcEncryptor::_hexCharToByte(char hexChar) {
+    uint8_t c = hexChar;
 
     if (c <= '9' && c >= '0') {
         c -= '0';
