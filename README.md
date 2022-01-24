@@ -2,6 +2,7 @@
 Firmware for ESP8266 based device (D1 Mini board) with designed vulnerabilities to practice ethical hacking. The software is tested on the following boards:
 
 * [D1 Mini](https://www.berrybase.de/en/dev.-boards/esp8266-esp32-d1-mini/)
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your D1 Mini (or other ESP8266 based boards) for development or hacking purposes.
@@ -12,15 +13,9 @@ The software is written, compiled and uploaded using the [Arduino IDE](https://w
 
 ### Dependencies
 
-
-#### Libraries
-
 - ESP for Arduino IDE
 - ESP Async WebServer V1.2.3
 - Wifimanager V0.16.0
-
-#### Files
-- config.h
 
 ### Installing
 
@@ -28,8 +23,7 @@ The software is written, compiled and uploaded using the [Arduino IDE](https://w
 1. Install the [driver](https://github.com/HobbyComponents/CH340-Drivers) for the esp8266.
 2. Clone the repository.
 
-There are multiple ways to upload the program files to the board. The two ways listed here are using Arduino IDE and Platformio on visual studio code.
-
+There are multiple ways to upload the program files to the board. The two ways listed here are using Arduino IDE and Platformio on Visual Dtudio Code.
 
 #### <b>Option 1: Arduino IDE</b>
 
@@ -44,7 +38,7 @@ There are multiple ways to upload the program files to the board. The two ways l
 
    <b>ESP8266 Sketch Data Upload</b>
 
-   1. Some installations of the Arduino IDE won't have the option 'ESP8266 Sketch Data Upload'.
+   1. The Arduino IDE won't have the option 'ESP8266 Sketch Data Upload'.
    2. You can download it from this [link](https://github.com/esp8266/arduino-esp8266fs-plugin/releases/tag/0.5.0).
    3. The file should be unpacked at `<home_dir>/Arduino-<version>/tools/ESP8266FS/tools/`.
       - If the directory `tools` does not exist you should create it. You have to create a new file named "tools" if it doesn't exist already inside of [Arduino file](https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide).
@@ -61,14 +55,7 @@ There are multiple ways to upload the program files to the board. The two ways l
 4. In visual studio code open the project in the platformio addon. `(Platoformio > Projects > open HackableEspDevicePlatformio)`.
 5. Upload the program `(project tasks > General> Upload)`.
 6. Upload the filesystem Image `(Project tasks > Platform > Upload filesystem Image)`.
-7.  Done the device should now be ready for use.
-
-<b>Wifi Manager First Boot</b>
-1. Start up the device.
-2. Connect to the `Configure Smartlight Wifi` via a mobile device.
-3. Go to the ip address listed in the serial monitor most of the time this is [http://192.168.4.1](http://192.168.4.1).
-4. Follow the steps on the website to configure a wifi connection.
-5. The device should now restart, connect to the selected wifi network and be ready for use.
+7. Done. The device should now be ready for use.
 
 ### Manual Platformio Prep
 1. Create the correct hierarchy.
@@ -88,15 +75,23 @@ void initializeHostname();\
 void connectWifi();\
 void initializeServer();\
 void loop();\
-String processor(const String& var);\
 String getContentType(String filename);\
 void handleFileRequest(String path, uint8_t permissionLevel);\
 void handleFileUpload();\
 void handleFileDownload();
-4. Move the platoformio.ini file from the root dir to the `hackableEspDevicePlatoformio` dir.
+4. Move the `platformio.ini` file from the root dir to the `hackableEspDevicePlatformio` dir.
 5. Copy all files from `hackableEspDevice\data` to `hackableEspDevicePlatformio\data`.
 
-### Customization of Hackable ESP (Contains spoilers)(Look in code of readme.md)
+### <b>Running</b>
+
+#### <b>Wifi Manager First Boot</b>
+1. Start up the device.
+2. Connect to the `Configure Smartlight Wifi` via a mobile device.
+3. Go to the IP address listed in the serial monitor. Most of the time this is [http://192.168.4.1](http://192.168.4.1).
+4. Follow the steps on the website to configure a wifi connection.
+5. The device should now restart, connect to the selected wifi network and be ready for use.
+
+### Customization of Hackable ESP (Contains spoilers) (Look in raw version of readme.md)
 <!--
 Default user and passwd
 It is possible to change the default username and password for the users on the webpage.
@@ -117,10 +112,11 @@ The settings that can be changed are the:
 
 * 1x D1 Mini Board
 * 1x USB to USB-mini cable
+* 1x ESP8266 casing
 
 ## Questions or Feedback?
 
-There is technical documentation available if you want to contribute to this project. There is an user manual as well, contact us for information. You can open an issue if you have questions or feedback for this repository.
+There is technical documentation available if you want to contribute to this project. There is a user manual as well, contact us for information. You can open an issue if you have questions or feedback for this repository.
 
 ## Authors
 
