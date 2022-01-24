@@ -106,79 +106,78 @@ $(document).ready(function(){initNavTree('_hostname_write_8cpp_source.html','');
 <a href="_hostname_write_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * File:      HostnameWrite.cpp</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * Author:    Twenne Elffers</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> * Class:     HostnameWrite</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * Version:   0.1</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * </span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> * Writes hostname to the EEPROM.</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;<a class="code" href="_hostname_write_8h.html">HostnameWrite.h</a>&quot;</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment">/**************************************************************************/</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment">/**************************************************************************/</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="_hostname_write_8cpp.html#a1c60cc0a431e819d47f645094e36b6bb">   17</a></span>String <a class="code hl_function" href="_hostname_write_8cpp.html#a1c60cc0a431e819d47f645094e36b6bb">getHostname</a>() {</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keywordtype">char</span> hostname[MAX_HOSTNAME_LENGTH]; </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    EEPROM.begin(MAX_HOSTNAME_LENGTH);</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keywordflow">for</span> (uint8_t i = 0; i &lt; MAX_HOSTNAME_LENGTH; i++) {</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        EEPROM.get(HOSTNAME_ADRESS+i, hostname[i]);</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <span class="keywordflow">if</span> (hostname[i] == 0xFF) {</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>            <span class="keywordflow">break</span>;                                                          <span class="comment">//Skips the unreadable chars</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>            }</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>      }</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    EEPROM.end();</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keywordflow">return</span> String(hostname);</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>}</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="comment">/**************************************************************************/</span></div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="comment">/**************************************************************************/</span></div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="_hostname_write_8cpp.html#ae8aa3c92ae0ab79d141bbec42f7f662c">   38</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="_hostname_write_8cpp.html#ae8aa3c92ae0ab79d141bbec42f7f662c">writeHostname</a>(<span class="keywordtype">char</span> hostname[MAX_HOSTNAME_LENGTH]) {</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    EEPROM.begin(MAX_HOSTNAME_LENGTH);</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i&lt; MAX_HOSTNAME_LENGTH; i++){</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        EEPROM.write(HOSTNAME_ADRESS+i, hostname[i]);</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        yield();</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    }</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <a class="code hl_function" href="_hostname_write_8cpp.html#ad104ddaec037908e58d9d06b53d19962">checkEepromCommit</a>();</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    EEPROM.end();</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>}</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="comment">/**************************************************************************/</span></div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="comment">/**************************************************************************/</span></div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="_hostname_write_8cpp.html#ab6a2cda115b3d0fe14a1916603ec19d4">   57</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="_hostname_write_8cpp.html#ab6a2cda115b3d0fe14a1916603ec19d4">setEEPROMToNULL</a>(<span class="keywordtype">int</span> writeLength, <span class="keywordtype">int</span> startAdress){ </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    EEPROM.begin(writeLength);</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i&lt; writeLength; i++){</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        EEPROM.write(startAdress+i, 0);</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        yield();</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    }</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    </div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <a class="code hl_function" href="_hostname_write_8cpp.html#ad104ddaec037908e58d9d06b53d19962">checkEepromCommit</a>();</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <a class="code hl_function" href="_debugger_8cpp.html#aee8aa821792dfa745cfffd6f8b03d529">debug</a>(<span class="stringliteral">&quot;Reset Value at: &quot;</span>);</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <a class="code hl_function" href="_debugger_8cpp.html#aee8aa821792dfa745cfffd6f8b03d529">debug</a>(String(startAdress));</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <a class="code hl_function" href="_debugger_8cpp.html#aee8aa821792dfa745cfffd6f8b03d529">debug</a>(<span class="stringliteral">&quot; till &quot;</span>);</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <a class="code hl_function" href="_debugger_8cpp.html#acc3264da13e660e155c411013e1e4bb4">debugln</a>(String(startAdress+writeLength));</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    EEPROM.end();</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>}</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="comment">/**************************************************************************/</span></div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="comment">/**************************************************************************/</span></div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="_hostname_write_8cpp.html#ad104ddaec037908e58d9d06b53d19962">   80</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="_hostname_write_8cpp.html#ad104ddaec037908e58d9d06b53d19962">checkEepromCommit</a>() {</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="keywordflow">if</span> (EEPROM.commit()) {</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        Serial.println(<span class="stringliteral">&quot;Data written!&quot;</span>);</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        Serial.println(<span class="stringliteral">&quot;ERROR! Data not written!&quot;</span>);</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    }</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>}</div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> * Version:   1.0</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * Handles hostname saving and reading to EEPROM.</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;<a class="code" href="_hostname_write_8h.html">HostnameWrite.h</a>&quot;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment">/**************************************************************************/</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment">/**************************************************************************/</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="_hostname_write_8cpp.html#a1c60cc0a431e819d47f645094e36b6bb">   16</a></span>String <a class="code hl_function" href="_hostname_write_8cpp.html#a1c60cc0a431e819d47f645094e36b6bb">getHostname</a>() {</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keywordtype">char</span> hostname[MAX_HOSTNAME_LENGTH]; </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    EEPROM.begin(MAX_HOSTNAME_LENGTH);</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keywordflow">for</span> (uint8_t i = 0; i &lt; MAX_HOSTNAME_LENGTH; i++) {</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        EEPROM.get(HOSTNAME_ADRESS+i, hostname[i]);</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <span class="keywordflow">if</span> (hostname[i] == 0xFF) {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>            <span class="keywordflow">break</span>;                                                          <span class="comment">//Skips the unreadable chars</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>            }</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>      }</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    EEPROM.end();</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordflow">return</span> String(hostname);</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>}</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="comment">/**************************************************************************/</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="comment">/**************************************************************************/</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="_hostname_write_8cpp.html#ae8aa3c92ae0ab79d141bbec42f7f662c">   37</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="_hostname_write_8cpp.html#ae8aa3c92ae0ab79d141bbec42f7f662c">writeHostname</a>(<span class="keywordtype">char</span> hostname[MAX_HOSTNAME_LENGTH]) {</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    EEPROM.begin(MAX_HOSTNAME_LENGTH);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keywordflow">for</span> (uint8_t i = 0; i&lt; MAX_HOSTNAME_LENGTH; i++){</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        EEPROM.write(HOSTNAME_ADRESS+i, hostname[i]);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        yield();</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    }</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <a class="code hl_function" href="_hostname_write_8cpp.html#ad104ddaec037908e58d9d06b53d19962">checkEepromCommit</a>();</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    EEPROM.end();</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>}</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="comment">/**************************************************************************/</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="comment">/**************************************************************************/</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="_hostname_write_8cpp.html#adfde4506dca28a741dc9526407e60598">   56</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="_hostname_write_8cpp.html#adfde4506dca28a741dc9526407e60598">setEepromToNull</a>(uint8_t writeLength, uint8_t startAdress) {</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    EEPROM.begin(writeLength);</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="keywordflow">for</span> (uint8_t i = 0; i &lt; writeLength; i++){</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        EEPROM.write(startAdress+i, 0);</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        yield();</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    }</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <a class="code hl_function" href="_hostname_write_8cpp.html#ad104ddaec037908e58d9d06b53d19962">checkEepromCommit</a>();</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <a class="code hl_function" href="_debugger_8cpp.html#aee8aa821792dfa745cfffd6f8b03d529">debug</a>(<span class="stringliteral">&quot;Reset Value at: &quot;</span>);</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <a class="code hl_function" href="_debugger_8cpp.html#aee8aa821792dfa745cfffd6f8b03d529">debug</a>(String(startAdress));</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <a class="code hl_function" href="_debugger_8cpp.html#aee8aa821792dfa745cfffd6f8b03d529">debug</a>(<span class="stringliteral">&quot; till &quot;</span>);</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <a class="code hl_function" href="_debugger_8cpp.html#acc3264da13e660e155c411013e1e4bb4">debugln</a>(String(startAdress+writeLength));</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    EEPROM.end();</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>}</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="comment">/**************************************************************************/</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="comment">/**************************************************************************/</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="_hostname_write_8cpp.html#ad104ddaec037908e58d9d06b53d19962">   79</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="_hostname_write_8cpp.html#ad104ddaec037908e58d9d06b53d19962">checkEepromCommit</a>() {</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <span class="keywordflow">if</span> (EEPROM.commit()) {</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        Serial.println(<span class="stringliteral">&quot;Data written!&quot;</span>);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        Serial.println(<span class="stringliteral">&quot;ERROR! Data not written!&quot;</span>);</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    }</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>}</div>
 <div class="ttc" id="a_debugger_8cpp_html_acc3264da13e660e155c411013e1e4bb4"><div class="ttname"><a href="_debugger_8cpp.html#acc3264da13e660e155c411013e1e4bb4">debugln</a></div><div class="ttdeci">void debugln(String text)</div><div class="ttdoc">Prints text (+' ') if debug is enabled.</div><div class="ttdef"><b>Definition:</b> <a href="_debugger_8cpp_source.html#l00032">Debugger.cpp:32</a></div></div>
 <div class="ttc" id="a_debugger_8cpp_html_aee8aa821792dfa745cfffd6f8b03d529"><div class="ttname"><a href="_debugger_8cpp.html#aee8aa821792dfa745cfffd6f8b03d529">debug</a></div><div class="ttdeci">void debug(String text)</div><div class="ttdoc">Prints text if debug is enabled.</div><div class="ttdef"><b>Definition:</b> <a href="_debugger_8cpp_source.html#l00016">Debugger.cpp:16</a></div></div>
-<div class="ttc" id="a_hostname_write_8cpp_html_a1c60cc0a431e819d47f645094e36b6bb"><div class="ttname"><a href="_hostname_write_8cpp.html#a1c60cc0a431e819d47f645094e36b6bb">getHostname</a></div><div class="ttdeci">String getHostname()</div><div class="ttdoc">Gets the hostname from the EEPROM.</div><div class="ttdef"><b>Definition:</b> <a href="_hostname_write_8cpp_source.html#l00017">HostnameWrite.cpp:17</a></div></div>
-<div class="ttc" id="a_hostname_write_8cpp_html_ab6a2cda115b3d0fe14a1916603ec19d4"><div class="ttname"><a href="_hostname_write_8cpp.html#ab6a2cda115b3d0fe14a1916603ec19d4">setEEPROMToNULL</a></div><div class="ttdeci">void setEEPROMToNULL(int writeLength, int startAdress)</div><div class="ttdoc">Resets the EEPROM at the startAdress.</div><div class="ttdef"><b>Definition:</b> <a href="_hostname_write_8cpp_source.html#l00057">HostnameWrite.cpp:57</a></div></div>
-<div class="ttc" id="a_hostname_write_8cpp_html_ad104ddaec037908e58d9d06b53d19962"><div class="ttname"><a href="_hostname_write_8cpp.html#ad104ddaec037908e58d9d06b53d19962">checkEepromCommit</a></div><div class="ttdeci">void checkEepromCommit()</div><div class="ttdoc">Checks if the eeprom was actually committed.</div><div class="ttdef"><b>Definition:</b> <a href="_hostname_write_8cpp_source.html#l00080">HostnameWrite.cpp:80</a></div></div>
-<div class="ttc" id="a_hostname_write_8cpp_html_ae8aa3c92ae0ab79d141bbec42f7f662c"><div class="ttname"><a href="_hostname_write_8cpp.html#ae8aa3c92ae0ab79d141bbec42f7f662c">writeHostname</a></div><div class="ttdeci">void writeHostname(char hostname[MAX_HOSTNAME_LENGTH])</div><div class="ttdoc">Writes the new hostname to the EEPROM.</div><div class="ttdef"><b>Definition:</b> <a href="_hostname_write_8cpp_source.html#l00038">HostnameWrite.cpp:38</a></div></div>
+<div class="ttc" id="a_hostname_write_8cpp_html_a1c60cc0a431e819d47f645094e36b6bb"><div class="ttname"><a href="_hostname_write_8cpp.html#a1c60cc0a431e819d47f645094e36b6bb">getHostname</a></div><div class="ttdeci">String getHostname()</div><div class="ttdoc">Gets the hostname from the EEPROM.</div><div class="ttdef"><b>Definition:</b> <a href="_hostname_write_8cpp_source.html#l00016">HostnameWrite.cpp:16</a></div></div>
+<div class="ttc" id="a_hostname_write_8cpp_html_ad104ddaec037908e58d9d06b53d19962"><div class="ttname"><a href="_hostname_write_8cpp.html#ad104ddaec037908e58d9d06b53d19962">checkEepromCommit</a></div><div class="ttdeci">void checkEepromCommit()</div><div class="ttdoc">Checks if the eeprom was actually committed.</div><div class="ttdef"><b>Definition:</b> <a href="_hostname_write_8cpp_source.html#l00079">HostnameWrite.cpp:79</a></div></div>
+<div class="ttc" id="a_hostname_write_8cpp_html_adfde4506dca28a741dc9526407e60598"><div class="ttname"><a href="_hostname_write_8cpp.html#adfde4506dca28a741dc9526407e60598">setEepromToNull</a></div><div class="ttdeci">void setEepromToNull(uint8_t writeLength, uint8_t startAdress)</div><div class="ttdoc">Resets the given EEPROM adresses.</div><div class="ttdef"><b>Definition:</b> <a href="_hostname_write_8cpp_source.html#l00056">HostnameWrite.cpp:56</a></div></div>
+<div class="ttc" id="a_hostname_write_8cpp_html_ae8aa3c92ae0ab79d141bbec42f7f662c"><div class="ttname"><a href="_hostname_write_8cpp.html#ae8aa3c92ae0ab79d141bbec42f7f662c">writeHostname</a></div><div class="ttdeci">void writeHostname(char hostname[MAX_HOSTNAME_LENGTH])</div><div class="ttdoc">Writes the new hostname to the EEPROM.</div><div class="ttdef"><b>Definition:</b> <a href="_hostname_write_8cpp_source.html#l00037">HostnameWrite.cpp:37</a></div></div>
 <div class="ttc" id="a_hostname_write_8h_html"><div class="ttname"><a href="_hostname_write_8h.html">HostnameWrite.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

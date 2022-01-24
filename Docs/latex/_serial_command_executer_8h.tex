@@ -5,6 +5,7 @@
 {\ttfamily \#include \char`\"{}Debugger.\+h\char`\"{}}\newline
 {\ttfamily \#include \char`\"{}Hostname\+Write.\+h\char`\"{}}\newline
 {\ttfamily \#include \char`\"{}Buffer\+Overflow.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Cbc\+Encryptor.\+h\char`\"{}}\newline
 Include dependency graph for Serial\+Command\+Executer.\+h\+:
 \nopagebreak
 \begin{figure}[H]
@@ -29,7 +30,7 @@ class \mbox{\hyperlink{class_serial_command_executer}{Serial\+Command\+Executer}
 \doxysubsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-\#define \mbox{\hyperlink{_serial_command_executer_8h_ac3c1be4a81c254ff0ffff58e4aa474e3}{MAX\+\_\+\+NUMBER\+\_\+\+PARAMS}}~2
+\#define \mbox{\hyperlink{_serial_command_executer_8h_ac3c1be4a81c254ff0ffff58e4aa474e3}{MAX\+\_\+\+NUMBER\+\_\+\+PARAMS}}~3
 \item 
 \#define \mbox{\hyperlink{_serial_command_executer_8h_aee9e8b97ac4a5cdc1c371da35a579210}{COMMAND\+\_\+\+HELP}}~\char`\"{}help\char`\"{}
 \item 
@@ -55,17 +56,43 @@ class \mbox{\hyperlink{class_serial_command_executer}{Serial\+Command\+Executer}
 \item 
 \#define \mbox{\hyperlink{_serial_command_executer_8h_a7610a1d9786ba66a0def94c2a284cb30}{COMMAND\+\_\+\+OBJDUMP}}~\char`\"{}objdump\char`\"{}
 \item 
+\#define \mbox{\hyperlink{_serial_command_executer_8h_a4e07c2074cd444889d528b540b8731d1}{COMMAND\+\_\+\+GPG}}~\char`\"{}gpg\char`\"{}
+\item 
+\#define \mbox{\hyperlink{_serial_command_executer_8h_a278cf1e66e046b5b219fce92cd3a4b72}{ARG\+\_\+\+HELP\+\_\+\+LONG}}~\char`\"{}-\/-\/help\char`\"{}
+\item 
+\#define \mbox{\hyperlink{_serial_command_executer_8h_afcdc3018e2517ceac50b19931ad6b9de}{ARG\+\_\+\+HELP\+\_\+\+SHORT}}~\char`\"{}-\/h\char`\"{}
+\item 
+\#define \mbox{\hyperlink{_serial_command_executer_8h_acc432387fb1ff55a0f29afb8696e9721}{ARG\+\_\+\+DEBUG\+\_\+\+ON}}~\char`\"{}-\/-\/on\char`\"{}
+\item 
+\#define \mbox{\hyperlink{_serial_command_executer_8h_a26414b369525a55c67016146915180b0}{ARG\+\_\+\+DEBUG\+\_\+\+OFF}}~\char`\"{}-\/-\/off\char`\"{}
+\item 
+\#define \mbox{\hyperlink{_serial_command_executer_8h_a682ea67f04725fdedbbd12540e7b8bd1}{ARG\+\_\+\+HOSTNAME\+\_\+\+SET}}~\char`\"{}-\/-\/set\char`\"{}
+\item 
+\#define \mbox{\hyperlink{_serial_command_executer_8h_a8d03419c9039d6df74a8c0423e04d2d7}{ARG\+\_\+\+HOSTNAME\+\_\+\+DEFAULT}}~\char`\"{}-\/-\/default\char`\"{}
+\item 
+\#define \mbox{\hyperlink{_serial_command_executer_8h_a3cf6cfbb759a1263ed8cdbd73a5b871a}{ARG\+\_\+\+GPG\+\_\+\+ENCRYPT}}~\char`\"{}-\/-\/encrypt\char`\"{}
+\item 
+\#define \mbox{\hyperlink{_serial_command_executer_8h_a931680d4d30ed0a7aaf2bdf8549b154b}{ARG\+\_\+\+GPG\+\_\+\+DECRYPT}}~\char`\"{}-\/-\/decrypt\char`\"{}
+\item 
+\#define \mbox{\hyperlink{_serial_command_executer_8h_a2740be22951054ff59d6e45a308bd744}{ARG\+\_\+\+LS\+\_\+\+FILE\+\_\+1\+\_\+1}}~\char`\"{}testprogram.\+c\char`\"{}
+\item 
+\#define \mbox{\hyperlink{_serial_command_executer_8h_a1f97975117193bf46ae79e4388320081}{ARG\+\_\+\+LS\+\_\+\+FILE\+\_\+1\+\_\+2}}~\char`\"{}./testprogram.\+c\char`\"{}
+\item 
+\#define \mbox{\hyperlink{_serial_command_executer_8h_a93a5a67054ced044b52c030036001fb5}{ARG\+\_\+\+LS\+\_\+\+FILE\+\_\+2\+\_\+1}}~\char`\"{}testprogram\char`\"{}
+\item 
+\#define \mbox{\hyperlink{_serial_command_executer_8h_a9995cdb5b24496fead3b092bacab58ab}{ARG\+\_\+\+LS\+\_\+\+FILE\+\_\+2\+\_\+2}}~\char`\"{}./testprogram\char`\"{}
+\item 
 \#define \mbox{\hyperlink{_serial_command_executer_8h_acbff4260ca589ed186c925def0941191}{MESS\+\_\+\+SUPER\+\_\+\+USER}}~\char`\"{}You are now super user.\char`\"{}
 \item 
-\#define \mbox{\hyperlink{_serial_command_executer_8h_ac8560b756d43b741a4163b7cb2e6a582}{ERROR\+\_\+\+TOO\+\_\+\+MANY\+\_\+\+ARGS}}~\char`\"{}Too many arguments. Typ \textquotesingle{}help\textquotesingle{} for help.\char`\"{}
+\#define \mbox{\hyperlink{_serial_command_executer_8h_ac8560b756d43b741a4163b7cb2e6a582}{ERROR\+\_\+\+TOO\+\_\+\+MANY\+\_\+\+ARGS}}~\char`\"{}Too many arguments. Add \textquotesingle{}-\/h\textquotesingle{} or \textquotesingle{}-\/-\/help\textquotesingle{} to the command for help.\char`\"{}
 \item 
-\#define \mbox{\hyperlink{_serial_command_executer_8h_a4070e23710bad905213da8fd295a36ed}{ERROR\+\_\+\+CMD\+\_\+\+NOT\+\_\+\+FOUND}}~\char`\"{}Bash\+: command not found. Typ \textquotesingle{}help\textquotesingle{} for help.\char`\"{}
+\#define \mbox{\hyperlink{_serial_command_executer_8h_a4070e23710bad905213da8fd295a36ed}{ERROR\+\_\+\+CMD\+\_\+\+NOT\+\_\+\+FOUND}}~\char`\"{}Bash\+: command not found. Type \textquotesingle{}help\textquotesingle{} for help.\char`\"{}
 \item 
 \#define \mbox{\hyperlink{_serial_command_executer_8h_a51d64576ad0d5ee8374721a29bf7f3ac}{ERROR\+\_\+\+PERM\+\_\+\+DENIED}}~\char`\"{}Bash\+: Permission denied\char`\"{}
 \item 
 \#define \mbox{\hyperlink{_serial_command_executer_8h_a2cd488232b05a4397e297fd82bbbf22e}{ERROR\+\_\+\+WRONG\+\_\+\+ARGS}}~\char`\"{}Wrong argument(s). Add \textquotesingle{}-\/h\textquotesingle{} or \textquotesingle{}-\/-\/help\textquotesingle{} to the command for help.\char`\"{}
 \item 
-\#define \mbox{\hyperlink{_serial_command_executer_8h_a2336d63967797df9308ca7bf2b356902}{ERROR\+\_\+\+TOO\+\_\+\+FEW\+\_\+\+ARGS}}~\char`\"{}Too few arguments. Typ \textquotesingle{}help\textquotesingle{} for help.\char`\"{}
+\#define \mbox{\hyperlink{_serial_command_executer_8h_a2336d63967797df9308ca7bf2b356902}{ERROR\+\_\+\+TOO\+\_\+\+FEW\+\_\+\+ARGS}}~\char`\"{}Too few arguments. Add \textquotesingle{}-\/h\textquotesingle{} or \textquotesingle{}-\/-\/help\textquotesingle{} to the command for help.\char`\"{}
 \item 
 \#define \mbox{\hyperlink{_serial_command_executer_8h_a0513ed94f64aeb430489112d20ea27c2}{ERROR\+\_\+\+WRONG\+\_\+\+PWD}}~\char`\"{}Wrong password.\char`\"{}
 \item 
@@ -74,10 +101,132 @@ class \mbox{\hyperlink{class_serial_command_executer}{Serial\+Command\+Executer}
 \#define \mbox{\hyperlink{_serial_command_executer_8h_ad4cbe103a5753a90ea14fd0e30b5c650}{ERROR\+\_\+\+NO\+\_\+\+FILE}}~\char`\"{}No such file.\char`\"{}
 \item 
 \#define \mbox{\hyperlink{_serial_command_executer_8h_a8f836310ffa2d75f973995730a9f92bb}{ERROR\+\_\+\+NO\+\_\+\+FILE\+\_\+\+DIR}}~\char`\"{}No such file or directory.\char`\"{}
+\item 
+\#define \mbox{\hyperlink{_serial_command_executer_8h_a762d6185f0f02997552e6cca4ec44f3b}{ERROR\+\_\+\+NO\+\_\+\+VALID\+\_\+\+KEY}}~\char`\"{}No valid key, needs to be 16 bytes long.\char`\"{}
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{_serial_command_executer_8h_a26414b369525a55c67016146915180b0}\label{_serial_command_executer_8h_a26414b369525a55c67016146915180b0}} 
+\index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!ARG\_DEBUG\_OFF@{ARG\_DEBUG\_OFF}}
+\index{ARG\_DEBUG\_OFF@{ARG\_DEBUG\_OFF}!SerialCommandExecuter.h@{SerialCommandExecuter.h}}
+\doxysubsubsection{\texorpdfstring{ARG\_DEBUG\_OFF}{ARG\_DEBUG\_OFF}}
+{\footnotesize\ttfamily \#define ARG\+\_\+\+DEBUG\+\_\+\+OFF~\char`\"{}-\/-\/off\char`\"{}}
+
+
+
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00041}{41}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+
+\mbox{\Hypertarget{_serial_command_executer_8h_acc432387fb1ff55a0f29afb8696e9721}\label{_serial_command_executer_8h_acc432387fb1ff55a0f29afb8696e9721}} 
+\index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!ARG\_DEBUG\_ON@{ARG\_DEBUG\_ON}}
+\index{ARG\_DEBUG\_ON@{ARG\_DEBUG\_ON}!SerialCommandExecuter.h@{SerialCommandExecuter.h}}
+\doxysubsubsection{\texorpdfstring{ARG\_DEBUG\_ON}{ARG\_DEBUG\_ON}}
+{\footnotesize\ttfamily \#define ARG\+\_\+\+DEBUG\+\_\+\+ON~\char`\"{}-\/-\/on\char`\"{}}
+
+
+
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00040}{40}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+
+\mbox{\Hypertarget{_serial_command_executer_8h_a931680d4d30ed0a7aaf2bdf8549b154b}\label{_serial_command_executer_8h_a931680d4d30ed0a7aaf2bdf8549b154b}} 
+\index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!ARG\_GPG\_DECRYPT@{ARG\_GPG\_DECRYPT}}
+\index{ARG\_GPG\_DECRYPT@{ARG\_GPG\_DECRYPT}!SerialCommandExecuter.h@{SerialCommandExecuter.h}}
+\doxysubsubsection{\texorpdfstring{ARG\_GPG\_DECRYPT}{ARG\_GPG\_DECRYPT}}
+{\footnotesize\ttfamily \#define ARG\+\_\+\+GPG\+\_\+\+DECRYPT~\char`\"{}-\/-\/decrypt\char`\"{}}
+
+
+
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00045}{45}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+
+\mbox{\Hypertarget{_serial_command_executer_8h_a3cf6cfbb759a1263ed8cdbd73a5b871a}\label{_serial_command_executer_8h_a3cf6cfbb759a1263ed8cdbd73a5b871a}} 
+\index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!ARG\_GPG\_ENCRYPT@{ARG\_GPG\_ENCRYPT}}
+\index{ARG\_GPG\_ENCRYPT@{ARG\_GPG\_ENCRYPT}!SerialCommandExecuter.h@{SerialCommandExecuter.h}}
+\doxysubsubsection{\texorpdfstring{ARG\_GPG\_ENCRYPT}{ARG\_GPG\_ENCRYPT}}
+{\footnotesize\ttfamily \#define ARG\+\_\+\+GPG\+\_\+\+ENCRYPT~\char`\"{}-\/-\/encrypt\char`\"{}}
+
+
+
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00044}{44}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+
+\mbox{\Hypertarget{_serial_command_executer_8h_a278cf1e66e046b5b219fce92cd3a4b72}\label{_serial_command_executer_8h_a278cf1e66e046b5b219fce92cd3a4b72}} 
+\index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!ARG\_HELP\_LONG@{ARG\_HELP\_LONG}}
+\index{ARG\_HELP\_LONG@{ARG\_HELP\_LONG}!SerialCommandExecuter.h@{SerialCommandExecuter.h}}
+\doxysubsubsection{\texorpdfstring{ARG\_HELP\_LONG}{ARG\_HELP\_LONG}}
+{\footnotesize\ttfamily \#define ARG\+\_\+\+HELP\+\_\+\+LONG~\char`\"{}-\/-\/help\char`\"{}}
+
+
+
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00038}{38}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+
+\mbox{\Hypertarget{_serial_command_executer_8h_afcdc3018e2517ceac50b19931ad6b9de}\label{_serial_command_executer_8h_afcdc3018e2517ceac50b19931ad6b9de}} 
+\index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!ARG\_HELP\_SHORT@{ARG\_HELP\_SHORT}}
+\index{ARG\_HELP\_SHORT@{ARG\_HELP\_SHORT}!SerialCommandExecuter.h@{SerialCommandExecuter.h}}
+\doxysubsubsection{\texorpdfstring{ARG\_HELP\_SHORT}{ARG\_HELP\_SHORT}}
+{\footnotesize\ttfamily \#define ARG\+\_\+\+HELP\+\_\+\+SHORT~\char`\"{}-\/h\char`\"{}}
+
+
+
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00039}{39}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+
+\mbox{\Hypertarget{_serial_command_executer_8h_a8d03419c9039d6df74a8c0423e04d2d7}\label{_serial_command_executer_8h_a8d03419c9039d6df74a8c0423e04d2d7}} 
+\index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!ARG\_HOSTNAME\_DEFAULT@{ARG\_HOSTNAME\_DEFAULT}}
+\index{ARG\_HOSTNAME\_DEFAULT@{ARG\_HOSTNAME\_DEFAULT}!SerialCommandExecuter.h@{SerialCommandExecuter.h}}
+\doxysubsubsection{\texorpdfstring{ARG\_HOSTNAME\_DEFAULT}{ARG\_HOSTNAME\_DEFAULT}}
+{\footnotesize\ttfamily \#define ARG\+\_\+\+HOSTNAME\+\_\+\+DEFAULT~\char`\"{}-\/-\/default\char`\"{}}
+
+
+
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00043}{43}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+
+\mbox{\Hypertarget{_serial_command_executer_8h_a682ea67f04725fdedbbd12540e7b8bd1}\label{_serial_command_executer_8h_a682ea67f04725fdedbbd12540e7b8bd1}} 
+\index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!ARG\_HOSTNAME\_SET@{ARG\_HOSTNAME\_SET}}
+\index{ARG\_HOSTNAME\_SET@{ARG\_HOSTNAME\_SET}!SerialCommandExecuter.h@{SerialCommandExecuter.h}}
+\doxysubsubsection{\texorpdfstring{ARG\_HOSTNAME\_SET}{ARG\_HOSTNAME\_SET}}
+{\footnotesize\ttfamily \#define ARG\+\_\+\+HOSTNAME\+\_\+\+SET~\char`\"{}-\/-\/set\char`\"{}}
+
+
+
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00042}{42}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+
+\mbox{\Hypertarget{_serial_command_executer_8h_a2740be22951054ff59d6e45a308bd744}\label{_serial_command_executer_8h_a2740be22951054ff59d6e45a308bd744}} 
+\index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!ARG\_LS\_FILE\_1\_1@{ARG\_LS\_FILE\_1\_1}}
+\index{ARG\_LS\_FILE\_1\_1@{ARG\_LS\_FILE\_1\_1}!SerialCommandExecuter.h@{SerialCommandExecuter.h}}
+\doxysubsubsection{\texorpdfstring{ARG\_LS\_FILE\_1\_1}{ARG\_LS\_FILE\_1\_1}}
+{\footnotesize\ttfamily \#define ARG\+\_\+\+LS\+\_\+\+FILE\+\_\+1\+\_\+1~\char`\"{}testprogram.\+c\char`\"{}}
+
+
+
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00046}{46}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+
+\mbox{\Hypertarget{_serial_command_executer_8h_a1f97975117193bf46ae79e4388320081}\label{_serial_command_executer_8h_a1f97975117193bf46ae79e4388320081}} 
+\index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!ARG\_LS\_FILE\_1\_2@{ARG\_LS\_FILE\_1\_2}}
+\index{ARG\_LS\_FILE\_1\_2@{ARG\_LS\_FILE\_1\_2}!SerialCommandExecuter.h@{SerialCommandExecuter.h}}
+\doxysubsubsection{\texorpdfstring{ARG\_LS\_FILE\_1\_2}{ARG\_LS\_FILE\_1\_2}}
+{\footnotesize\ttfamily \#define ARG\+\_\+\+LS\+\_\+\+FILE\+\_\+1\+\_\+2~\char`\"{}./testprogram.\+c\char`\"{}}
+
+
+
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00047}{47}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+
+\mbox{\Hypertarget{_serial_command_executer_8h_a93a5a67054ced044b52c030036001fb5}\label{_serial_command_executer_8h_a93a5a67054ced044b52c030036001fb5}} 
+\index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!ARG\_LS\_FILE\_2\_1@{ARG\_LS\_FILE\_2\_1}}
+\index{ARG\_LS\_FILE\_2\_1@{ARG\_LS\_FILE\_2\_1}!SerialCommandExecuter.h@{SerialCommandExecuter.h}}
+\doxysubsubsection{\texorpdfstring{ARG\_LS\_FILE\_2\_1}{ARG\_LS\_FILE\_2\_1}}
+{\footnotesize\ttfamily \#define ARG\+\_\+\+LS\+\_\+\+FILE\+\_\+2\+\_\+1~\char`\"{}testprogram\char`\"{}}
+
+
+
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00048}{48}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+
+\mbox{\Hypertarget{_serial_command_executer_8h_a9995cdb5b24496fead3b092bacab58ab}\label{_serial_command_executer_8h_a9995cdb5b24496fead3b092bacab58ab}} 
+\index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!ARG\_LS\_FILE\_2\_2@{ARG\_LS\_FILE\_2\_2}}
+\index{ARG\_LS\_FILE\_2\_2@{ARG\_LS\_FILE\_2\_2}!SerialCommandExecuter.h@{SerialCommandExecuter.h}}
+\doxysubsubsection{\texorpdfstring{ARG\_LS\_FILE\_2\_2}{ARG\_LS\_FILE\_2\_2}}
+{\footnotesize\ttfamily \#define ARG\+\_\+\+LS\+\_\+\+FILE\+\_\+2\+\_\+2~\char`\"{}./testprogram\char`\"{}}
+
+
+
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00049}{49}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+
 \mbox{\Hypertarget{_serial_command_executer_8h_a4271519e9ee5565b70175ae766253c65}\label{_serial_command_executer_8h_a4271519e9ee5565b70175ae766253c65}} 
 \index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!COMMAND\_DEBUG@{COMMAND\_DEBUG}}
 \index{COMMAND\_DEBUG@{COMMAND\_DEBUG}!SerialCommandExecuter.h@{SerialCommandExecuter.h}}
@@ -86,7 +235,17 @@ class \mbox{\hyperlink{class_serial_command_executer}{Serial\+Command\+Executer}
 
 
 
-Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00020}{20}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00021}{21}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+
+\mbox{\Hypertarget{_serial_command_executer_8h_a4e07c2074cd444889d528b540b8731d1}\label{_serial_command_executer_8h_a4e07c2074cd444889d528b540b8731d1}} 
+\index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!COMMAND\_GPG@{COMMAND\_GPG}}
+\index{COMMAND\_GPG@{COMMAND\_GPG}!SerialCommandExecuter.h@{SerialCommandExecuter.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_GPG}{COMMAND\_GPG}}
+{\footnotesize\ttfamily \#define COMMAND\+\_\+\+GPG~\char`\"{}gpg\char`\"{}}
+
+
+
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00036}{36}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
 
 \mbox{\Hypertarget{_serial_command_executer_8h_aee9e8b97ac4a5cdc1c371da35a579210}\label{_serial_command_executer_8h_aee9e8b97ac4a5cdc1c371da35a579210}} 
 \index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!COMMAND\_HELP@{COMMAND\_HELP}}
@@ -96,7 +255,7 @@ Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00020}{2
 
 
 
-Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00019}{19}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00020}{20}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
 
 \mbox{\Hypertarget{_serial_command_executer_8h_a17435a155b6388f6992f108f4946ad95}\label{_serial_command_executer_8h_a17435a155b6388f6992f108f4946ad95}} 
 \index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!COMMAND\_HOSTNAME@{COMMAND\_HOSTNAME}}
@@ -106,7 +265,7 @@ Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00019}{1
 
 
 
-Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00025}{25}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00026}{26}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
 
 \mbox{\Hypertarget{_serial_command_executer_8h_af998daeb22b38baa1ccbf04bd88dfe31}\label{_serial_command_executer_8h_af998daeb22b38baa1ccbf04bd88dfe31}} 
 \index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!COMMAND\_KEYS@{COMMAND\_KEYS}}
@@ -116,7 +275,7 @@ Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00025}{2
 
 
 
-Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00022}{22}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00023}{23}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
 
 \mbox{\Hypertarget{_serial_command_executer_8h_a1ec42af5209fa6fe2a3ab53031e4c67a}\label{_serial_command_executer_8h_a1ec42af5209fa6fe2a3ab53031e4c67a}} 
 \index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!COMMAND\_LS@{COMMAND\_LS}}
@@ -126,7 +285,7 @@ Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00022}{2
 
 
 
-Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00029}{29}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00030}{30}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
 
 \mbox{\Hypertarget{_serial_command_executer_8h_a7610a1d9786ba66a0def94c2a284cb30}\label{_serial_command_executer_8h_a7610a1d9786ba66a0def94c2a284cb30}} 
 \index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!COMMAND\_OBJDUMP@{COMMAND\_OBJDUMP}}
@@ -136,7 +295,7 @@ Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00029}{2
 
 
 
-Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00032}{32}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00033}{33}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
 
 \mbox{\Hypertarget{_serial_command_executer_8h_a4b0eeaf40a8a79d1a17d2506909a1d07}\label{_serial_command_executer_8h_a4b0eeaf40a8a79d1a17d2506909a1d07}} 
 \index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!COMMAND\_RESTART@{COMMAND\_RESTART}}
@@ -146,7 +305,7 @@ Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00032}{3
 
 
 
-Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00023}{23}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00024}{24}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
 
 \mbox{\Hypertarget{_serial_command_executer_8h_a2e3c1635a22898c9e1ec48b57d7f3d99}\label{_serial_command_executer_8h_a2e3c1635a22898c9e1ec48b57d7f3d99}} 
 \index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!COMMAND\_RUN@{COMMAND\_RUN}}
@@ -156,7 +315,7 @@ Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00023}{2
 
 
 
-Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00031}{31}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00032}{32}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
 
 \mbox{\Hypertarget{_serial_command_executer_8h_a7e0cf8d05523e31cb48f7acf4ef8e832}\label{_serial_command_executer_8h_a7e0cf8d05523e31cb48f7acf4ef8e832}} 
 \index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!COMMAND\_SU@{COMMAND\_SU}}
@@ -166,7 +325,7 @@ Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00031}{3
 
 
 
-Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00021}{21}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00022}{22}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
 
 \mbox{\Hypertarget{_serial_command_executer_8h_a9db5fb18d2bcb32925d11bd5e9ed758d}\label{_serial_command_executer_8h_a9db5fb18d2bcb32925d11bd5e9ed758d}} 
 \index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!COMMAND\_USERS@{COMMAND\_USERS}}
@@ -176,7 +335,7 @@ Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00021}{2
 
 
 
-Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00024}{24}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00025}{25}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
 
 \mbox{\Hypertarget{_serial_command_executer_8h_afec90b1f39bd61f392adbfcbe61229a0}\label{_serial_command_executer_8h_afec90b1f39bd61f392adbfcbe61229a0}} 
 \index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!COMMAND\_VI@{COMMAND\_VI}}
@@ -186,7 +345,7 @@ Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00024}{2
 
 
 
-Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00030}{30}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00031}{31}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
 
 \mbox{\Hypertarget{_serial_command_executer_8h_a275155a2e16b59de496b532a924bc2c9}\label{_serial_command_executer_8h_a275155a2e16b59de496b532a924bc2c9}} 
 \index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!COMMAND\_WHOAMI@{COMMAND\_WHOAMI}}
@@ -196,17 +355,17 @@ Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00030}{3
 
 
 
-Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00026}{26}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00027}{27}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
 
 \mbox{\Hypertarget{_serial_command_executer_8h_a4070e23710bad905213da8fd295a36ed}\label{_serial_command_executer_8h_a4070e23710bad905213da8fd295a36ed}} 
 \index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!ERROR\_CMD\_NOT\_FOUND@{ERROR\_CMD\_NOT\_FOUND}}
 \index{ERROR\_CMD\_NOT\_FOUND@{ERROR\_CMD\_NOT\_FOUND}!SerialCommandExecuter.h@{SerialCommandExecuter.h}}
 \doxysubsubsection{\texorpdfstring{ERROR\_CMD\_NOT\_FOUND}{ERROR\_CMD\_NOT\_FOUND}}
-{\footnotesize\ttfamily \#define ERROR\+\_\+\+CMD\+\_\+\+NOT\+\_\+\+FOUND~\char`\"{}Bash\+: command not found. Typ \textquotesingle{}help\textquotesingle{} for help.\char`\"{}}
+{\footnotesize\ttfamily \#define ERROR\+\_\+\+CMD\+\_\+\+NOT\+\_\+\+FOUND~\char`\"{}Bash\+: command not found. Type \textquotesingle{}help\textquotesingle{} for help.\char`\"{}}
 
 
 
-Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00037}{37}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00056}{56}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
 
 \mbox{\Hypertarget{_serial_command_executer_8h_ad4cbe103a5753a90ea14fd0e30b5c650}\label{_serial_command_executer_8h_ad4cbe103a5753a90ea14fd0e30b5c650}} 
 \index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!ERROR\_NO\_FILE@{ERROR\_NO\_FILE}}
@@ -216,7 +375,7 @@ Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00037}{3
 
 
 
-Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00043}{43}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00062}{62}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
 
 \mbox{\Hypertarget{_serial_command_executer_8h_a8f836310ffa2d75f973995730a9f92bb}\label{_serial_command_executer_8h_a8f836310ffa2d75f973995730a9f92bb}} 
 \index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!ERROR\_NO\_FILE\_DIR@{ERROR\_NO\_FILE\_DIR}}
@@ -226,7 +385,7 @@ Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00043}{4
 
 
 
-Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00044}{44}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00063}{63}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
 
 \mbox{\Hypertarget{_serial_command_executer_8h_ab71c0b561167166742d07f3f2ce3e27c}\label{_serial_command_executer_8h_ab71c0b561167166742d07f3f2ce3e27c}} 
 \index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!ERROR\_NO\_PERMISSION@{ERROR\_NO\_PERMISSION}}
@@ -236,7 +395,17 @@ Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00044}{4
 
 
 
-Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00042}{42}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00061}{61}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+
+\mbox{\Hypertarget{_serial_command_executer_8h_a762d6185f0f02997552e6cca4ec44f3b}\label{_serial_command_executer_8h_a762d6185f0f02997552e6cca4ec44f3b}} 
+\index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!ERROR\_NO\_VALID\_KEY@{ERROR\_NO\_VALID\_KEY}}
+\index{ERROR\_NO\_VALID\_KEY@{ERROR\_NO\_VALID\_KEY}!SerialCommandExecuter.h@{SerialCommandExecuter.h}}
+\doxysubsubsection{\texorpdfstring{ERROR\_NO\_VALID\_KEY}{ERROR\_NO\_VALID\_KEY}}
+{\footnotesize\ttfamily \#define ERROR\+\_\+\+NO\+\_\+\+VALID\+\_\+\+KEY~\char`\"{}No valid key, needs to be 16 bytes long.\char`\"{}}
+
+
+
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00064}{64}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
 
 \mbox{\Hypertarget{_serial_command_executer_8h_a51d64576ad0d5ee8374721a29bf7f3ac}\label{_serial_command_executer_8h_a51d64576ad0d5ee8374721a29bf7f3ac}} 
 \index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!ERROR\_PERM\_DENIED@{ERROR\_PERM\_DENIED}}
@@ -246,27 +415,27 @@ Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00042}{4
 
 
 
-Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00038}{38}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00057}{57}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
 
 \mbox{\Hypertarget{_serial_command_executer_8h_a2336d63967797df9308ca7bf2b356902}\label{_serial_command_executer_8h_a2336d63967797df9308ca7bf2b356902}} 
 \index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!ERROR\_TOO\_FEW\_ARGS@{ERROR\_TOO\_FEW\_ARGS}}
 \index{ERROR\_TOO\_FEW\_ARGS@{ERROR\_TOO\_FEW\_ARGS}!SerialCommandExecuter.h@{SerialCommandExecuter.h}}
 \doxysubsubsection{\texorpdfstring{ERROR\_TOO\_FEW\_ARGS}{ERROR\_TOO\_FEW\_ARGS}}
-{\footnotesize\ttfamily \#define ERROR\+\_\+\+TOO\+\_\+\+FEW\+\_\+\+ARGS~\char`\"{}Too few arguments. Typ \textquotesingle{}help\textquotesingle{} for help.\char`\"{}}
+{\footnotesize\ttfamily \#define ERROR\+\_\+\+TOO\+\_\+\+FEW\+\_\+\+ARGS~\char`\"{}Too few arguments. Add \textquotesingle{}-\/h\textquotesingle{} or \textquotesingle{}-\/-\/help\textquotesingle{} to the command for help.\char`\"{}}
 
 
 
-Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00040}{40}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00059}{59}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
 
 \mbox{\Hypertarget{_serial_command_executer_8h_ac8560b756d43b741a4163b7cb2e6a582}\label{_serial_command_executer_8h_ac8560b756d43b741a4163b7cb2e6a582}} 
 \index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!ERROR\_TOO\_MANY\_ARGS@{ERROR\_TOO\_MANY\_ARGS}}
 \index{ERROR\_TOO\_MANY\_ARGS@{ERROR\_TOO\_MANY\_ARGS}!SerialCommandExecuter.h@{SerialCommandExecuter.h}}
 \doxysubsubsection{\texorpdfstring{ERROR\_TOO\_MANY\_ARGS}{ERROR\_TOO\_MANY\_ARGS}}
-{\footnotesize\ttfamily \#define ERROR\+\_\+\+TOO\+\_\+\+MANY\+\_\+\+ARGS~\char`\"{}Too many arguments. Typ \textquotesingle{}help\textquotesingle{} for help.\char`\"{}}
+{\footnotesize\ttfamily \#define ERROR\+\_\+\+TOO\+\_\+\+MANY\+\_\+\+ARGS~\char`\"{}Too many arguments. Add \textquotesingle{}-\/h\textquotesingle{} or \textquotesingle{}-\/-\/help\textquotesingle{} to the command for help.\char`\"{}}
 
 
 
-Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00036}{36}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00055}{55}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
 
 \mbox{\Hypertarget{_serial_command_executer_8h_a2cd488232b05a4397e297fd82bbbf22e}\label{_serial_command_executer_8h_a2cd488232b05a4397e297fd82bbbf22e}} 
 \index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!ERROR\_WRONG\_ARGS@{ERROR\_WRONG\_ARGS}}
@@ -276,7 +445,7 @@ Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00036}{3
 
 
 
-Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00039}{39}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00058}{58}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
 
 \mbox{\Hypertarget{_serial_command_executer_8h_a0513ed94f64aeb430489112d20ea27c2}\label{_serial_command_executer_8h_a0513ed94f64aeb430489112d20ea27c2}} 
 \index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!ERROR\_WRONG\_PWD@{ERROR\_WRONG\_PWD}}
@@ -286,17 +455,17 @@ Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00039}{3
 
 
 
-Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00041}{41}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00060}{60}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
 
 \mbox{\Hypertarget{_serial_command_executer_8h_ac3c1be4a81c254ff0ffff58e4aa474e3}\label{_serial_command_executer_8h_ac3c1be4a81c254ff0ffff58e4aa474e3}} 
 \index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!MAX\_NUMBER\_PARAMS@{MAX\_NUMBER\_PARAMS}}
 \index{MAX\_NUMBER\_PARAMS@{MAX\_NUMBER\_PARAMS}!SerialCommandExecuter.h@{SerialCommandExecuter.h}}
 \doxysubsubsection{\texorpdfstring{MAX\_NUMBER\_PARAMS}{MAX\_NUMBER\_PARAMS}}
-{\footnotesize\ttfamily \#define MAX\+\_\+\+NUMBER\+\_\+\+PARAMS~2}
+{\footnotesize\ttfamily \#define MAX\+\_\+\+NUMBER\+\_\+\+PARAMS~3}
 
 
 
-Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00017}{17}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00018}{18}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
 
 \mbox{\Hypertarget{_serial_command_executer_8h_acbff4260ca589ed186c925def0941191}\label{_serial_command_executer_8h_acbff4260ca589ed186c925def0941191}} 
 \index{SerialCommandExecuter.h@{SerialCommandExecuter.h}!MESS\_SUPER\_USER@{MESS\_SUPER\_USER}}
@@ -306,5 +475,5 @@ Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00017}{1
 
 
 
-Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00034}{34}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
+Definition at line \mbox{\hyperlink{_serial_command_executer_8h_source_l00052}{52}} of file \mbox{\hyperlink{_serial_command_executer_8h_source}{Serial\+Command\+Executer.\+h}}.
 

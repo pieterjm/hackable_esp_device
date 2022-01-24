@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['initializehostname_0',['initializeHostname',['../hackable_esp_device_8ino.html#af9a7ef5ef61f50c11497d37c9ccda5b2',1,'hackableEspDevice.ino']]],
-  ['initializeserver_1',['initializeServer',['../hackable_esp_device_8ino.html#a5ea6b44c795d4cc5929063f444147dba',1,'hackableEspDevice.ino']]]
+  ['handlefiledownload_0',['handleFileDownload',['../hackable_esp_device_8ino.html#a08eee08276e783a745b7db1ff57f690a',1,'hackableEspDevice.ino']]],
+  ['handlefilerequest_1',['handleFileRequest',['../hackable_esp_device_8ino.html#a7ae585e44c0629645a31c6478417be65',1,'hackableEspDevice.ino']]],
+  ['handlefileupload_2',['handleFileUpload',['../hackable_esp_device_8ino.html#a3ad222f20f56d154a7728c39310e6873',1,'hackableEspDevice.ino']]]
 ];

@@ -59,13 +59,14 @@ var NAVTREE =
         [ "Variables", "globals_vars.html", null ],
         [ "Macros", "globals_defs.html", null ]
       ] ]
-    ] ]
+    ] ],
+    [ "Examples", "examples.html", "examples" ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"_buffer_overflow_8cpp.html"
+"_a_e_s_8cpp.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

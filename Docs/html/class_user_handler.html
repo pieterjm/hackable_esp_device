@@ -115,13 +115,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ae44272296983fa6a2df985c8e2596109"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="class_user_handler.html#ae44272296983fa6a2df985c8e2596109">More...</a><br /></td></tr>
 <tr class="separator:ae44272296983fa6a2df985c8e2596109"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5267a38ddc76c3887e535fd02914370"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user_handler.html#ab5267a38ddc76c3887e535fd02914370">updateUsers</a> ()</td></tr>
-<tr class="memdesc:ab5267a38ddc76c3887e535fd02914370"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the users from the config file in workmemory.  <a href="class_user_handler.html#ab5267a38ddc76c3887e535fd02914370">More...</a><br /></td></tr>
+<tr class="memdesc:ab5267a38ddc76c3887e535fd02914370"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the users from the config file in RAM.  <a href="class_user_handler.html#ab5267a38ddc76c3887e535fd02914370">More...</a><br /></td></tr>
 <tr class="separator:ab5267a38ddc76c3887e535fd02914370"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af30dbda21be1f07ba95a3a2040b0bed6"><td class="memItemLeft" align="right" valign="top">String *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user_handler.html#af30dbda21be1f07ba95a3a2040b0bed6">getUsers</a> ()</td></tr>
 <tr class="memdesc:af30dbda21be1f07ba95a3a2040b0bed6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets users.  <a href="class_user_handler.html#af30dbda21be1f07ba95a3a2040b0bed6">More...</a><br /></td></tr>
 <tr class="separator:af30dbda21be1f07ba95a3a2040b0bed6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc8548e9a986b34e225c0a127dd4fbfb"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user_handler.html#abc8548e9a986b34e225c0a127dd4fbfb">getNumberOfUsers</a> ()</td></tr>
-<tr class="memdesc:abc8548e9a986b34e225c0a127dd4fbfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets number users.  <a href="class_user_handler.html#abc8548e9a986b34e225c0a127dd4fbfb">More...</a><br /></td></tr>
+<tr class="memdesc:abc8548e9a986b34e225c0a127dd4fbfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets number of users.  <a href="class_user_handler.html#abc8548e9a986b34e225c0a127dd4fbfb">More...</a><br /></td></tr>
 <tr class="separator:abc8548e9a986b34e225c0a127dd4fbfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f44b5bbcb227ad8f3d4c0857f0d715a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user_handler.html#a4f44b5bbcb227ad8f3d4c0857f0d715a">checkPermission</a> (uint8_t permissionLevel, ESP8266WebServer *<a class="el" href="hackable_esp_device_8ino.html#a58141c4f251beaa1fee89b632d87152f">server</a>)</td></tr>
 <tr class="memdesc:a4f44b5bbcb227ad8f3d4c0857f0d715a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if user has permission.  <a href="class_user_handler.html#a4f44b5bbcb227ad8f3d4c0857f0d715a">More...</a><br /></td></tr>
@@ -129,7 +129,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="user_handler_8h_source.html#l00016">16</a> of file <a class="el" href="user_handler_8h_source.html">userHandler.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="user_handler_8h_source.html#l00017">17</a> of file <a class="el" href="user_handler_8h_source.html">userHandler.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ae44272296983fa6a2df985c8e2596109" name="ae44272296983fa6a2df985c8e2596109"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae44272296983fa6a2df985c8e2596109">&#9670;&nbsp;</a></span>UserHandler()</h2>
@@ -194,9 +194,9 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>bool If user has permission </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>bool True if user has permission </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="user_handler_8cpp_source.html#l00080">80</a> of file <a class="el" href="user_handler_8cpp_source.html">userHandler.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="user_handler_8cpp_source.html#l00094">94</a> of file <a class="el" href="user_handler_8cpp_source.html">userHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -215,9 +215,10 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gets number users. </p>
+<p>Gets number of users. </p>
+<dl class="section return"><dt>Returns</dt><dd>Uint8_t Number of users </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="user_handler_8cpp_source.html#l00068">68</a> of file <a class="el" href="user_handler_8cpp_source.html">userHandler.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="user_handler_8cpp_source.html#l00082">82</a> of file <a class="el" href="user_handler_8cpp_source.html">userHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -237,8 +238,9 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets users. </p>
+<dl class="section return"><dt>Returns</dt><dd>String* String array of users </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="user_handler_8cpp_source.html#l00059">59</a> of file <a class="el" href="user_handler_8cpp_source.html">userHandler.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="user_handler_8cpp_source.html#l00072">72</a> of file <a class="el" href="user_handler_8cpp_source.html">userHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -257,7 +259,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Updates the users from the config file in workmemory. </p>
+<p>Updates the users from the config file in RAM. </p>
 
 <p class="definition">Definition at line <a class="el" href="user_handler_8cpp_source.html#l00026">26</a> of file <a class="el" href="user_handler_8cpp_source.html">userHandler.cpp</a>.</p>
 

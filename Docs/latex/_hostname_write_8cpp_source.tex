@@ -5,72 +5,71 @@
 \DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00001}00001 \textcolor{comment}{/*}}
 \DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00002}00002 \textcolor{comment}{ * File:      HostnameWrite.cpp}}
 \DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00003}00003 \textcolor{comment}{ * Author:    Twenne Elffers}}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00004}00004 \textcolor{comment}{ * Class:     HostnameWrite}}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00005}00005 \textcolor{comment}{ * Version:   0.1}}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00006}00006 \textcolor{comment}{ * }}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00007}00007 \textcolor{comment}{ * Writes hostname to the EEPROM.}}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00008}00008 \textcolor{comment}{ */}}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00009}00009 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_hostname_write_8h}{HostnameWrite.h}}"{}}}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00010}00010 }
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00011}00011 \textcolor{comment}{/**************************************************************************/}}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00016}00016 \textcolor{comment}{/**************************************************************************/}}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00017}\mbox{\hyperlink{_hostname_write_8cpp_a1c60cc0a431e819d47f645094e36b6bb}{00017}} String \mbox{\hyperlink{_hostname_write_8cpp_a1c60cc0a431e819d47f645094e36b6bb}{getHostname}}() \{}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00018}00018     \textcolor{keywordtype}{char} hostname[MAX\_HOSTNAME\_LENGTH]; }
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00019}00019     EEPROM.begin(MAX\_HOSTNAME\_LENGTH);}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00020}00020 }
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00021}00021     \textcolor{keywordflow}{for} (uint8\_t i = 0; i < MAX\_HOSTNAME\_LENGTH; i++) \{}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00022}00022         EEPROM.get(HOSTNAME\_ADRESS+i, hostname[i]);}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00023}00023         \textcolor{keywordflow}{if} (hostname[i] == 0xFF) \{}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00024}00024             \textcolor{keywordflow}{break};                                                          \textcolor{comment}{//Skips the unreadable chars}}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00025}00025             \}}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00026}00026       \}}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00027}00027     }
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00028}00028     EEPROM.end();}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00029}00029     \textcolor{keywordflow}{return} String(hostname);}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00030}00030 \}}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00031}00031 }
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00032}00032 \textcolor{comment}{/**************************************************************************/}}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00037}00037 \textcolor{comment}{/**************************************************************************/}}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00038}\mbox{\hyperlink{_hostname_write_8cpp_ae8aa3c92ae0ab79d141bbec42f7f662c}{00038}} \textcolor{keywordtype}{void} \mbox{\hyperlink{_hostname_write_8cpp_ae8aa3c92ae0ab79d141bbec42f7f662c}{writeHostname}}(\textcolor{keywordtype}{char} hostname[MAX\_HOSTNAME\_LENGTH]) \{}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00039}00039     EEPROM.begin(MAX\_HOSTNAME\_LENGTH);}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00040}00040     }
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00041}00041     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i< MAX\_HOSTNAME\_LENGTH; i++)\{}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00042}00042         EEPROM.write(HOSTNAME\_ADRESS+i, hostname[i]);}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00043}00043         yield();}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00044}00044     \}}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00045}00045     }
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00046}00046     \mbox{\hyperlink{_hostname_write_8cpp_ad104ddaec037908e58d9d06b53d19962}{checkEepromCommit}}();}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00047}00047     EEPROM.end();}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00048}00048 \}}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00049}00049 }
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00050}00050 \textcolor{comment}{/**************************************************************************/}}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00056}00056 \textcolor{comment}{/**************************************************************************/}}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00057}\mbox{\hyperlink{_hostname_write_8cpp_ab6a2cda115b3d0fe14a1916603ec19d4}{00057}} \textcolor{keywordtype}{void} \mbox{\hyperlink{_hostname_write_8cpp_ab6a2cda115b3d0fe14a1916603ec19d4}{setEEPROMToNULL}}(\textcolor{keywordtype}{int} writeLength, \textcolor{keywordtype}{int} startAdress)\{ }
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00058}00058     EEPROM.begin(writeLength);}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00059}00059     }
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00060}00060     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i< writeLength; i++)\{}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00061}00061         EEPROM.write(startAdress+i, 0);}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00062}00062         yield();}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00063}00063     \}}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00064}00064     }
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00065}00065     \mbox{\hyperlink{_hostname_write_8cpp_ad104ddaec037908e58d9d06b53d19962}{checkEepromCommit}}();}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00066}00066     }
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00067}00067     \mbox{\hyperlink{_debugger_8cpp_aee8aa821792dfa745cfffd6f8b03d529}{debug}}(\textcolor{stringliteral}{"{}Reset Value at: "{}});}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00068}00068     \mbox{\hyperlink{_debugger_8cpp_aee8aa821792dfa745cfffd6f8b03d529}{debug}}(String(startAdress));}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00069}00069     \mbox{\hyperlink{_debugger_8cpp_aee8aa821792dfa745cfffd6f8b03d529}{debug}}(\textcolor{stringliteral}{"{} till "{}});}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00070}00070     \mbox{\hyperlink{_debugger_8cpp_acc3264da13e660e155c411013e1e4bb4}{debugln}}(String(startAdress+writeLength));}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00071}00071     }
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00072}00072     EEPROM.end();}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00073}00073 \}}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00074}00074 }
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00075}00075 \textcolor{comment}{/**************************************************************************/}}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00079}00079 \textcolor{comment}{/**************************************************************************/}}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00080}\mbox{\hyperlink{_hostname_write_8cpp_ad104ddaec037908e58d9d06b53d19962}{00080}} \textcolor{keywordtype}{void} \mbox{\hyperlink{_hostname_write_8cpp_ad104ddaec037908e58d9d06b53d19962}{checkEepromCommit}}() \{}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00081}00081     \textcolor{keywordflow}{if} (EEPROM.commit()) \{}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00082}00082         Serial.println(\textcolor{stringliteral}{"{}Data written!"{}});}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00083}00083     \} \textcolor{keywordflow}{else} \{}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00084}00084         Serial.println(\textcolor{stringliteral}{"{}ERROR! Data not written!"{}});}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00085}00085     \}}
-\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00086}00086 \}}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00004}00004 \textcolor{comment}{ * Version:   1.0}}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00005}00005 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00006}00006 \textcolor{comment}{ * Handles hostname saving and reading to EEPROM.}}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00007}00007 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00008}00008 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_hostname_write_8h}{HostnameWrite.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00010}00010 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00015}00015 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00016}\mbox{\hyperlink{_hostname_write_8cpp_a1c60cc0a431e819d47f645094e36b6bb}{00016}} String \mbox{\hyperlink{_hostname_write_8cpp_a1c60cc0a431e819d47f645094e36b6bb}{getHostname}}() \{}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00017}00017     \textcolor{keywordtype}{char} hostname[MAX\_HOSTNAME\_LENGTH]; }
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00018}00018     EEPROM.begin(MAX\_HOSTNAME\_LENGTH);}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00020}00020     \textcolor{keywordflow}{for} (uint8\_t i = 0; i < MAX\_HOSTNAME\_LENGTH; i++) \{}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00021}00021         EEPROM.get(HOSTNAME\_ADRESS+i, hostname[i]);}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00022}00022         \textcolor{keywordflow}{if} (hostname[i] == 0xFF) \{}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00023}00023             \textcolor{keywordflow}{break};                                                          \textcolor{comment}{//Skips the unreadable chars}}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00024}00024             \}}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00025}00025       \}}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00026}00026     }
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00027}00027     EEPROM.end();}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00028}00028     \textcolor{keywordflow}{return} String(hostname);}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00029}00029 \}}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00031}00031 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00036}00036 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00037}\mbox{\hyperlink{_hostname_write_8cpp_ae8aa3c92ae0ab79d141bbec42f7f662c}{00037}} \textcolor{keywordtype}{void} \mbox{\hyperlink{_hostname_write_8cpp_ae8aa3c92ae0ab79d141bbec42f7f662c}{writeHostname}}(\textcolor{keywordtype}{char} hostname[MAX\_HOSTNAME\_LENGTH]) \{}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00038}00038     EEPROM.begin(MAX\_HOSTNAME\_LENGTH);}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00039}00039     }
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00040}00040     \textcolor{keywordflow}{for} (uint8\_t i = 0; i< MAX\_HOSTNAME\_LENGTH; i++)\{}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00041}00041         EEPROM.write(HOSTNAME\_ADRESS+i, hostname[i]);}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00042}00042         yield();}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00043}00043     \}}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00044}00044     }
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00045}00045     \mbox{\hyperlink{_hostname_write_8cpp_ad104ddaec037908e58d9d06b53d19962}{checkEepromCommit}}();}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00046}00046     EEPROM.end();}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00047}00047 \}}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00048}00048 }
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00049}00049 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00055}00055 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00056}\mbox{\hyperlink{_hostname_write_8cpp_adfde4506dca28a741dc9526407e60598}{00056}} \textcolor{keywordtype}{void} \mbox{\hyperlink{_hostname_write_8cpp_adfde4506dca28a741dc9526407e60598}{setEepromToNull}}(uint8\_t writeLength, uint8\_t startAdress) \{}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00057}00057     EEPROM.begin(writeLength);}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00058}00058     }
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00059}00059     \textcolor{keywordflow}{for} (uint8\_t i = 0; i < writeLength; i++)\{}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00060}00060         EEPROM.write(startAdress+i, 0);}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00061}00061         yield();}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00062}00062     \}}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00063}00063     }
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00064}00064     \mbox{\hyperlink{_hostname_write_8cpp_ad104ddaec037908e58d9d06b53d19962}{checkEepromCommit}}();}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00065}00065     }
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00066}00066     \mbox{\hyperlink{_debugger_8cpp_aee8aa821792dfa745cfffd6f8b03d529}{debug}}(\textcolor{stringliteral}{"{}Reset Value at: "{}});}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00067}00067     \mbox{\hyperlink{_debugger_8cpp_aee8aa821792dfa745cfffd6f8b03d529}{debug}}(String(startAdress));}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00068}00068     \mbox{\hyperlink{_debugger_8cpp_aee8aa821792dfa745cfffd6f8b03d529}{debug}}(\textcolor{stringliteral}{"{} till "{}});}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00069}00069     \mbox{\hyperlink{_debugger_8cpp_acc3264da13e660e155c411013e1e4bb4}{debugln}}(String(startAdress+writeLength));}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00070}00070     }
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00071}00071     EEPROM.end();}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00072}00072 \}}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00073}00073 }
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00074}00074 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00078}00078 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00079}\mbox{\hyperlink{_hostname_write_8cpp_ad104ddaec037908e58d9d06b53d19962}{00079}} \textcolor{keywordtype}{void} \mbox{\hyperlink{_hostname_write_8cpp_ad104ddaec037908e58d9d06b53d19962}{checkEepromCommit}}() \{}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00080}00080     \textcolor{keywordflow}{if} (EEPROM.commit()) \{}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00081}00081         Serial.println(\textcolor{stringliteral}{"{}Data written!"{}});}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00082}00082     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00083}00083         Serial.println(\textcolor{stringliteral}{"{}ERROR! Data not written!"{}});}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00084}00084     \}}
+\DoxyCodeLine{\Hypertarget{_hostname_write_8cpp_source_l00085}00085 \}}
 
 \end{DoxyCode}
