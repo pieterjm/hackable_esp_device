@@ -1,7 +1,7 @@
 /*
  * File:      Debugger.h
  * Author:    Luke de Munk
- * Version:   0.1
+ * Version:   1.0
  * 
  * Class for handling the debug prints.
  */
@@ -41,7 +41,7 @@ void debugln(String text) {
 /**************************************************************************/
 /*!
   @brief    Gets if debug is enabled.
-  @return   isEnabled       If debug is enabled (true == enabled)
+  @return   bool            True if debug is enabled
 */
 /**************************************************************************/
 bool getDebugEnabled() {

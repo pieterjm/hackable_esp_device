@@ -66,7 +66,7 @@ $("#brightness").change(
     function() {
         var brightness = $(this).val();
         $.ajax({
-            url: "/update_brightness",
+            url: "/set_brightness",
             type: "get",
             data: {
                 brightness: brightness

@@ -1,17 +1,16 @@
 /*
  * File:      HostnameWrite.cpp
  * Author:    Twenne Elffers
- * Class:     HostnameWrite
- * Version:   0.1
+ * Version:   1.0
  * 
- * Writes hostname to the EEPROM.
+ * Handles hostname saving and reading to EEPROM.
  */
 #include "HostnameWrite.h"
 
 /**************************************************************************/
 /*!
   @brief    Gets the hostname from the EEPROM.
-  @return   hostname       contains the hostname from eeprom (true == enabled)
+  @return   String          Current hostname
 */
 /**************************************************************************/
 String getHostname() {
@@ -32,13 +31,13 @@ String getHostname() {
 /**************************************************************************/
 /*!
   @brief    Writes the new hostname to the EEPROM.
-  @param    hostname[32]    char that contains the hostname to be written
+  @param    hostname        String that contains the hostname to be written
 */
 /**************************************************************************/
 void writeHostname(char hostname[MAX_HOSTNAME_LENGTH]) {
     EEPROM.begin(MAX_HOSTNAME_LENGTH);
     
-    for (int i = 0; i< MAX_HOSTNAME_LENGTH; i++){
+    for (uint8_t i = 0; i< MAX_HOSTNAME_LENGTH; i++){
         EEPROM.write(HOSTNAME_ADRESS+i, hostname[i]);
         yield();
     }
@@ -49,15 +48,15 @@ void writeHostname(char hostname[MAX_HOSTNAME_LENGTH]) {
 
 /**************************************************************************/
 /*!
-  @brief    Resets the EEPROM at the startAdress.
-  @param    writeLength      int of total lenth to be writen
-  @param    startAdress     int of start adress
+  @brief    Resets the given EEPROM adresses.
+  @param    writeLength     Length to be erased
+  @param    startAdress     Start adress
 */
 /**************************************************************************/
-void setEEPROMToNULL(int writeLength, int startAdress){ 
+void setEepromToNull(uint8_t writeLength, uint8_t startAdress) {
     EEPROM.begin(writeLength);
     
-    for (int i = 0; i< writeLength; i++){
+    for (uint8_t i = 0; i < writeLength; i++){
         EEPROM.write(startAdress+i, 0);
         yield();
     }

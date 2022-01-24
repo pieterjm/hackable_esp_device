@@ -2,7 +2,7 @@
  * File:      UserHandler.cpp
  * Author:    Luke de Munk & Twenne Elffers
  * Class:     UserHandler
- * Version:   0.1
+ * Version:   1.0
  * 
  * Class for the http authentication process.
  */
@@ -20,7 +20,7 @@ UserHandler::UserHandler(ESP8266WebServer *server) {
 
 /**************************************************************************/
 /*!
-  @brief    Updates the users from the config file in workmemory.
+  @brief    Updates the users from the config file in RAM.
 */
 /**************************************************************************/
 void UserHandler::updateUsers() {
@@ -39,7 +39,8 @@ void UserHandler::updateUsers() {
     
     String line;
     String* user;
-
+    configFile.readStringUntil('\n');                                       //Ignore first line (format)
+    
     /* Extract user information line by line */
     for(uint8_t i = 0; i < MAX_NUMBER_USERS*USER_INFO_LENGTH; i+=USER_INFO_LENGTH) {
         line = configFile.readStringUntil('\n');                            //Read a line from the file
@@ -64,7 +65,8 @@ void UserHandler::updateUsers() {
 
 /**************************************************************************/
 /*!
-  @brief    Gets users
+  @brief    Gets users.
+  @return   String*         String array of users
 */
 /**************************************************************************/
 String* UserHandler::getUsers() {
@@ -73,7 +75,8 @@ String* UserHandler::getUsers() {
 
 /**************************************************************************/
 /*!
-  @brief    Gets number users
+  @brief    Gets number of users.
+  @return   Uint8_t         Number of users
 */
 /**************************************************************************/
 uint8_t UserHandler::getNumberOfUsers() {
@@ -85,7 +88,7 @@ uint8_t UserHandler::getNumberOfUsers() {
   @brief    Checks if user has permission.
   @param    permissionLevel 0 = not logged in, 1 = user, 2 = admin
   @param    server          Webserver object
-  @return   bool            If user has permission
+  @return   bool            True if user has permission
 */
 /**************************************************************************/
 bool UserHandler::checkPermission(uint8_t permissionLevel, ESP8266WebServer *server) {
