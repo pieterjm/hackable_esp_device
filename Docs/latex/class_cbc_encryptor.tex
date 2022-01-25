@@ -1,0 +1,164 @@
+\hypertarget{class_cbc_encryptor}{}\doxysection{Cbc\+Encryptor Class Reference}
+\label{class_cbc_encryptor}\index{CbcEncryptor@{CbcEncryptor}}
+
+
+{\ttfamily \#include $<$Cbc\+Encryptor.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_cbc_encryptor_abfcf1693f291985ce73f077adce8bc39}{Cbc\+Encryptor}} ()
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_cbc_encryptor_a3eeecbd0687b7dd7d32e39e2cd33199f}{encrypt\+File}} (String filename)
+\begin{DoxyCompactList}\small\item\em Encrypts the SPIFFS file if it exists. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_cbc_encryptor_a138202d41ce6d5a0a731c305c1a81175}{decrypt\+File}} (String filename)
+\begin{DoxyCompactList}\small\item\em Decrypts the SPIFFS file if it exists. \end{DoxyCompactList}\item 
+String \mbox{\hyperlink{class_cbc_encryptor_a03e7a772a04aee6c90856942e95419b5}{encrypt\+Line}} (String line)
+\begin{DoxyCompactList}\small\item\em Encrypts a line of text. \end{DoxyCompactList}\item 
+String \mbox{\hyperlink{class_cbc_encryptor_ad8ffa9b2ea69562f99a6a6ab73a44341}{decrypt\+Line}} (String line)
+\begin{DoxyCompactList}\small\item\em Decrypts a line of text. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_cbc_encryptor_a818679d4f7312052c24c8d6d05016122}{set\+Key}} (String key)
+\begin{DoxyCompactList}\small\item\em Sets the encryption key. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_cbc_encryptor_8h_source_l00015}{15}} of file \mbox{\hyperlink{_cbc_encryptor_8h_source}{Cbc\+Encryptor.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_cbc_encryptor_abfcf1693f291985ce73f077adce8bc39}\label{class_cbc_encryptor_abfcf1693f291985ce73f077adce8bc39}} 
+\index{CbcEncryptor@{CbcEncryptor}!CbcEncryptor@{CbcEncryptor}}
+\index{CbcEncryptor@{CbcEncryptor}!CbcEncryptor@{CbcEncryptor}}
+\doxysubsubsection{\texorpdfstring{CbcEncryptor()}{CbcEncryptor()}}
+{\footnotesize\ttfamily Cbc\+Encryptor\+::\+Cbc\+Encryptor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+
+
+Definition at line \mbox{\hyperlink{_cbc_encryptor_8cpp_source_l00016}{16}} of file \mbox{\hyperlink{_cbc_encryptor_8cpp_source}{Cbc\+Encryptor.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_cbc_encryptor_a138202d41ce6d5a0a731c305c1a81175}\label{class_cbc_encryptor_a138202d41ce6d5a0a731c305c1a81175}} 
+\index{CbcEncryptor@{CbcEncryptor}!decryptFile@{decryptFile}}
+\index{decryptFile@{decryptFile}!CbcEncryptor@{CbcEncryptor}}
+\doxysubsubsection{\texorpdfstring{decryptFile()}{decryptFile()}}
+{\footnotesize\ttfamily bool Cbc\+Encryptor\+::decrypt\+File (\begin{DoxyParamCaption}\item[{String}]{filename }\end{DoxyParamCaption})}
+
+
+
+Decrypts the SPIFFS file if it exists. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Name of the file to decrypt \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool True if decryption is successfull 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_cbc_encryptor_8cpp_source_l00075}{75}} of file \mbox{\hyperlink{_cbc_encryptor_8cpp_source}{Cbc\+Encryptor.\+cpp}}.
+
+\mbox{\Hypertarget{class_cbc_encryptor_ad8ffa9b2ea69562f99a6a6ab73a44341}\label{class_cbc_encryptor_ad8ffa9b2ea69562f99a6a6ab73a44341}} 
+\index{CbcEncryptor@{CbcEncryptor}!decryptLine@{decryptLine}}
+\index{decryptLine@{decryptLine}!CbcEncryptor@{CbcEncryptor}}
+\doxysubsubsection{\texorpdfstring{decryptLine()}{decryptLine()}}
+{\footnotesize\ttfamily String Cbc\+Encryptor\+::decrypt\+Line (\begin{DoxyParamCaption}\item[{String}]{line }\end{DoxyParamCaption})}
+
+
+
+Decrypts a line of text. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em line} & Line to decrypt \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+String Decrypted string 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_cbc_encryptor_8cpp_source_l00168}{168}} of file \mbox{\hyperlink{_cbc_encryptor_8cpp_source}{Cbc\+Encryptor.\+cpp}}.
+
+\mbox{\Hypertarget{class_cbc_encryptor_a3eeecbd0687b7dd7d32e39e2cd33199f}\label{class_cbc_encryptor_a3eeecbd0687b7dd7d32e39e2cd33199f}} 
+\index{CbcEncryptor@{CbcEncryptor}!encryptFile@{encryptFile}}
+\index{encryptFile@{encryptFile}!CbcEncryptor@{CbcEncryptor}}
+\doxysubsubsection{\texorpdfstring{encryptFile()}{encryptFile()}}
+{\footnotesize\ttfamily bool Cbc\+Encryptor\+::encrypt\+File (\begin{DoxyParamCaption}\item[{String}]{filename }\end{DoxyParamCaption})}
+
+
+
+Encrypts the SPIFFS file if it exists. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Name of the file to encrypt \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool True if encryption is successfull 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_cbc_encryptor_8cpp_source_l00033}{33}} of file \mbox{\hyperlink{_cbc_encryptor_8cpp_source}{Cbc\+Encryptor.\+cpp}}.
+
+\mbox{\Hypertarget{class_cbc_encryptor_a03e7a772a04aee6c90856942e95419b5}\label{class_cbc_encryptor_a03e7a772a04aee6c90856942e95419b5}} 
+\index{CbcEncryptor@{CbcEncryptor}!encryptLine@{encryptLine}}
+\index{encryptLine@{encryptLine}!CbcEncryptor@{CbcEncryptor}}
+\doxysubsubsection{\texorpdfstring{encryptLine()}{encryptLine()}}
+{\footnotesize\ttfamily String Cbc\+Encryptor\+::encrypt\+Line (\begin{DoxyParamCaption}\item[{String}]{line }\end{DoxyParamCaption})}
+
+
+
+Encrypts a line of text. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em line} & Line to encrypt \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+String Encrypted string 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_cbc_encryptor_8cpp_source_l00137}{137}} of file \mbox{\hyperlink{_cbc_encryptor_8cpp_source}{Cbc\+Encryptor.\+cpp}}.
+
+\mbox{\Hypertarget{class_cbc_encryptor_a818679d4f7312052c24c8d6d05016122}\label{class_cbc_encryptor_a818679d4f7312052c24c8d6d05016122}} 
+\index{CbcEncryptor@{CbcEncryptor}!setKey@{setKey}}
+\index{setKey@{setKey}!CbcEncryptor@{CbcEncryptor}}
+\doxysubsubsection{\texorpdfstring{setKey()}{setKey()}}
+{\footnotesize\ttfamily bool Cbc\+Encryptor\+::set\+Key (\begin{DoxyParamCaption}\item[{String}]{key }\end{DoxyParamCaption})}
+
+
+
+Sets the encryption key. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & Encryption key \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool True if is successfull 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_cbc_encryptor_8cpp_source_l00115}{115}} of file \mbox{\hyperlink{_cbc_encryptor_8cpp_source}{Cbc\+Encryptor.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+hackable\+Esp\+Device/\mbox{\hyperlink{_cbc_encryptor_8h}{Cbc\+Encryptor.\+h}}\item 
+hackable\+Esp\+Device/\mbox{\hyperlink{_cbc_encryptor_8cpp}{Cbc\+Encryptor.\+cpp}}\end{DoxyCompactItemize}

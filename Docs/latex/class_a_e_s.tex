@@ -1,0 +1,605 @@
+\hypertarget{class_a_e_s}{}\doxysection{AES Class Reference}
+\label{class_a_e_s}\index{AES@{AES}}
+
+
+{\ttfamily \#include $<$AES.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_a_e_s_aead4c030c140418b2d2330d646f3d87f}{AES}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_a_e_s}{AES}} constructor. \end{DoxyCompactList}\item 
+byte \mbox{\hyperlink{class_a_e_s_afe2900d46f475f6f3ea8d164e1581ed9}{set\+\_\+key}} (byte key\mbox{[}$\,$\mbox{]}, int keylen)
+\item 
+void \mbox{\hyperlink{class_a_e_s_a12485f897e56d28e9d6b49e568d1c222}{clean}} ()
+\item 
+void \mbox{\hyperlink{class_a_e_s_ae7b28053b759aea46d13f2c8ebc3b64a}{copy\+\_\+n\+\_\+bytes}} (byte $\ast$AESt, byte $\ast$src, byte n)
+\item 
+byte \mbox{\hyperlink{class_a_e_s_a72a674e99a92e296d1bf03444fe6ea15}{encrypt}} (byte plain\mbox{[}\mbox{\hyperlink{_a_e_s__config_8h_a64c8b1a34c03210cc4c214735bb4f186}{N\+\_\+\+BLOCK}}\mbox{]}, byte cipher\mbox{[}\mbox{\hyperlink{_a_e_s__config_8h_a64c8b1a34c03210cc4c214735bb4f186}{N\+\_\+\+BLOCK}}\mbox{]})
+\item 
+byte \mbox{\hyperlink{class_a_e_s_ae99f48bcf9c5f5c98ffb37d3912dc4d1}{cbc\+\_\+encrypt}} (byte $\ast$plain, byte $\ast$cipher, int n\+\_\+block, byte iv\mbox{[}\mbox{\hyperlink{_a_e_s__config_8h_a64c8b1a34c03210cc4c214735bb4f186}{N\+\_\+\+BLOCK}}\mbox{]})
+\item 
+byte \mbox{\hyperlink{class_a_e_s_aa3e2d95cee3d244a0fffaf8c60814cd4}{cbc\+\_\+encrypt}} (byte $\ast$plain, byte $\ast$cipher, int n\+\_\+block)
+\item 
+byte \mbox{\hyperlink{class_a_e_s_abc514d1129789a60d60127f151450e9c}{decrypt}} (byte cipher\mbox{[}\mbox{\hyperlink{_a_e_s__config_8h_a64c8b1a34c03210cc4c214735bb4f186}{N\+\_\+\+BLOCK}}\mbox{]}, byte plain\mbox{[}\mbox{\hyperlink{_a_e_s__config_8h_a64c8b1a34c03210cc4c214735bb4f186}{N\+\_\+\+BLOCK}}\mbox{]})
+\item 
+byte \mbox{\hyperlink{class_a_e_s_a2b8023781d7ddd13930bda0fd4312369}{cbc\+\_\+decrypt}} (byte $\ast$cipher, byte $\ast$plain, int n\+\_\+block, byte iv\mbox{[}\mbox{\hyperlink{_a_e_s__config_8h_a64c8b1a34c03210cc4c214735bb4f186}{N\+\_\+\+BLOCK}}\mbox{]})
+\item 
+byte \mbox{\hyperlink{class_a_e_s_a7242c64fc6c53152841ecbd840ac2a81}{cbc\+\_\+decrypt}} (byte $\ast$cipher, byte $\ast$plain, int n\+\_\+block)
+\item 
+void \mbox{\hyperlink{class_a_e_s_a86f4dfa2c855aa16ef847bb1a46c66bd}{set\+\_\+\+IV}} (unsigned long long int IVCl)
+\item 
+void \mbox{\hyperlink{class_a_e_s_aa64b7b326d6016963b56293323590624}{iv\+\_\+inc}} ()
+\item 
+int \mbox{\hyperlink{class_a_e_s_ac333f0da98cb09087770fd06d276c6aa}{get\+\_\+size}} ()
+\item 
+void \mbox{\hyperlink{class_a_e_s_ab0f5e7dc53c0b8277f65578765a2e911}{set\+\_\+size}} (int sizel)
+\item 
+int \mbox{\hyperlink{class_a_e_s_a681b37a8c430a786b4c5daf9af0903f4}{get\+\_\+pad}} ()
+\item 
+void \mbox{\hyperlink{class_a_e_s_a4c540bb245286e6f6419980f8129465c}{get\+\_\+\+IV}} (byte $\ast$out)
+\item 
+void \mbox{\hyperlink{class_a_e_s_a628b83cd60acf674bb64f8c90e7fa84d}{calc\+\_\+size\+\_\+n\+\_\+pad}} (int p\+\_\+size)
+\item 
+void \mbox{\hyperlink{class_a_e_s_a58e4e3ba80940f6be851be58a8be6bbd}{pad\+Plaintext}} (void $\ast$in, byte $\ast$out)
+\item 
+bool \mbox{\hyperlink{class_a_e_s_ac297cda54d320b1b975e1eee96e8d547}{Check\+Pad}} (byte $\ast$in, int size)
+\item 
+void \mbox{\hyperlink{class_a_e_s_a6b0db893a71f8650d3e59441c23fc9dd}{print\+Array}} (byte output\mbox{[}$\,$\mbox{]}, bool p\+\_\+pad=true)
+\item 
+void \mbox{\hyperlink{class_a_e_s_add8ddd9cce8b4de87b9ef2ff2f5ddb29}{print\+Array}} (byte output\mbox{[}$\,$\mbox{]}, int sizel)
+\item 
+void \mbox{\hyperlink{class_a_e_s_a417f2c3f01927bc88c56462a0891f3c2}{do\+\_\+aes\+\_\+encrypt}} (byte $\ast$plain, int size\+\_\+p, byte $\ast$cipher, byte $\ast$key, int bits, byte ivl\mbox{[}\mbox{\hyperlink{_a_e_s__config_8h_a64c8b1a34c03210cc4c214735bb4f186}{N\+\_\+\+BLOCK}}\mbox{]})
+\item 
+void \mbox{\hyperlink{class_a_e_s_adaeab53c0a5ce4a6b1634650fb0475f2}{do\+\_\+aes\+\_\+encrypt}} (byte $\ast$plain, int size\+\_\+p, byte $\ast$cipher, byte $\ast$key, int bits)
+\item 
+void \mbox{\hyperlink{class_a_e_s_afd66d5b1be883ee03f2f1d99aa0611da}{do\+\_\+aes\+\_\+decrypt}} (byte $\ast$cipher, int size\+\_\+c, byte $\ast$plain, byte $\ast$key, int bits, byte ivl\mbox{[}\mbox{\hyperlink{_a_e_s__config_8h_a64c8b1a34c03210cc4c214735bb4f186}{N\+\_\+\+BLOCK}}\mbox{]})
+\item 
+void \mbox{\hyperlink{class_a_e_s_a649781b684fca61689d5ddbe7d6f498a}{do\+\_\+aes\+\_\+decrypt}} (byte $\ast$cipher, int size\+\_\+c, byte $\ast$plain, byte $\ast$key, int bits)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8h_source_l00039}{39}} of file \mbox{\hyperlink{_a_e_s_8h_source}{AES.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_a_e_s_aead4c030c140418b2d2330d646f3d87f}\label{class_a_e_s_aead4c030c140418b2d2330d646f3d87f}} 
+\index{AES@{AES}!AES@{AES}}
+\index{AES@{AES}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{AES()}{AES()}}
+{\footnotesize\ttfamily AES\+::\+AES (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{\hyperlink{class_a_e_s}{AES}} constructor. 
+
+This function initialized an instance of \mbox{\hyperlink{class_a_e_s}{AES}}. 
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00231}{231}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_a_e_s_a628b83cd60acf674bb64f8c90e7fa84d}\label{class_a_e_s_a628b83cd60acf674bb64f8c90e7fa84d}} 
+\index{AES@{AES}!calc\_size\_n\_pad@{calc\_size\_n\_pad}}
+\index{calc\_size\_n\_pad@{calc\_size\_n\_pad}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{calc\_size\_n\_pad()}{calc\_size\_n\_pad()}}
+{\footnotesize\ttfamily void AES\+::calc\+\_\+size\+\_\+n\+\_\+pad (\begin{DoxyParamCaption}\item[{int}]{p\+\_\+size }\end{DoxyParamCaption})}
+
+Calculates the size of the plaintext and the padding.
+
+Calculates the size of theplaintext with the padding and the size of the padding needed. Moreover it stores them in their class variables.
+
+
+\begin{DoxyParams}{Parameters}
+{\em p\+\_\+size} & the size of the byte array ex sizeof(plaintext) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00492}{492}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{class_a_e_s_a7242c64fc6c53152841ecbd840ac2a81}\label{class_a_e_s_a7242c64fc6c53152841ecbd840ac2a81}} 
+\index{AES@{AES}!cbc\_decrypt@{cbc\_decrypt}}
+\index{cbc\_decrypt@{cbc\_decrypt}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{cbc\_decrypt()}{cbc\_decrypt()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily byte AES\+::cbc\+\_\+decrypt (\begin{DoxyParamCaption}\item[{byte $\ast$}]{cipher,  }\item[{byte $\ast$}]{plain,  }\item[{int}]{n\+\_\+block }\end{DoxyParamCaption})}
+
+CBC decrypt a number of blocks (input and return an IV)
+
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$cipher} & Pointer, points to the ciphertext that will be created. \\
+\hline
+{\em $\ast$plain} & Pointer, points to the plaintex. \\
+\hline
+{\em n\+\_\+block} & integer, indicated the number of blocks to be ciphered. @\+Return 0 if SUCCESS or -\/1 if FAILURE \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00432}{432}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{class_a_e_s_a2b8023781d7ddd13930bda0fd4312369}\label{class_a_e_s_a2b8023781d7ddd13930bda0fd4312369}} 
+\index{AES@{AES}!cbc\_decrypt@{cbc\_decrypt}}
+\index{cbc\_decrypt@{cbc\_decrypt}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{cbc\_decrypt()}{cbc\_decrypt()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily byte AES\+::cbc\+\_\+decrypt (\begin{DoxyParamCaption}\item[{byte $\ast$}]{cipher,  }\item[{byte $\ast$}]{plain,  }\item[{int}]{n\+\_\+block,  }\item[{byte}]{iv\mbox{[}\+N\+\_\+\+BLOCK\mbox{]} }\end{DoxyParamCaption})}
+
+CBC decrypt a number of blocks (input and return an IV)
+
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$cipher} & Pointer, points to the ciphertext that will be created. \\
+\hline
+{\em $\ast$plain} & Pointer, points to the plaintex. \\
+\hline
+{\em n\+\_\+block} & integer, indicated the number of blocks to be ciphered. \\
+\hline
+{\em iv\mbox{[}\+N\+\_\+\+BLOCK\mbox{]}} & byte Array that holds the IV (initialization vector). @\+Return 0 if SUCCESS or -\/1 if FAILURE \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00414}{414}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{class_a_e_s_aa3e2d95cee3d244a0fffaf8c60814cd4}\label{class_a_e_s_aa3e2d95cee3d244a0fffaf8c60814cd4}} 
+\index{AES@{AES}!cbc\_encrypt@{cbc\_encrypt}}
+\index{cbc\_encrypt@{cbc\_encrypt}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{cbc\_encrypt()}{cbc\_encrypt()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily byte AES\+::cbc\+\_\+encrypt (\begin{DoxyParamCaption}\item[{byte $\ast$}]{plain,  }\item[{byte $\ast$}]{cipher,  }\item[{int}]{n\+\_\+block }\end{DoxyParamCaption})}
+
+CBC encrypt a number of blocks (input and return an IV).
+
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$plain} & Pointer, points to the plaintex. \\
+\hline
+{\em $\ast$cipher} & Pointer, points to the ciphertext that will be created. \\
+\hline
+{\em n\+\_\+block} & integer, indicated the number of blocks to be ciphered. @\+Return 0 if SUCCESS or -\/1 if FAILURE \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00375}{375}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{class_a_e_s_ae99f48bcf9c5f5c98ffb37d3912dc4d1}\label{class_a_e_s_ae99f48bcf9c5f5c98ffb37d3912dc4d1}} 
+\index{AES@{AES}!cbc\_encrypt@{cbc\_encrypt}}
+\index{cbc\_encrypt@{cbc\_encrypt}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{cbc\_encrypt()}{cbc\_encrypt()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily byte AES\+::cbc\+\_\+encrypt (\begin{DoxyParamCaption}\item[{byte $\ast$}]{plain,  }\item[{byte $\ast$}]{cipher,  }\item[{int}]{n\+\_\+block,  }\item[{byte}]{iv\mbox{[}\+N\+\_\+\+BLOCK\mbox{]} }\end{DoxyParamCaption})}
+
+CBC encrypt a number of blocks (input and return an IV).
+
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$plain} & Pointer, points to the plaintex. \\
+\hline
+{\em $\ast$cipher} & Pointer, points to the ciphertext that will be created. \\
+\hline
+{\em n\+\_\+block} & integer, indicated the number of blocks to be ciphered. \\
+\hline
+{\em iv\mbox{[}\+N\+\_\+\+BLOCK\mbox{]}} & byte Array that holds the IV (initialization vector). @\+Return 0 if SUCCESS or -\/1 if FAILURE \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00359}{359}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{class_a_e_s_ac297cda54d320b1b975e1eee96e8d547}\label{class_a_e_s_ac297cda54d320b1b975e1eee96e8d547}} 
+\index{AES@{AES}!CheckPad@{CheckPad}}
+\index{CheckPad@{CheckPad}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{CheckPad()}{CheckPad()}}
+{\footnotesize\ttfamily bool AES\+::\+Check\+Pad (\begin{DoxyParamCaption}\item[{byte $\ast$}]{in,  }\item[{int}]{size }\end{DoxyParamCaption})}
+
+Check the if the padding is correct.
+
+This functions checks the padding of the plaintext.
+
+
+\begin{DoxyParams}{Parameters}
+{\em in} & the string of the plaintext in a byte array \\
+\hline
+{\em size} & the size of the string \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if correct / false if not 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00509}{509}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{class_a_e_s_a12485f897e56d28e9d6b49e568d1c222}\label{class_a_e_s_a12485f897e56d28e9d6b49e568d1c222}} 
+\index{AES@{AES}!clean@{clean}}
+\index{clean@{clean}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{clean()}{clean()}}
+{\footnotesize\ttfamily void AES\+::clean (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+clean up subkeys after use. 
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00311}{311}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{class_a_e_s_ae7b28053b759aea46d13f2c8ebc3b64a}\label{class_a_e_s_ae7b28053b759aea46d13f2c8ebc3b64a}} 
+\index{AES@{AES}!copy\_n\_bytes@{copy\_n\_bytes}}
+\index{copy\_n\_bytes@{copy\_n\_bytes}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{copy\_n\_bytes()}{copy\_n\_bytes()}}
+{\footnotesize\ttfamily void AES\+::copy\+\_\+n\+\_\+bytes (\begin{DoxyParamCaption}\item[{byte $\ast$}]{AESt,  }\item[{byte $\ast$}]{src,  }\item[{byte}]{n }\end{DoxyParamCaption})}
+
+copying and xoring utilities. 
+\begin{DoxyParams}{Parameters}
+{\em $\ast$\+AESt} & byte pointer of the AEStination array. \\
+\hline
+{\em $\ast$src} & byte pointer of the source array. \\
+\hline
+{\em n} & byte, indicating the sizeof the bytes to be copied. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+this is an alternative for memcpy(void $\ast$s1,const void $\ast$s2, site\+\_\+t n), i have not updated the function in the implementation yet, but it is considered a future plan. 
+\end{DoxyNote}
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00320}{320}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{class_a_e_s_abc514d1129789a60d60127f151450e9c}\label{class_a_e_s_abc514d1129789a60d60127f151450e9c}} 
+\index{AES@{AES}!decrypt@{decrypt}}
+\index{decrypt@{decrypt}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{decrypt()}{decrypt()}}
+{\footnotesize\ttfamily byte AES\+::decrypt (\begin{DoxyParamCaption}\item[{byte}]{cipher\mbox{[}\+N\+\_\+\+BLOCK\mbox{]},  }\item[{byte}]{plain\mbox{[}\+N\+\_\+\+BLOCK\mbox{]} }\end{DoxyParamCaption})}
+
+Decrypt a single block of 16 bytes 
+\begin{DoxyParams}{Parameters}
+{\em cipher\mbox{[}\+N\+\_\+\+BLOCK\mbox{]}} & Array of the ciphertext. \\
+\hline
+{\em plain\mbox{[}\+N\+\_\+\+BLOCK\mbox{]}} & Array of the plaintext. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The N\+\_\+\+BLOCK is defined in \mbox{\hyperlink{_a_e_s__config_8h}{AES\+\_\+config.\+h}} as, 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define N\_ROW                   4}}
+\DoxyCodeLine{\textcolor{preprocessor}{     \#define N\_COL                   4}}
+\DoxyCodeLine{\textcolor{preprocessor}{     \#define N\_BLOCK   (N\_ROW * N\_COL)}}
+
+\end{DoxyCode}
+ Changed to that will change the Block\+\_\+size. @\+Return 0 if SUCCESS or -\/1 if FAILURE 
+\end{DoxyNote}
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00391}{391}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{class_a_e_s_a649781b684fca61689d5ddbe7d6f498a}\label{class_a_e_s_a649781b684fca61689d5ddbe7d6f498a}} 
+\index{AES@{AES}!do\_aes\_decrypt@{do\_aes\_decrypt}}
+\index{do\_aes\_decrypt@{do\_aes\_decrypt}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{do\_aes\_decrypt()}{do\_aes\_decrypt()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void AES\+::do\+\_\+aes\+\_\+decrypt (\begin{DoxyParamCaption}\item[{byte $\ast$}]{cipher,  }\item[{int}]{size\+\_\+c,  }\item[{byte $\ast$}]{plain,  }\item[{byte $\ast$}]{key,  }\item[{int}]{bits }\end{DoxyParamCaption})}
+
+User friendly implementation of AES-\/\+CBC decryption.
+
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$cipher} & pointer to the ciphertext \\
+\hline
+{\em size\+\_\+c} & size of the ciphertext \\
+\hline
+{\em $\ast$plain} & pointer to the plaintext \\
+\hline
+{\em $\ast$key} & pointer to the key that will be used. \\
+\hline
+{\em bits} & bits of the encryption/decrpytion \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The key will be stored in class variable. 
+\end{DoxyNote}
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00585}{585}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{class_a_e_s_afd66d5b1be883ee03f2f1d99aa0611da}\label{class_a_e_s_afd66d5b1be883ee03f2f1d99aa0611da}} 
+\index{AES@{AES}!do\_aes\_decrypt@{do\_aes\_decrypt}}
+\index{do\_aes\_decrypt@{do\_aes\_decrypt}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{do\_aes\_decrypt()}{do\_aes\_decrypt()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void AES\+::do\+\_\+aes\+\_\+decrypt (\begin{DoxyParamCaption}\item[{byte $\ast$}]{cipher,  }\item[{int}]{size\+\_\+c,  }\item[{byte $\ast$}]{plain,  }\item[{byte $\ast$}]{key,  }\item[{int}]{bits,  }\item[{byte}]{ivl\mbox{[}\+N\+\_\+\+BLOCK\mbox{]} }\end{DoxyParamCaption})}
+
+User friendly implementation of AES-\/\+CBC decryption.
+
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$cipher} & pointer to the ciphertext \\
+\hline
+{\em size\+\_\+c} & size of the ciphertext \\
+\hline
+{\em $\ast$plain} & pointer to the plaintext \\
+\hline
+{\em $\ast$key} & pointer to the key that will be used. \\
+\hline
+{\em bits} & bits of the encryption/decrpytion \\
+\hline
+{\em ivl\mbox{[}\+N\+\_\+\+BLOCK\mbox{]}} & the initialization vector IV that will be used for decryption. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The key will be stored in class variable. 
+\end{DoxyNote}
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00576}{576}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{class_a_e_s_adaeab53c0a5ce4a6b1634650fb0475f2}\label{class_a_e_s_adaeab53c0a5ce4a6b1634650fb0475f2}} 
+\index{AES@{AES}!do\_aes\_encrypt@{do\_aes\_encrypt}}
+\index{do\_aes\_encrypt@{do\_aes\_encrypt}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{do\_aes\_encrypt()}{do\_aes\_encrypt()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void AES\+::do\+\_\+aes\+\_\+encrypt (\begin{DoxyParamCaption}\item[{byte $\ast$}]{plain,  }\item[{int}]{size\+\_\+p,  }\item[{byte $\ast$}]{cipher,  }\item[{byte $\ast$}]{key,  }\item[{int}]{bits }\end{DoxyParamCaption})}
+
+User friendly implementation of AES-\/\+CBC encryption.
+
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$plain} & pointer to the plaintext \\
+\hline
+{\em size\+\_\+p} & size of the plaintext \\
+\hline
+{\em $\ast$cipher} & pointer to the ciphertext \\
+\hline
+{\em $\ast$key} & pointer to the key that will be used. \\
+\hline
+{\em bits} & bits of the encryption/decrpytion \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The key will be stored in class variable. 
+\end{DoxyNote}
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00565}{565}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{class_a_e_s_a417f2c3f01927bc88c56462a0891f3c2}\label{class_a_e_s_a417f2c3f01927bc88c56462a0891f3c2}} 
+\index{AES@{AES}!do\_aes\_encrypt@{do\_aes\_encrypt}}
+\index{do\_aes\_encrypt@{do\_aes\_encrypt}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{do\_aes\_encrypt()}{do\_aes\_encrypt()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void AES\+::do\+\_\+aes\+\_\+encrypt (\begin{DoxyParamCaption}\item[{byte $\ast$}]{plain,  }\item[{int}]{size\+\_\+p,  }\item[{byte $\ast$}]{cipher,  }\item[{byte $\ast$}]{key,  }\item[{int}]{bits,  }\item[{byte}]{ivl\mbox{[}\+N\+\_\+\+BLOCK\mbox{]} }\end{DoxyParamCaption})}
+
+User friendly implementation of AES-\/\+CBC encryption.
+
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$plain} & pointer to the plaintext \\
+\hline
+{\em size\+\_\+p} & size of the plaintext \\
+\hline
+{\em $\ast$cipher} & pointer to the ciphertext \\
+\hline
+{\em $\ast$key} & pointer to the key that will be used. \\
+\hline
+{\em bits} & bits of the encryption/decrpytion \\
+\hline
+{\em ivl\mbox{[}\+N\+\_\+\+BLOCK\mbox{]}} & the initialization vector IV that will be used for encryption. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The key will be stored in class variable. 
+\end{DoxyNote}
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00554}{554}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{class_a_e_s_a72a674e99a92e296d1bf03444fe6ea15}\label{class_a_e_s_a72a674e99a92e296d1bf03444fe6ea15}} 
+\index{AES@{AES}!encrypt@{encrypt}}
+\index{encrypt@{encrypt}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{encrypt()}{encrypt()}}
+{\footnotesize\ttfamily byte AES\+::encrypt (\begin{DoxyParamCaption}\item[{byte}]{plain\mbox{[}\+N\+\_\+\+BLOCK\mbox{]},  }\item[{byte}]{cipher\mbox{[}\+N\+\_\+\+BLOCK\mbox{]} }\end{DoxyParamCaption})}
+
+Encrypt a single block of 16 bytes . 
+\begin{DoxyParams}{Parameters}
+{\em plain\mbox{[}\+N\+\_\+\+BLOCK\mbox{]}} & Array of the plaintext. \\
+\hline
+{\em cipher\mbox{[}\+N\+\_\+\+BLOCK\mbox{]}} & Array of the ciphertext. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The N\+\_\+\+BLOCK is defined in \mbox{\hyperlink{_a_e_s__config_8h}{AES\+\_\+config.\+h}} as, 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define N\_ROW                   4}}
+\DoxyCodeLine{\textcolor{preprocessor}{     \#define N\_COL                   4}}
+\DoxyCodeLine{\textcolor{preprocessor}{     \#define N\_BLOCK   (N\_ROW * N\_COL)}}
+
+\end{DoxyCode}
+ Changed to that will change the Block\+\_\+size. @\+Return 0 if SUCCESS or -\/1 if FAILURE 
+\end{DoxyNote}
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00336}{336}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{class_a_e_s_a4c540bb245286e6f6419980f8129465c}\label{class_a_e_s_a4c540bb245286e6f6419980f8129465c}} 
+\index{AES@{AES}!get\_IV@{get\_IV}}
+\index{get\_IV@{get\_IV}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{get\_IV()}{get\_IV()}}
+{\footnotesize\ttfamily void AES\+::get\+\_\+\+IV (\begin{DoxyParamCaption}\item[{byte $\ast$}]{out }\end{DoxyParamCaption})}
+
+Getter method for IV
+
+This function return the IV 
+\begin{DoxyParams}{Parameters}
+{\em out} & byte pointer that gets the IV. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none, the IV is writed to the out pointer. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00485}{485}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{class_a_e_s_a681b37a8c430a786b4c5daf9af0903f4}\label{class_a_e_s_a681b37a8c430a786b4c5daf9af0903f4}} 
+\index{AES@{AES}!get\_pad@{get\_pad}}
+\index{get\_pad@{get\_pad}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{get\_pad()}{get\_pad()}}
+{\footnotesize\ttfamily int AES\+::get\+\_\+pad (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00472}{472}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{class_a_e_s_ac333f0da98cb09087770fd06d276c6aa}\label{class_a_e_s_ac333f0da98cb09087770fd06d276c6aa}} 
+\index{AES@{AES}!get\_size@{get\_size}}
+\index{get\_size@{get\_size}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{get\_size()}{get\_size()}}
+{\footnotesize\ttfamily int AES\+::get\+\_\+size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Getter method for size
+
+This function return the size \begin{DoxyReturn}{Returns}
+an integer, that is the size of the of the padded plaintext, thus, the size of the ciphertext. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00466}{466}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{class_a_e_s_aa64b7b326d6016963b56293323590624}\label{class_a_e_s_aa64b7b326d6016963b56293323590624}} 
+\index{AES@{AES}!iv\_inc@{iv\_inc}}
+\index{iv\_inc@{iv\_inc}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{iv\_inc()}{iv\_inc()}}
+{\footnotesize\ttfamily void AES\+::iv\+\_\+inc (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+increase the iv (initialization vector) and IVC (IV counter) by 1
+
+This function increased the VI by one step in order to have a different IV each time 
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00458}{458}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{class_a_e_s_a58e4e3ba80940f6be851be58a8be6bbd}\label{class_a_e_s_a58e4e3ba80940f6be851be58a8be6bbd}} 
+\index{AES@{AES}!padPlaintext@{padPlaintext}}
+\index{padPlaintext@{padPlaintext}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{padPlaintext()}{padPlaintext()}}
+{\footnotesize\ttfamily void AES\+::pad\+Plaintext (\begin{DoxyParamCaption}\item[{void $\ast$}]{in,  }\item[{byte $\ast$}]{out }\end{DoxyParamCaption})}
+
+Pads the plaintext
+
+This function pads the plaintext and returns an char array with the plaintext and the padding in order for the plaintext to be compatible with 16bit size blocks required by \mbox{\hyperlink{class_a_e_s}{AES}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em in} & the string of the plaintext in a byte array \\
+\hline
+{\em out} & The string of the out array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+no return, The padded plaintext is stored in the out pointer. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00499}{499}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{class_a_e_s_a6b0db893a71f8650d3e59441c23fc9dd}\label{class_a_e_s_a6b0db893a71f8650d3e59441c23fc9dd}} 
+\index{AES@{AES}!printArray@{printArray}}
+\index{printArray@{printArray}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{printArray()}{printArray()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void AES\+::print\+Array (\begin{DoxyParamCaption}\item[{byte}]{output\mbox{[}$\,$\mbox{]},  }\item[{bool}]{p\+\_\+pad = {\ttfamily true} }\end{DoxyParamCaption})}
+
+Prints the array given.
+
+This function prints the given array and pad, It is mainlly used for debugging purpuses or to output the string.
+
+
+\begin{DoxyParams}{Parameters}
+{\em output\mbox{[}$\,$\mbox{]}} & the string of the text in a byte array \\
+\hline
+{\em p\+\_\+pad} & optional, used to print with out the padding characters \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00525}{525}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{class_a_e_s_add8ddd9cce8b4de87b9ef2ff2f5ddb29}\label{class_a_e_s_add8ddd9cce8b4de87b9ef2ff2f5ddb29}} 
+\index{AES@{AES}!printArray@{printArray}}
+\index{printArray@{printArray}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{printArray()}{printArray()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void AES\+::print\+Array (\begin{DoxyParamCaption}\item[{byte}]{output\mbox{[}$\,$\mbox{]},  }\item[{int}]{sizel }\end{DoxyParamCaption})}
+
+Prints the array given.
+
+This function prints the given array in Hexadecimal.
+
+
+\begin{DoxyParams}{Parameters}
+{\em output\mbox{[}$\,$\mbox{]}} & the string of the text in a byte array \\
+\hline
+{\em sizel} & the size of the array. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00542}{542}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{class_a_e_s_a86f4dfa2c855aa16ef847bb1a46c66bd}\label{class_a_e_s_a86f4dfa2c855aa16ef847bb1a46c66bd}} 
+\index{AES@{AES}!set\_IV@{set\_IV}}
+\index{set\_IV@{set\_IV}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{set\_IV()}{set\_IV()}}
+{\footnotesize\ttfamily void AES\+::set\+\_\+\+IV (\begin{DoxyParamCaption}\item[{unsigned long long int}]{IVCl }\end{DoxyParamCaption})}
+
+Sets IV (initialization vector) and IVC (IV counter). This function changes the ivc and iv variables needed for \mbox{\hyperlink{class_a_e_s}{AES}}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em IVCl} & int or hex value of iv , ex. 0x0000000000000001 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+example\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} \textcolor{keywordtype}{int} my\_iv = 01234567; }
+
+\end{DoxyCode}
+ 
+\end{DoxyNote}
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00450}{450}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{class_a_e_s_afe2900d46f475f6f3ea8d164e1581ed9}\label{class_a_e_s_afe2900d46f475f6f3ea8d164e1581ed9}} 
+\index{AES@{AES}!set\_key@{set\_key}}
+\index{set\_key@{set\_key}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{set\_key()}{set\_key()}}
+{\footnotesize\ttfamily byte AES\+::set\+\_\+key (\begin{DoxyParamCaption}\item[{byte}]{key\mbox{[}$\,$\mbox{]},  }\item[{int}]{keylen }\end{DoxyParamCaption})}
+
+Set the cipher key for the pre-\/keyed version. 
+\begin{DoxyParams}{Parameters}
+{\em key\mbox{[}$\,$\mbox{]}} & pointer to the key string. \\
+\hline
+{\em keylen} & Integer that indicates the length of the key. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+NOTE\+: If the length\+\_\+type used for the key length is an unsigned 8-\/bit character, a key length of 256 bits must be entered as a length in bytes (valid inputs are hence 128, 192, 16, 24 and 32). 
+\end{DoxyNote}
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00255}{255}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{class_a_e_s_ab0f5e7dc53c0b8277f65578765a2e911}\label{class_a_e_s_ab0f5e7dc53c0b8277f65578765a2e911}} 
+\index{AES@{AES}!set\_size@{set\_size}}
+\index{set\_size@{set\_size}!AES@{AES}}
+\doxysubsubsection{\texorpdfstring{set\_size()}{set\_size()}}
+{\footnotesize\ttfamily void AES\+::set\+\_\+size (\begin{DoxyParamCaption}\item[{int}]{sizel }\end{DoxyParamCaption})}
+
+Setter method for size
+
+This function sets the size of the plaintext+pad 
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00478}{478}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+hackable\+Esp\+Device/\mbox{\hyperlink{_a_e_s_8h}{AES.\+h}}\item 
+hackable\+Esp\+Device/\mbox{\hyperlink{_a_e_s_8cpp}{AES.\+cpp}}\end{DoxyCompactItemize}

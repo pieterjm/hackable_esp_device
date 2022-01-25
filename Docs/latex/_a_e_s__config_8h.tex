@@ -1,0 +1,112 @@
+\hypertarget{_a_e_s__config_8h}{}\doxysection{hackable\+Esp\+Device/\+AES\+\_\+config.h File Reference}
+\label{_a_e_s__config_8h}\index{hackableEspDevice/AES\_config.h@{hackableEspDevice/AES\_config.h}}
+{\ttfamily \#include $<$Arduino.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$pgmspace.\+h$>$}\newline
+Include dependency graph for AES\+\_\+config.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_a_e_s__config_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_a_e_s__config_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_a_e_s__config_8h_a397e692f15f1a68ad71f333267f94f89}{N\+\_\+\+ROW}}~4
+\item 
+\#define \mbox{\hyperlink{_a_e_s__config_8h_aa1ca982cd5aa9c974edfddab55fb994b}{N\+\_\+\+COL}}~4
+\item 
+\#define \mbox{\hyperlink{_a_e_s__config_8h_a64c8b1a34c03210cc4c214735bb4f186}{N\+\_\+\+BLOCK}}~(\mbox{\hyperlink{_a_e_s__config_8h_a397e692f15f1a68ad71f333267f94f89}{N\+\_\+\+ROW}} $\ast$ \mbox{\hyperlink{_a_e_s__config_8h_aa1ca982cd5aa9c974edfddab55fb994b}{N\+\_\+\+COL}})
+\item 
+\#define \mbox{\hyperlink{_a_e_s__config_8h_af8b900ecc3a113f2aed001ac9e1cb11e}{N\+\_\+\+MAX\+\_\+\+ROUNDS}}~14
+\item 
+\#define \mbox{\hyperlink{_a_e_s__config_8h_ad95a6be09387647ced94dadafc76267e}{KEY\+\_\+\+SCHEDULE\+\_\+\+BYTES}}~((\mbox{\hyperlink{_a_e_s__config_8h_af8b900ecc3a113f2aed001ac9e1cb11e}{N\+\_\+\+MAX\+\_\+\+ROUNDS}} + 1) $\ast$ \mbox{\hyperlink{_a_e_s__config_8h_a64c8b1a34c03210cc4c214735bb4f186}{N\+\_\+\+BLOCK}})
+\item 
+\#define \mbox{\hyperlink{_a_e_s__config_8h_aa90cac659d18e8ef6294c7ae337f6b58}{SUCCESS}}~(0)
+\item 
+\#define \mbox{\hyperlink{_a_e_s__config_8h_a6d58f9ac447476b4e084d7ca383f5183}{FAILURE}}~(-\/1)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{_a_e_s__config_8h_a6d58f9ac447476b4e084d7ca383f5183}\label{_a_e_s__config_8h_a6d58f9ac447476b4e084d7ca383f5183}} 
+\index{AES\_config.h@{AES\_config.h}!FAILURE@{FAILURE}}
+\index{FAILURE@{FAILURE}!AES\_config.h@{AES\_config.h}}
+\doxysubsubsection{\texorpdfstring{FAILURE}{FAILURE}}
+{\footnotesize\ttfamily \#define FAILURE~(-\/1)}
+
+
+
+Definition at line \mbox{\hyperlink{_a_e_s__config_8h_source_l00053}{53}} of file \mbox{\hyperlink{_a_e_s__config_8h_source}{AES\+\_\+config.\+h}}.
+
+\mbox{\Hypertarget{_a_e_s__config_8h_ad95a6be09387647ced94dadafc76267e}\label{_a_e_s__config_8h_ad95a6be09387647ced94dadafc76267e}} 
+\index{AES\_config.h@{AES\_config.h}!KEY\_SCHEDULE\_BYTES@{KEY\_SCHEDULE\_BYTES}}
+\index{KEY\_SCHEDULE\_BYTES@{KEY\_SCHEDULE\_BYTES}!AES\_config.h@{AES\_config.h}}
+\doxysubsubsection{\texorpdfstring{KEY\_SCHEDULE\_BYTES}{KEY\_SCHEDULE\_BYTES}}
+{\footnotesize\ttfamily \#define KEY\+\_\+\+SCHEDULE\+\_\+\+BYTES~((\mbox{\hyperlink{_a_e_s__config_8h_af8b900ecc3a113f2aed001ac9e1cb11e}{N\+\_\+\+MAX\+\_\+\+ROUNDS}} + 1) $\ast$ \mbox{\hyperlink{_a_e_s__config_8h_a64c8b1a34c03210cc4c214735bb4f186}{N\+\_\+\+BLOCK}})}
+
+
+
+Definition at line \mbox{\hyperlink{_a_e_s__config_8h_source_l00051}{51}} of file \mbox{\hyperlink{_a_e_s__config_8h_source}{AES\+\_\+config.\+h}}.
+
+\mbox{\Hypertarget{_a_e_s__config_8h_a64c8b1a34c03210cc4c214735bb4f186}\label{_a_e_s__config_8h_a64c8b1a34c03210cc4c214735bb4f186}} 
+\index{AES\_config.h@{AES\_config.h}!N\_BLOCK@{N\_BLOCK}}
+\index{N\_BLOCK@{N\_BLOCK}!AES\_config.h@{AES\_config.h}}
+\doxysubsubsection{\texorpdfstring{N\_BLOCK}{N\_BLOCK}}
+{\footnotesize\ttfamily \#define N\+\_\+\+BLOCK~(\mbox{\hyperlink{_a_e_s__config_8h_a397e692f15f1a68ad71f333267f94f89}{N\+\_\+\+ROW}} $\ast$ \mbox{\hyperlink{_a_e_s__config_8h_aa1ca982cd5aa9c974edfddab55fb994b}{N\+\_\+\+COL}})}
+
+
+
+Definition at line \mbox{\hyperlink{_a_e_s__config_8h_source_l00049}{49}} of file \mbox{\hyperlink{_a_e_s__config_8h_source}{AES\+\_\+config.\+h}}.
+
+\mbox{\Hypertarget{_a_e_s__config_8h_aa1ca982cd5aa9c974edfddab55fb994b}\label{_a_e_s__config_8h_aa1ca982cd5aa9c974edfddab55fb994b}} 
+\index{AES\_config.h@{AES\_config.h}!N\_COL@{N\_COL}}
+\index{N\_COL@{N\_COL}!AES\_config.h@{AES\_config.h}}
+\doxysubsubsection{\texorpdfstring{N\_COL}{N\_COL}}
+{\footnotesize\ttfamily \#define N\+\_\+\+COL~4}
+
+
+
+Definition at line \mbox{\hyperlink{_a_e_s__config_8h_source_l00048}{48}} of file \mbox{\hyperlink{_a_e_s__config_8h_source}{AES\+\_\+config.\+h}}.
+
+\mbox{\Hypertarget{_a_e_s__config_8h_af8b900ecc3a113f2aed001ac9e1cb11e}\label{_a_e_s__config_8h_af8b900ecc3a113f2aed001ac9e1cb11e}} 
+\index{AES\_config.h@{AES\_config.h}!N\_MAX\_ROUNDS@{N\_MAX\_ROUNDS}}
+\index{N\_MAX\_ROUNDS@{N\_MAX\_ROUNDS}!AES\_config.h@{AES\_config.h}}
+\doxysubsubsection{\texorpdfstring{N\_MAX\_ROUNDS}{N\_MAX\_ROUNDS}}
+{\footnotesize\ttfamily \#define N\+\_\+\+MAX\+\_\+\+ROUNDS~14}
+
+
+
+Definition at line \mbox{\hyperlink{_a_e_s__config_8h_source_l00050}{50}} of file \mbox{\hyperlink{_a_e_s__config_8h_source}{AES\+\_\+config.\+h}}.
+
+\mbox{\Hypertarget{_a_e_s__config_8h_a397e692f15f1a68ad71f333267f94f89}\label{_a_e_s__config_8h_a397e692f15f1a68ad71f333267f94f89}} 
+\index{AES\_config.h@{AES\_config.h}!N\_ROW@{N\_ROW}}
+\index{N\_ROW@{N\_ROW}!AES\_config.h@{AES\_config.h}}
+\doxysubsubsection{\texorpdfstring{N\_ROW}{N\_ROW}}
+{\footnotesize\ttfamily \#define N\+\_\+\+ROW~4}
+
+
+
+Definition at line \mbox{\hyperlink{_a_e_s__config_8h_source_l00047}{47}} of file \mbox{\hyperlink{_a_e_s__config_8h_source}{AES\+\_\+config.\+h}}.
+
+\mbox{\Hypertarget{_a_e_s__config_8h_aa90cac659d18e8ef6294c7ae337f6b58}\label{_a_e_s__config_8h_aa90cac659d18e8ef6294c7ae337f6b58}} 
+\index{AES\_config.h@{AES\_config.h}!SUCCESS@{SUCCESS}}
+\index{SUCCESS@{SUCCESS}!AES\_config.h@{AES\_config.h}}
+\doxysubsubsection{\texorpdfstring{SUCCESS}{SUCCESS}}
+{\footnotesize\ttfamily \#define SUCCESS~(0)}
+
+
+
+Definition at line \mbox{\hyperlink{_a_e_s__config_8h_source_l00052}{52}} of file \mbox{\hyperlink{_a_e_s__config_8h_source}{AES\+\_\+config.\+h}}.
+

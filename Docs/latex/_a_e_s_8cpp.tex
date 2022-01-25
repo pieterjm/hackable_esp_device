@@ -1,0 +1,65 @@
+\hypertarget{_a_e_s_8cpp}{}\doxysection{hackable\+Esp\+Device/\+AES.cpp File Reference}
+\label{_a_e_s_8cpp}\index{hackableEspDevice/AES.cpp@{hackableEspDevice/AES.cpp}}
+{\ttfamily \#include \char`\"{}AES.\+h\char`\"{}}\newline
+Include dependency graph for AES.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_a_e_s_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_a_e_s_8cpp_a42a5cd32857f360475450233f8367515}{WPOLY}}~0x011B
+\item 
+\#define \mbox{\hyperlink{_a_e_s_8cpp_a7dc5fb6478333a4f4cb3f55360f51d85}{DPOLY}}~0x008D
+\item 
+\#define \mbox{\hyperlink{_a_e_s_8cpp_a5cd67c8452696b8eebb34709acc71f36}{f2}}(x)~((x) \& 0x80 ? (x $<$$<$ 1) $^\wedge$ \mbox{\hyperlink{_a_e_s_8cpp_a42a5cd32857f360475450233f8367515}{WPOLY}} \+: x $<$$<$ 1)
+\item 
+\#define \mbox{\hyperlink{_a_e_s_8cpp_a2087aa6d56cb1111b2483bc1207c050a}{d2}}(x)~(((x) $>$$>$ 1) $^\wedge$ ((x) \& 1 ? \mbox{\hyperlink{_a_e_s_8cpp_a7dc5fb6478333a4f4cb3f55360f51d85}{DPOLY}} \+: 0))
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{_a_e_s_8cpp_a2087aa6d56cb1111b2483bc1207c050a}\label{_a_e_s_8cpp_a2087aa6d56cb1111b2483bc1207c050a}} 
+\index{AES.cpp@{AES.cpp}!d2@{d2}}
+\index{d2@{d2}!AES.cpp@{AES.cpp}}
+\doxysubsubsection{\texorpdfstring{d2}{d2}}
+{\footnotesize\ttfamily \#define d2(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})~(((x) $>$$>$ 1) $^\wedge$ ((x) \& 1 ? \mbox{\hyperlink{_a_e_s_8cpp_a7dc5fb6478333a4f4cb3f55360f51d85}{DPOLY}} \+: 0))}
+
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00110}{110}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{_a_e_s_8cpp_a7dc5fb6478333a4f4cb3f55360f51d85}\label{_a_e_s_8cpp_a7dc5fb6478333a4f4cb3f55360f51d85}} 
+\index{AES.cpp@{AES.cpp}!DPOLY@{DPOLY}}
+\index{DPOLY@{DPOLY}!AES.cpp@{AES.cpp}}
+\doxysubsubsection{\texorpdfstring{DPOLY}{DPOLY}}
+{\footnotesize\ttfamily \#define DPOLY~0x008D}
+
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00066}{66}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{_a_e_s_8cpp_a5cd67c8452696b8eebb34709acc71f36}\label{_a_e_s_8cpp_a5cd67c8452696b8eebb34709acc71f36}} 
+\index{AES.cpp@{AES.cpp}!f2@{f2}}
+\index{f2@{f2}!AES.cpp@{AES.cpp}}
+\doxysubsubsection{\texorpdfstring{f2}{f2}}
+{\footnotesize\ttfamily \#define f2(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})~((x) \& 0x80 ? (x $<$$<$ 1) $^\wedge$ \mbox{\hyperlink{_a_e_s_8cpp_a42a5cd32857f360475450233f8367515}{WPOLY}} \+: x $<$$<$ 1)}
+
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00109}{109}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+
+\mbox{\Hypertarget{_a_e_s_8cpp_a42a5cd32857f360475450233f8367515}\label{_a_e_s_8cpp_a42a5cd32857f360475450233f8367515}} 
+\index{AES.cpp@{AES.cpp}!WPOLY@{WPOLY}}
+\index{WPOLY@{WPOLY}!AES.cpp@{AES.cpp}}
+\doxysubsubsection{\texorpdfstring{WPOLY}{WPOLY}}
+{\footnotesize\ttfamily \#define WPOLY~0x011B}
+
+
+
+Definition at line \mbox{\hyperlink{_a_e_s_8cpp_source_l00065}{65}} of file \mbox{\hyperlink{_a_e_s_8cpp_source}{AES.\+cpp}}.
+

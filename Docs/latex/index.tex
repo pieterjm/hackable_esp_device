@@ -1,0 +1,125 @@
+\label{index_md_README}%
+\Hypertarget{index_md_README}%
+Firmware for ESP8266 based device (D1 Mini board) with designed vulnerabilities to practice ethical hacking. The software is tested on the following boards\+:
+
+
+\begin{DoxyItemize}
+\item \href{https://www.berrybase.de/en/dev.-boards/esp8266-esp32-d1-mini/}{\texttt{ D1 Mini}}
+\end{DoxyItemize}\hypertarget{index_autotoc_md1}{}\doxysection{Getting Started}\label{index_autotoc_md1}
+These instructions will get you a copy of the project up and running on your D1 Mini (or other ESP8266 based boards) for development or hacking purposes.\hypertarget{index_autotoc_md2}{}\doxysubsection{Prerequisites}\label{index_autotoc_md2}
+The software is written, compiled and uploaded using the \href{https://www.arduino.cc/en/software}{\texttt{ Arduino IDE}}. Platform.\+io and Visual Studio Code can be used as well. Use the script to convert the project to a Platform.\+io.\hypertarget{index_autotoc_md3}{}\doxysubsection{Dependencies}\label{index_autotoc_md3}
+
+\begin{DoxyItemize}
+\item ESP for Arduino IDE
+\item ESP Async Web\+Server V1.\+2.\+3
+\item Wifimanager V0.\+16.\+0
+\end{DoxyItemize}\hypertarget{index_autotoc_md4}{}\doxysubsection{Installing}\label{index_autotoc_md4}
+{\bfseries{General Install}}
+\begin{DoxyEnumerate}
+\item Install the \href{https://github.com/HobbyComponents/CH340-Drivers}{\texttt{ driver}} for the esp8266.
+\item Clone the repository.
+\end{DoxyEnumerate}
+
+There are multiple ways to upload the program files to the board. The two ways listed here are using Arduino IDE and Platformio on Visual Studio Code.\hypertarget{index_autotoc_md5}{}\doxysubsubsection{$<$b$>$\+Option 1\+: Arduino IDE$<$/b$>$}\label{index_autotoc_md5}
+
+\begin{DoxyEnumerate}
+\item Install the \href{https://www.arduino.cc/en/software}{\texttt{ Arduino IDE}}
+\item \href{https://www.nonscio.com/blog/installing-esp8266-libraries-to-the-arduino-ide}{\texttt{ Add the esp8266 libraries to Arduino IDE}}.
+\item Follow \href{https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide}{\texttt{ this}} tutorial about the SPIFFS.
+\item Navigate to the {\ttfamily hackable\+Esp\+Device} folder.
+\item Open {\ttfamily \mbox{\hyperlink{hackable_esp_device_8ino}{hackable\+Esp\+Device.\+ino}}}.
+\item Upload the files in the {\ttfamily data} folder (see the tutorial).
+\item Upload the program to the device.
+\item Connect to the {\ttfamily Configure Smartlight Wifi} AP to configure the wifi.
+
+{\bfseries{ESP8266 Sketch Data Upload}}
+\begin{DoxyEnumerate}
+\item The Arduino IDE won\textquotesingle{}t have the option \textquotesingle{}ESP8266 Sketch Data Upload\textquotesingle{}.
+\item You can download it from this \href{https://github.com/esp8266/arduino-esp8266fs-plugin/releases/tag/0.5.0}{\texttt{ link}}.
+\item The file should be unpacked at {\ttfamily \texorpdfstring{$<$}{<}home\+\_\+dir\texorpdfstring{$>$}{>}/\+Arduino-\/\texorpdfstring{$<$}{<}version\texorpdfstring{$>$}{>}/tools/\+ESP8266\+FS/tools/}.
+\begin{DoxyItemize}
+\item If the directory {\ttfamily tools} does not exist you should create it. You have to create a new file named \char`\"{}tools\char`\"{} if it doesn\textquotesingle{}t exist already inside of \href{https://randomnerdtutorials.com/install-esp8266-filesystem-uploader-arduino-ide}{\texttt{ Arduino file}}.
+\end{DoxyItemize}
+\end{DoxyEnumerate}
+\end{DoxyEnumerate}\hypertarget{index_autotoc_md6}{}\doxysubsubsection{$<$b$>$\+Option 2\+: Visual Studio Code + Platformio$<$/b$>$}\label{index_autotoc_md6}
+
+\begin{DoxyEnumerate}
+\item Install the \href{https://platformio.org/install/ide?install=vscode}{\texttt{ Platformio}} plugin.
+\item Prepare files for platformio.
+\begin{DoxyItemize}
+\item Run the {\ttfamily to\+Platformio.\+ps1} script and select the copy or symbolic option.
+\begin{DoxyItemize}
+\item Symbolic changes the original ideal for editing the files.
+\item Copy simply copies the files to a new location for platformio files.
+\end{DoxyItemize}
+\item Run the {\ttfamily to\+Platformio.\+ps1} script and select fix.
+\item Or prepare the files manually see manual prep platformio.
+\end{DoxyItemize}
+\item Open visual studio code in the {\ttfamily Hackable\+Esp\+Device\+Platformio} directory.
+\item In visual studio code open the project in the platformio addon. {\ttfamily (Platoformio \texorpdfstring{$>$}{>} Projects \texorpdfstring{$>$}{>} open Hackable\+Esp\+Device\+Platformio)}.
+\item Upload the program {\ttfamily (project tasks \texorpdfstring{$>$}{>} General\texorpdfstring{$>$}{>} Upload)}.
+\item Upload the filesystem Image {\ttfamily (Project tasks \texorpdfstring{$>$}{>} Platform \texorpdfstring{$>$}{>} Upload filesystem Image)}.
+\item Done. The device should now be ready for use.
+\end{DoxyEnumerate}\hypertarget{index_autotoc_md7}{}\doxysubsection{Manual Platformio Prep}\label{index_autotoc_md7}
+
+\begin{DoxyEnumerate}
+\item Create the correct hierarchy.
+\end{DoxyEnumerate}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{|HackableEspDevicePlatformio\(\backslash\)}
+\DoxyCodeLine{|-\/-\/-\/ platformio.ini}
+\DoxyCodeLine{|-\/-\/-\/ src\(\backslash\)}
+\DoxyCodeLine{|-\/-\/-\/ src\(\backslash\)main.cpp\(\backslash\)}
+\DoxyCodeLine{|-\/-\/-\/ data\(\backslash\)}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyEnumerate}
+\item The src dir needs to contain all the files from the {\ttfamily hackable\+Esp\+Device} directory except the data directory.
+\item Rename the {\ttfamily \mbox{\hyperlink{hackable_esp_device_8ino}{hackable\+Esp\+Device.\+ino}}} to {\ttfamily main.\+cpp}.
+\item In {\ttfamily main.\+cpp} add a reference to all functions in main e.\+g. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{void setup();}
+\DoxyCodeLine{void setup();}
+\DoxyCodeLine{void initializeHostname();}
+\DoxyCodeLine{void connectWifi();}
+\DoxyCodeLine{void initializeServer();}
+\DoxyCodeLine{void loop();}
+\DoxyCodeLine{String getContentType(String filename);}
+\DoxyCodeLine{void handleFileRequest(String path, uint8\_t permissionLevel);}
+\DoxyCodeLine{void handleFileUpload();}
+\DoxyCodeLine{void handleFileDownload();}
+
+\end{DoxyCode}
+
+\item Move the {\ttfamily platformio.\+ini} file from the root dir to the {\ttfamily hackable\+Esp\+Device\+Platformio} dir.
+\item Copy all files from {\ttfamily hackable\+Esp\+Device\textbackslash{}data} to {\ttfamily hackable\+Esp\+Device\+Platformio\textbackslash{}data}.
+\end{DoxyEnumerate}\hypertarget{index_autotoc_md8}{}\doxysubsection{$<$b$>$\+Running$<$/b$>$}\label{index_autotoc_md8}
+\hypertarget{index_autotoc_md9}{}\doxysubsubsection{$<$b$>$\+Wifi Manager First Boot$<$/b$>$}\label{index_autotoc_md9}
+
+\begin{DoxyEnumerate}
+\item Start up the device.
+\item Connect to the {\ttfamily Configure Smartlight Wifi} via a mobile device.
+\item Go to the IP address listed in the serial monitor. Most of the time this is \href{http://192.168.4.1}{\texttt{ http\+://192.\+168.\+4.\+1}}.
+\item Follow the steps on the website to configure a wifi connection.
+\item The device should now restart, connect to the selected wifi network and be ready for use.
+\end{DoxyEnumerate}\hypertarget{index_autotoc_md10}{}\doxysubsection{Customization of Hackable ESP (\+Contains spoilers) (\+Look in raw version of readme.\+md)}\label{index_autotoc_md10}
+\hypertarget{index_autotoc_md11}{}\doxysection{Hardware}\label{index_autotoc_md11}
+
+\begin{DoxyItemize}
+\item 1x D1 Mini Board
+\item 1x USB to USB-\/mini cable
+\item 1x ESP8266 casing
+\end{DoxyItemize}\hypertarget{index_autotoc_md12}{}\doxysection{Questions or Feedback?}\label{index_autotoc_md12}
+There is technical documentation available if you want to contribute to this project. There is a user manual as well, contact us for information. You can open an issue if you have questions or feedback for this repository.\hypertarget{index_autotoc_md13}{}\doxysection{Authors}\label{index_autotoc_md13}
+
+\begin{DoxyItemize}
+\item {\bfseries{Luke de Munk}} -\/ {\itshape Head author} -\/ \href{https://www.linkedin.com/in/luke-de-munk/}{\texttt{ Linked\+In}}
+\item {\bfseries{Thijs Takken}} -\/ {\itshape Head author} -\/ \href{https://www.linkedin.com/in/thijstakken}{\texttt{ Linked\+In}}
+\item {\bfseries{Christina Kostine}} -\/ {\itshape Head author} -\/ \href{https://www.linkedin.com/in/christine-kostine}{\texttt{ Linked\+In}}
+\item {\bfseries{Twenne Elffers}} -\/ {\itshape Head author} -\/ \href{https://www.linkedin.com/in/twenne-elffers/}{\texttt{ Linked\+In}} 
+\end{DoxyItemize}

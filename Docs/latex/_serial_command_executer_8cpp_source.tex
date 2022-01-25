@@ -1,0 +1,414 @@
+\hypertarget{_serial_command_executer_8cpp_source}{}\doxysection{Serial\+Command\+Executer.\+cpp}
+\label{_serial_command_executer_8cpp_source}\index{hackableEspDevice/SerialCommandExecuter.cpp@{hackableEspDevice/SerialCommandExecuter.cpp}}
+\mbox{\hyperlink{_serial_command_executer_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00001}00001 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00002}00002 \textcolor{comment}{ * File:      SerialCommandExecuter.cpp}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00003}00003 \textcolor{comment}{ * Author:    Luke de Munk \& Twenne Elffers}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00004}00004 \textcolor{comment}{ * Class:     SerialCommandExecuter}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00005}00005 \textcolor{comment}{ * Version:   1.0}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00006}00006 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00007}00007 \textcolor{comment}{ * Parses and executes serial terminal commands.}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00008}00008 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00009}00009 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_serial_command_executer_8h}{SerialCommandExecuter.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00011}00011 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00015}00015 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00016}\mbox{\hyperlink{class_serial_command_executer_ae22bd33f949f089fd92479b40f6d53dd}{00016}} \mbox{\hyperlink{class_serial_command_executer_ae22bd33f949f089fd92479b40f6d53dd}{SerialCommandExecuter::SerialCommandExecuter}}() \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00017}00017     \_isLoggedIn = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00018}00018 \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00020}00020 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00026}00026 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00027}\mbox{\hyperlink{class_serial_command_executer_a810f7d1f90cbb55ae7e05d6a7cd14fee}{00027}} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_serial_command_executer_a810f7d1f90cbb55ae7e05d6a7cd14fee}{SerialCommandExecuter::setUsers}}(String* users, uint8\_t numUsers) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00028}00028     \textcolor{comment}{/* Copy users */}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00029}00029     \textcolor{keywordflow}{for} (uint8\_t i = 0; i < MAX\_NUMBER\_USERS*USER\_INFO\_LENGTH; i++) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00030}00030         \_users[i] = users[i];}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00031}00031     \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00032}00032     \_numberUsers = numUsers;}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00033}00033 \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00035}00035 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00039}00039 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00040}\mbox{\hyperlink{class_serial_command_executer_a3dd139732e3317ed68575d6f3c77e2d6}{00040}} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_serial_command_executer_a3dd139732e3317ed68575d6f3c77e2d6}{SerialCommandExecuter::executeCommand}}() \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00041}00041     String command = Serial.readString();}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00043}00043     \textcolor{keywordflow}{if} (command != \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00044}00044         \textcolor{keywordflow}{if} (\_isLoggedIn) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00045}00045             Serial.print(\textcolor{stringliteral}{"{}\string~\# "{}});                                            \textcolor{comment}{//For the Linux feeling, superuser}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00046}00046         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00047}00047             Serial.print(\textcolor{stringliteral}{"{}\string~\$ "{}});                                            \textcolor{comment}{//For the Linux feeling, no superuser}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00048}00048         \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00049}00049         Serial.print(command);                                              \textcolor{comment}{//Echo command (command ends with \(\backslash\)n)}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00050}00050         }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00051}00051         \_parseCommand(command);}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00052}00052     \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00053}00053 \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00055}00055 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00061}00061 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00062}00062 \textcolor{keywordtype}{bool} SerialCommandExecuter::\_parseCommand(String commandString) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00063}00063     String* trimmedCmdLine = \_trimCommand(commandString);}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00064}00064     String command = trimmedCmdLine[0].c\_str();}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00065}00065     String params[\mbox{\hyperlink{_serial_command_executer_8h_ac3c1be4a81c254ff0ffff58e4aa474e3}{MAX\_NUMBER\_PARAMS}}] = \{\textcolor{stringliteral}{"{}"{}}\};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00066}00066     uint8\_t numParams = 0;}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00067}00067     }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00068}00068     \textcolor{keywordflow}{while} (numParams < \mbox{\hyperlink{_serial_command_executer_8h_ac3c1be4a81c254ff0ffff58e4aa474e3}{MAX\_NUMBER\_PARAMS}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00069}00069         \textcolor{keywordflow}{if} (trimmedCmdLine[numParams+1] == \textcolor{stringliteral}{"{}"{}}) \{                            \textcolor{comment}{//+1, because the command is in the first cell}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00070}00070             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00071}00071         \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00072}00072         numParams++;}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00073}00073     \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00074}00074 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00075}00075     \textcolor{keywordflow}{for} (uint8\_t i = 1; i-\/1 < numParams; i++)\{                              \textcolor{comment}{//+1, because the command is in the first cell}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00076}00076         params[i-\/1] = trimmedCmdLine[i].c\_str();}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00077}00077     \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00078}00078 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00079}00079     \textcolor{comment}{/* Check which command is given */}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00080}00080     \textcolor{keywordflow}{if} (command == \mbox{\hyperlink{_serial_command_executer_8h_aee9e8b97ac4a5cdc1c371da35a579210}{COMMAND\_HELP}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00081}00081         \_printHelp(\mbox{\hyperlink{_serial_command_executer_8h_aee9e8b97ac4a5cdc1c371da35a579210}{COMMAND\_HELP}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00082}00082         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00083}00083     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00084}00084         \textcolor{comment}{/* If help needs to be printed, print it and return */}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00085}00085         \textcolor{keywordflow}{if} (\_checkHelp(params[0], command)) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00086}00086             \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00087}00087         \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00088}00088     \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00089}00089     }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00090}00090     \textcolor{keywordflow}{if} (command == \mbox{\hyperlink{_serial_command_executer_8h_a4271519e9ee5565b70175ae766253c65}{COMMAND\_DEBUG}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00091}00091         \textcolor{keywordflow}{if} (!\_checkParams(numParams, 1, 1) || !\_enableDebug(params[0])) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00092}00092             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00093}00093         \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00094}00094     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (command == \mbox{\hyperlink{_serial_command_executer_8h_a7e0cf8d05523e31cb48f7acf4ef8e832}{COMMAND\_SU}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00095}00095         \textcolor{keywordflow}{if} (!\_checkParams(numParams, 1, 1) || !\_superUserLogin(params[0])) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00096}00096             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00097}00097         \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00098}00098     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (command == \mbox{\hyperlink{_serial_command_executer_8h_af998daeb22b38baa1ccbf04bd88dfe31}{COMMAND\_KEYS}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00099}00099         \textcolor{keywordflow}{if} (!\_viewKey()) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00100}00100             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00101}00101         \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00102}00102     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ((command == \mbox{\hyperlink{_serial_command_executer_8h_a4b0eeaf40a8a79d1a17d2506909a1d07}{COMMAND\_RESTART}})) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00103}00103         \_restart();}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00104}00104     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (command == \mbox{\hyperlink{_serial_command_executer_8h_a9db5fb18d2bcb32925d11bd5e9ed758d}{COMMAND\_USERS}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00105}00105         \textcolor{keywordflow}{if} (!\_viewUsers()) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00106}00106             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00107}00107         \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00108}00108     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (command == \mbox{\hyperlink{_serial_command_executer_8h_a17435a155b6388f6992f108f4946ad95}{COMMAND\_HOSTNAME}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00109}00109         \textcolor{keywordflow}{if} (!\_checkParams(numParams, 0, 2) || !\_hostname(params)) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00110}00110             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00111}00111         \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00112}00112     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (command == \mbox{\hyperlink{_serial_command_executer_8h_a275155a2e16b59de496b532a924bc2c9}{COMMAND\_WHOAMI}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00113}00113         \textcolor{keywordflow}{if} (\_isLoggedIn) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00114}00114             Serial.println(\textcolor{stringliteral}{"{}superuser"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00115}00115         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00116}00116             Serial.println(\textcolor{stringliteral}{"{}user"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00117}00117         \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00118}00118         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00119}00119     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (command == \mbox{\hyperlink{_serial_command_executer_8h_a1ec42af5209fa6fe2a3ab53031e4c67a}{COMMAND\_LS}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00120}00120         buffOverflow.\mbox{\hyperlink{class_buffer_overflow_ad07b6cca0dced1bc955ea3d0c99b93fa}{ls}}();}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00121}00121     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (command == \mbox{\hyperlink{_serial_command_executer_8h_afec90b1f39bd61f392adbfcbe61229a0}{COMMAND\_VI}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00122}00122         \textcolor{keywordflow}{if} (\_checkParams(numParams, 1, 1)) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00123}00123             \textcolor{keywordflow}{if} (params[0] == \mbox{\hyperlink{_serial_command_executer_8h_a2740be22951054ff59d6e45a308bd744}{ARG\_LS\_FILE\_1\_1}} || params[0] == \mbox{\hyperlink{_serial_command_executer_8h_a1f97975117193bf46ae79e4388320081}{ARG\_LS\_FILE\_1\_2}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00124}00124                 buffOverflow.\mbox{\hyperlink{class_buffer_overflow_a923093d8aa31018b33d8a6906d372e1c}{vi}}();}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00125}00125             \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00126}00126                 Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_ad4cbe103a5753a90ea14fd0e30b5c650}{ERROR\_NO\_FILE}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00127}00127                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00128}00128             \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00129}00129         \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00130}00130     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (command.substring(0, 2) == \mbox{\hyperlink{_serial_command_executer_8h_a2e3c1635a22898c9e1ec48b57d7f3d99}{COMMAND\_RUN}}) \{                    \textcolor{comment}{//Substring == "{}./"{} the rest is filename}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00131}00131         \textcolor{keywordflow}{if} (\_checkParams(numParams, 0, 1)) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00132}00132             String filename = command.substring(2);                         \textcolor{comment}{//The rest of the command is filename}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00133}00133           }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00134}00134             \textcolor{keywordflow}{if} (filename == \mbox{\hyperlink{_serial_command_executer_8h_a2740be22951054ff59d6e45a308bd744}{ARG\_LS\_FILE\_1\_1}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00135}00135                 Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_a51d64576ad0d5ee8374721a29bf7f3ac}{ERROR\_PERM\_DENIED}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00136}00136                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00137}00137             \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00138}00138             }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00139}00139             \textcolor{keywordflow}{if} (filename != \mbox{\hyperlink{_serial_command_executer_8h_a93a5a67054ced044b52c030036001fb5}{ARG\_LS\_FILE\_2\_1}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00140}00140                 Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_a8f836310ffa2d75f973995730a9f92bb}{ERROR\_NO\_FILE\_DIR}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00141}00141                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00142}00142             \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00143}00143             }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00144}00144             \textcolor{keywordflow}{if} (numParams == 1) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00145}00145                 \textcolor{comment}{/* If buffer overflow is done correctly,}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00146}00146 \textcolor{comment}{                 * user is logged in.}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00147}00147 \textcolor{comment}{                 */}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00148}00148                 \textcolor{keywordflow}{if} (buffOverflow.\mbox{\hyperlink{class_buffer_overflow_ab0aba29bf8441de0dbf2c1fb119003c0}{runCProgram}}(params[0])) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00149}00149                     \_isLoggedIn = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00150}00150                     Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_acbff4260ca589ed186c925def0941191}{MESS\_SUPER\_USER}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00151}00151                 \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00152}00152             \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00153}00153                 buffOverflow.\mbox{\hyperlink{class_buffer_overflow_ab0aba29bf8441de0dbf2c1fb119003c0}{runCProgram}}(\textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00154}00154             \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00155}00155         \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00156}00156     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (command == \mbox{\hyperlink{_serial_command_executer_8h_a7610a1d9786ba66a0def94c2a284cb30}{COMMAND\_OBJDUMP}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00157}00157         \textcolor{keywordflow}{if} (\_checkParams(numParams, 2, 2)) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00158}00158             \textcolor{keywordflow}{if} (params[0] != \textcolor{stringliteral}{"{}-\/d"{}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00159}00159                 Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_a2cd488232b05a4397e297fd82bbbf22e}{ERROR\_WRONG\_ARGS}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00160}00160                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00161}00161             \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00162}00162             \textcolor{keywordflow}{if} (params[1] == \mbox{\hyperlink{_serial_command_executer_8h_a93a5a67054ced044b52c030036001fb5}{ARG\_LS\_FILE\_2\_1}} || params[1] == \mbox{\hyperlink{_serial_command_executer_8h_a9995cdb5b24496fead3b092bacab58ab}{ARG\_LS\_FILE\_2\_2}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00163}00163                 buffOverflow.\mbox{\hyperlink{class_buffer_overflow_ad53f098752a13155046b79d222e32140}{objectDump}}();}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00164}00164             \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00165}00165                 Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_ad4cbe103a5753a90ea14fd0e30b5c650}{ERROR\_NO\_FILE}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00166}00166                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00167}00167             \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00168}00168         \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00169}00169     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (command == \mbox{\hyperlink{_serial_command_executer_8h_a4e07c2074cd444889d528b540b8731d1}{COMMAND\_GPG}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00170}00170         \textcolor{keywordflow}{if} (\_checkParams(numParams, 3, 3)) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00171}00171             \textcolor{keywordflow}{if} (params[0] == \mbox{\hyperlink{_serial_command_executer_8h_a3cf6cfbb759a1263ed8cdbd73a5b871a}{ARG\_GPG\_ENCRYPT}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00172}00172               \_encrypt(params);}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00173}00173             \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (params[0] == \mbox{\hyperlink{_serial_command_executer_8h_a931680d4d30ed0a7aaf2bdf8549b154b}{ARG\_GPG\_DECRYPT}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00174}00174               \_decrypt(params);}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00175}00175             \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00176}00176                 Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_a2cd488232b05a4397e297fd82bbbf22e}{ERROR\_WRONG\_ARGS}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00177}00177                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00178}00178             \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00179}00179         \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00180}00180     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00181}00181         Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_a4070e23710bad905213da8fd295a36ed}{ERROR\_CMD\_NOT\_FOUND}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00182}00182         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00183}00183     \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00184}00184     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00185}00185 \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00186}00186 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00187}00187 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00193}00193 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00194}00194 String* SerialCommandExecuter::\_trimCommand(String commandString) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00195}00195     \textcolor{keyword}{static} String commandItems[1+\mbox{\hyperlink{_serial_command_executer_8h_ac3c1be4a81c254ff0ffff58e4aa474e3}{MAX\_NUMBER\_PARAMS}}] = \{\textcolor{stringliteral}{"{}"{}}\};                 \textcolor{comment}{//To save command and parameters, each in own cell}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00196}00196     String item = \textcolor{stringliteral}{"{}"{}};                                                       \textcolor{comment}{//Can be a command or parameter}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00197}00197     uint8\_t paramCounter = 0;}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00198}00198     }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00199}00199     \textcolor{comment}{/* Reset static array */}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00200}00200     \textcolor{keywordflow}{for} (uint16\_t x = 0; x < 1+\mbox{\hyperlink{_serial_command_executer_8h_ac3c1be4a81c254ff0ffff58e4aa474e3}{MAX\_NUMBER\_PARAMS}}; x++) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00201}00201         commandItems[x] = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00202}00202     \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00203}00203     }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00204}00204     \textcolor{comment}{/* Count number of parameters by adding to temp variable if not a whitespace or end of line*/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00205}00205     \textcolor{keywordflow}{for} (uint16\_t c = 0; c < commandString.length(); c++) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00206}00206         \textcolor{keywordflow}{if} (commandString[c] == \textcolor{charliteral}{' '} || commandString[c] == \textcolor{charliteral}{'\(\backslash\)n'}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00207}00207             \textcolor{comment}{/* If item is not empty: add to item array */}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00208}00208             \textcolor{keywordflow}{if} (item != \textcolor{stringliteral}{"{}"{}})\{                                                      }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00209}00209                 commandItems[paramCounter] = item;                          \textcolor{comment}{//Save param to items list}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00210}00210                 item = \textcolor{stringliteral}{"{}"{}};                                                  \textcolor{comment}{//Reset item value}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00211}00211                 paramCounter++;}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00212}00212            \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00213}00213         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00214}00214             item += commandString[c];}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00215}00215         \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00216}00216     \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00217}00217     \textcolor{keywordflow}{return} commandItems;}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00218}00218 \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00219}00219 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00220}00220 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00227}00227 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00228}00228 \textcolor{keywordtype}{bool} SerialCommandExecuter::\_checkParams(uint8\_t numParams, uint8\_t minNumberParams, uint8\_t maxNumberParams) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00229}00229     \textcolor{keywordflow}{if} (numParams < minNumberParams) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00230}00230         Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_a2336d63967797df9308ca7bf2b356902}{ERROR\_TOO\_FEW\_ARGS}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00231}00231         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00232}00232     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (numParams > maxNumberParams) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00233}00233         Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_ac8560b756d43b741a4163b7cb2e6a582}{ERROR\_TOO\_MANY\_ARGS}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00234}00234         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00235}00235     \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00236}00236     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00237}00237 \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00238}00238 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00239}00239 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00244}00244 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00245}00245 \textcolor{keywordtype}{void} SerialCommandExecuter::\_printHelp(String command) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00246}00246     \textcolor{comment}{/* Print help lines according to command */}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00247}00247     \textcolor{keywordflow}{if} (command == \textcolor{stringliteral}{"{}"{}} || command == \mbox{\hyperlink{_serial_command_executer_8h_aee9e8b97ac4a5cdc1c371da35a579210}{COMMAND\_HELP}}) \{                         \textcolor{comment}{//Default help}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00248}00248         Serial.println(\textcolor{stringliteral}{"{}|-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/HELP-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/|"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00249}00249         Serial.println(\textcolor{stringliteral}{"{}This is a commandline interface that allows access to the smartlight config"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00250}00250         \_printCommands();}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00251}00251     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (command == \mbox{\hyperlink{_serial_command_executer_8h_a4271519e9ee5565b70175ae766253c65}{COMMAND\_DEBUG}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00252}00252         Serial.println(\textcolor{stringliteral}{"{}Usage: debug [-\/-\/off]                    Turns the debug off"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00253}00253         Serial.println(\textcolor{stringliteral}{"{}       debug [-\/-\/on]                     Turns the debug on"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00254}00254     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (command == \mbox{\hyperlink{_serial_command_executer_8h_a7e0cf8d05523e31cb48f7acf4ef8e832}{COMMAND\_SU}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00255}00255         Serial.println(\textcolor{stringliteral}{"{}Usage: su \{passwd\}                      Login as superuser"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00256}00256     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (command == \mbox{\hyperlink{_serial_command_executer_8h_af998daeb22b38baa1ccbf04bd88dfe31}{COMMAND\_KEYS}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00257}00257         Serial.println(\textcolor{stringliteral}{"{}Usage: privatekeys                      Shows private encryption keys"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00258}00258     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (command == \mbox{\hyperlink{_serial_command_executer_8h_a4b0eeaf40a8a79d1a17d2506909a1d07}{COMMAND\_RESTART}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00259}00259         Serial.println(\textcolor{stringliteral}{"{}Usage: reboot                           Reboots the device"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00260}00260     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (command == \mbox{\hyperlink{_serial_command_executer_8h_a9db5fb18d2bcb32925d11bd5e9ed758d}{COMMAND\_USERS}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00261}00261         Serial.println(\textcolor{stringliteral}{"{}Usage: users                            Shows usertable of website"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00262}00262     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (command == \mbox{\hyperlink{_serial_command_executer_8h_a17435a155b6388f6992f108f4946ad95}{COMMAND\_HOSTNAME}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00263}00263         Serial.println(\textcolor{stringliteral}{"{}Usage: hostname                         Gives the current hostname"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00264}00264         Serial.println(\textcolor{stringliteral}{"{}       hostname [-\/-\/set] \{newhostname\}   Set new hostname. (needs reboot)"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00265}00265         Serial.println(\textcolor{stringliteral}{"{}       hostname [-\/-\/default]             Sets the hostname to the default hostname"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00266}00266     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (command == \mbox{\hyperlink{_serial_command_executer_8h_a1ec42af5209fa6fe2a3ab53031e4c67a}{COMMAND\_LS}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00267}00267         Serial.println(\textcolor{stringliteral}{"{}Usage: ls                               Shows files in current folder"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00268}00268     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (command == \mbox{\hyperlink{_serial_command_executer_8h_afec90b1f39bd61f392adbfcbe61229a0}{COMMAND\_VI}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00269}00269         Serial.println(\textcolor{stringliteral}{"{}Usage: vi \{filename\}                    Opens file in text editor"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00270}00270     \}\textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (command == \mbox{\hyperlink{_serial_command_executer_8h_a2e3c1635a22898c9e1ec48b57d7f3d99}{COMMAND\_RUN}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00271}00271         Serial.println(\textcolor{stringliteral}{"{}Usage: ./\{filename\}                     Runs an executable file"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00272}00272     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (command == \mbox{\hyperlink{_serial_command_executer_8h_a7610a1d9786ba66a0def94c2a284cb30}{COMMAND\_OBJDUMP}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00273}00273         Serial.println(\textcolor{stringliteral}{"{}Usage: objdump -\/d \{filename\}            Prints disassembled code of an executable file"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00274}00274     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (command == \mbox{\hyperlink{_serial_command_executer_8h_a4e07c2074cd444889d528b540b8731d1}{COMMAND\_GPG}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00275}00275         Serial.println(\textcolor{stringliteral}{"{}Usage: gpg -\/-\/encrypt \{key\} \{line\}       Prints disassembled code of an executable file"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00276}00276         Serial.println(\textcolor{stringliteral}{"{}Usage: gpg -\/-\/decrypt \{key\} \{line\}       Prints disassembled code of an executable file"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00277}00277     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00278}00278         Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_a4070e23710bad905213da8fd295a36ed}{ERROR\_CMD\_NOT\_FOUND}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00279}00279     \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00280}00280 \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00281}00281 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00282}00282 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00286}00286 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00287}00287 \textcolor{keywordtype}{void} SerialCommandExecuter::\_printCommands() \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00288}00288     Serial.println(\textcolor{stringliteral}{"{}Available commands:"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00289}00289     Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_aee9e8b97ac4a5cdc1c371da35a579210}{COMMAND\_HELP}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00290}00290     Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_a4271519e9ee5565b70175ae766253c65}{COMMAND\_DEBUG}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00291}00291     Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_a7e0cf8d05523e31cb48f7acf4ef8e832}{COMMAND\_SU}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00292}00292     Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_af998daeb22b38baa1ccbf04bd88dfe31}{COMMAND\_KEYS}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00293}00293     Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_a4b0eeaf40a8a79d1a17d2506909a1d07}{COMMAND\_RESTART}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00294}00294     Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_a9db5fb18d2bcb32925d11bd5e9ed758d}{COMMAND\_USERS}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00295}00295     Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_a17435a155b6388f6992f108f4946ad95}{COMMAND\_HOSTNAME}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00296}00296     Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_a1ec42af5209fa6fe2a3ab53031e4c67a}{COMMAND\_LS}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00297}00297     Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_afec90b1f39bd61f392adbfcbe61229a0}{COMMAND\_VI}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00298}00298     Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_a7610a1d9786ba66a0def94c2a284cb30}{COMMAND\_OBJDUMP}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00299}00299     Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_a275155a2e16b59de496b532a924bc2c9}{COMMAND\_WHOAMI}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00300}00300     Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_a4e07c2074cd444889d528b540b8731d1}{COMMAND\_GPG}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00301}00301 \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00302}00302 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00303}00303 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00310}00310 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00311}00311 \textcolor{keywordtype}{bool} SerialCommandExecuter::\_enableDebug(String enable) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00312}00312     \textcolor{keywordflow}{if} (enable == \mbox{\hyperlink{_serial_command_executer_8h_acc432387fb1ff55a0f29afb8696e9721}{ARG\_DEBUG\_ON}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00313}00313         \mbox{\hyperlink{_debugger_8cpp_ad1e4185e4e4f6ffc254dbcc964d38710}{setDebugEnabled}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00314}00314         Serial.println(\textcolor{stringliteral}{"{}debug = true"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00315}00315     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (enable == \mbox{\hyperlink{_serial_command_executer_8h_a26414b369525a55c67016146915180b0}{ARG\_DEBUG\_OFF}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00316}00316         \mbox{\hyperlink{_debugger_8cpp_ad1e4185e4e4f6ffc254dbcc964d38710}{setDebugEnabled}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00317}00317         Serial.println(\textcolor{stringliteral}{"{}debug = false"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00318}00318     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00319}00319         Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_a2cd488232b05a4397e297fd82bbbf22e}{ERROR\_WRONG\_ARGS}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00320}00320         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00321}00321     \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00322}00322     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00323}00323 \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00324}00324 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00325}00325 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00331}00331 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00332}00332 \textcolor{keywordtype}{bool} SerialCommandExecuter::\_superUserLogin(String password) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00333}00333     \textcolor{keywordflow}{if} (password == ROOT\_PASSWORD) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00334}00334         \_isLoggedIn = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00335}00335         Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_acbff4260ca589ed186c925def0941191}{MESS\_SUPER\_USER}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00336}00336     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00337}00337         Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_a0513ed94f64aeb430489112d20ea27c2}{ERROR\_WRONG\_PWD}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00338}00338         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00339}00339     \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00340}00340     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00341}00341 \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00342}00342 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00343}00343 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00348}00348 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00349}00349 \textcolor{keywordtype}{bool} SerialCommandExecuter::\_viewKey() \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00350}00350     \textcolor{keywordflow}{if} (!\_isLoggedIn) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00351}00351         Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_ab71c0b561167166742d07f3f2ce3e27c}{ERROR\_NO\_PERMISSION}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00352}00352         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00353}00353     \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00354}00354     Serial.println(\textcolor{stringliteral}{"{}Private encryption keys (Don't share!!!):"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00355}00355     Serial.println(AES\_KEY);}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00356}00356     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00357}00357 \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00358}00358 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00359}00359 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00363}00363 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00364}00364 \textcolor{keywordtype}{void} SerialCommandExecuter::\_restart() \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00365}00365     Serial.print(\textcolor{stringliteral}{"{}Restarting in "{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00366}00366 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00367}00367     \textcolor{comment}{/* Wait 3 seconds */}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00368}00368     \textcolor{keywordflow}{for} (uint8\_t s = 3; s > 0; s-\/-\/) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00369}00369         Serial.print(s);}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00370}00370         Serial.print(\textcolor{stringliteral}{"{} "{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00371}00371         delay(1000);}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00372}00372     \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00373}00373     ESP.restart();}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00374}00374 \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00375}00375 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00376}00376 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00381}00381 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00382}00382 \textcolor{keywordtype}{bool} SerialCommandExecuter::\_viewUsers() \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00383}00383     String userPrints[USER\_INFO\_LENGTH] = \{\textcolor{stringliteral}{"{}"{}}\};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00384}00384       }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00385}00385     \textcolor{keywordflow}{if} (!\_isLoggedIn) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00386}00386         Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_ab71c0b561167166742d07f3f2ce3e27c}{ERROR\_NO\_PERMISSION}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00387}00387         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00388}00388     \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00389}00389     }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00390}00390     Serial.println(\textcolor{stringliteral}{"{}|-\/USERNAME-\/-\/-\/-\/-\/-\/-\/|-\/PASSWORD-\/-\/-\/-\/-\/-\/-\/|-\/ROLE-\/-\/-\/|"{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00391}00391   }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00392}00392     \textcolor{keywordflow}{for} (uint8\_t i = 0; i < \_numberUsers; i += 3) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00393}00393         userPrints[0] = \_users[i].c\_str();                                  \textcolor{comment}{//Username}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00394}00394         \textcolor{keywordflow}{if}(atoi(\_users[i+2].c\_str()) == PERMISSION\_LVL\_USER) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00395}00395             userPrints[1] = \_users[i+1].c\_str();                            \textcolor{comment}{//Password}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00396}00396             userPrints[2] = \textcolor{stringliteral}{"{}User"{}};                                         \textcolor{comment}{//Permission level/role}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00397}00397         \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (atoi(\_users[i+2].c\_str()) == PERMISSION\_LVL\_ADMIN) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00398}00398             userPrints[1] = \textcolor{stringliteral}{"{}******"{}};                                       \textcolor{comment}{//Password, not printed}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00399}00399             userPrints[2] = \textcolor{stringliteral}{"{}Admin"{}};                                        \textcolor{comment}{//Permission level/role}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00400}00400         \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00401}00401         Serial.printf(\textcolor{stringliteral}{"{}| \%-\/15s| \%-\/15s| \%-\/7s|\(\backslash\)n"{}}, userPrints[0].c\_str(), userPrints[1].c\_str(), userPrints[2].c\_str());}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00402}00402     \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00403}00403     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00404}00404 \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00405}00405 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00406}00406 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00412}00412 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00413}00413 \textcolor{keywordtype}{bool} SerialCommandExecuter::\_hostname(String* params) \{ }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00414}00414     uint8\_t numParams = params-\/>length();}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00415}00415     \textcolor{keywordflow}{if} (numParams == 0) \{                                                   \textcolor{comment}{//If empty: show hostname}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00416}00416         Serial.print(\textcolor{stringliteral}{"{}Hostname is: "{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00417}00417         Serial.println(String(\mbox{\hyperlink{_hostname_write_8cpp_a1c60cc0a431e819d47f645094e36b6bb}{getHostname}}()));}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00418}00418         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00419}00419     \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00420}00420     }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00421}00421     \textcolor{keywordflow}{if} (params[0] ==  \mbox{\hyperlink{_serial_command_executer_8h_a682ea67f04725fdedbbd12540e7b8bd1}{ARG\_HOSTNAME\_SET}} \&\& params[1] != \textcolor{stringliteral}{"{}"{}}) \{                \textcolor{comment}{//If parameter 'set' check if next value is not empty}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00422}00422         \textcolor{keywordtype}{char} newHostname[MAX\_HOSTNAME\_LENGTH];}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00423}00423         params[1].toCharArray(newHostname, MAX\_HOSTNAME\_LENGTH);}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00424}00424         \mbox{\hyperlink{_hostname_write_8cpp_ae8aa3c92ae0ab79d141bbec42f7f662c}{writeHostname}}(newHostname);}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00425}00425     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (params[0] == \mbox{\hyperlink{_serial_command_executer_8h_a8d03419c9039d6df74a8c0423e04d2d7}{ARG\_HOSTNAME\_DEFAULT}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00426}00426         \mbox{\hyperlink{_hostname_write_8cpp_ae8aa3c92ae0ab79d141bbec42f7f662c}{writeHostname}}(DEFAULT\_HOSTNAME);}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00427}00427     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00428}00428         Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_a2cd488232b05a4397e297fd82bbbf22e}{ERROR\_WRONG\_ARGS}});                                   \textcolor{comment}{//If it can't find suitable params: give error}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00429}00429         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00430}00430     \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00431}00431     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00432}00432 \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00433}00433 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00434}00434 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00435}00435 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00441}00441 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00442}00442 \textcolor{keywordtype}{bool} SerialCommandExecuter::\_encrypt(String* params) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00443}00443     \textcolor{keywordflow}{if} (!cryptor.\mbox{\hyperlink{class_cbc_encryptor_a818679d4f7312052c24c8d6d05016122}{setKey}}(params[1])) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00444}00444         Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_a762d6185f0f02997552e6cca4ec44f3b}{ERROR\_NO\_VALID\_KEY}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00445}00445         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00446}00446     \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00447}00447     }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00448}00448     Serial.print(\textcolor{stringliteral}{"{}Encrypted output: "{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00449}00449     Serial.println(cryptor.\mbox{\hyperlink{class_cbc_encryptor_a03e7a772a04aee6c90856942e95419b5}{encryptLine}}(params[2]));}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00450}00450     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00451}00451 \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00452}00452 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00453}00453 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00459}00459 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00460}00460 \textcolor{keywordtype}{bool} SerialCommandExecuter::\_decrypt(String* params) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00461}00461     \textcolor{keywordflow}{if} (!cryptor.\mbox{\hyperlink{class_cbc_encryptor_a818679d4f7312052c24c8d6d05016122}{setKey}}(params[1])) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00462}00462         Serial.println(\mbox{\hyperlink{_serial_command_executer_8h_a762d6185f0f02997552e6cca4ec44f3b}{ERROR\_NO\_VALID\_KEY}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00463}00463         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00464}00464     \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00465}00465     }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00466}00466     Serial.print(\textcolor{stringliteral}{"{}Decrypted output: "{}});}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00467}00467     Serial.println(cryptor.\mbox{\hyperlink{class_cbc_encryptor_ad8ffa9b2ea69562f99a6a6ab73a44341}{decryptLine}}(params[2]));}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00468}00468     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00469}00469 \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00470}00470 }
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00471}00471 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00479}00479 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00480}00480 \textcolor{keywordtype}{bool} SerialCommandExecuter::\_checkHelp(String param, String command) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00481}00481     \textcolor{keywordflow}{if} (param == \mbox{\hyperlink{_serial_command_executer_8h_afcdc3018e2517ceac50b19931ad6b9de}{ARG\_HELP\_SHORT}} || param == \mbox{\hyperlink{_serial_command_executer_8h_a278cf1e66e046b5b219fce92cd3a4b72}{ARG\_HELP\_LONG}}) \{}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00482}00482         \_printHelp(command);}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00483}00483         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00484}00484     \}}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00485}00485     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_serial_command_executer_8cpp_source_l00486}00486 \}}
+
+\end{DoxyCode}

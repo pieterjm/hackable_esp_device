@@ -1,0 +1,114 @@
+\hypertarget{user_handler_8cpp_source}{}\doxysection{user\+Handler.\+cpp}
+\label{user_handler_8cpp_source}\index{hackableEspDevice/userHandler.cpp@{hackableEspDevice/userHandler.cpp}}
+\mbox{\hyperlink{user_handler_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00001}00001 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00002}00002 \textcolor{comment}{ * File:      UserHandler.cpp}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00003}00003 \textcolor{comment}{ * Author:    Luke de Munk \& Twenne Elffers}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00004}00004 \textcolor{comment}{ * Class:     UserHandler}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00005}00005 \textcolor{comment}{ * Version:   1.0}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00006}00006 \textcolor{comment}{ * }}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00007}00007 \textcolor{comment}{ * Class for the http authentication process.}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00008}00008 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00009}00009 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{user_handler_8h}{UserHandler.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00011}00011 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00016}00016 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00017}\mbox{\hyperlink{class_user_handler_ae44272296983fa6a2df985c8e2596109}{00017}} \mbox{\hyperlink{class_user_handler_ae44272296983fa6a2df985c8e2596109}{UserHandler::UserHandler}}(ESP8266WebServer *\mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}) \{}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00018}00018     \_numberUsers = 0;}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00019}00019 \}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00021}00021 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00025}00025 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00026}\mbox{\hyperlink{class_user_handler_ab5267a38ddc76c3887e535fd02914370}{00026}} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_user_handler_ab5267a38ddc76c3887e535fd02914370}{UserHandler::updateUsers}}() \{}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00027}00027     \textcolor{comment}{/* If there is no file, return 0 users */}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00028}00028     \textcolor{keywordflow}{if} (!SPIFFS.exists(HTTP\_CONFIG\_LOCATION)) \{}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00029}00029         \_numberUsers = 0;}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00030}00030         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00031}00031     \}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00032}00032     }
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00033}00033     \textcolor{comment}{//Decrypt the file before reading}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00034}00034     \textcolor{keywordflow}{if} (!cryptor.\mbox{\hyperlink{class_cbc_encryptor_a138202d41ce6d5a0a731c305c1a81175}{decryptFile}}(HTTP\_CONFIG\_LOCATION)) \{}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00035}00035         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00036}00036     \}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00038}00038     File configFile = SPIFFS.open(HTTP\_CONFIG\_LOCATION, \textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00039}00039     }
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00040}00040     String line;}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00041}00041     String* user;}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00042}00042     configFile.readStringUntil(\textcolor{charliteral}{'\(\backslash\)n'});                                       \textcolor{comment}{//Ignore first line (format)}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00043}00043     }
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00044}00044     \textcolor{comment}{/* Extract user information line by line */}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00045}00045     \textcolor{keywordflow}{for}(uint8\_t i = 0; i < MAX\_NUMBER\_USERS*USER\_INFO\_LENGTH; i+=USER\_INFO\_LENGTH) \{}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00046}00046         line = configFile.readStringUntil(\textcolor{charliteral}{'\(\backslash\)n'});                            \textcolor{comment}{//Read a line from the file}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00047}00047         \textcolor{keywordflow}{if} (line != \textcolor{stringliteral}{"{}"{}} \&\& line.indexOf(\textcolor{stringliteral}{"{}:"{}}) != -\/1) \{}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00048}00048             user = \_parseLine(line);}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00049}00049             \_users[i] = user[0].c\_str();}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00050}00050             \_users[i+1] = user[1].c\_str();}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00051}00051             \_users[i+2] = user[2].c\_str();}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00052}00052         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00053}00053             \_numberUsers = i-\/1;}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00054}00054             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00055}00055         \}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00056}00056         \_numberUsers = i-\/1;}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00057}00057     \}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00058}00058     configFile.close();}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00059}00059     }
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00060}00060     \textcolor{comment}{/* Encrypt the file again */}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00061}00061     \textcolor{keywordflow}{if} (!cryptor.\mbox{\hyperlink{class_cbc_encryptor_a3eeecbd0687b7dd7d32e39e2cd33199f}{encryptFile}}(HTTP\_CONFIG\_LOCATION)) \{}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00062}00062         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00063}00063     \}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00064}00064 \}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00066}00066 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00071}00071 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00072}\mbox{\hyperlink{class_user_handler_af30dbda21be1f07ba95a3a2040b0bed6}{00072}} String* \mbox{\hyperlink{class_user_handler_af30dbda21be1f07ba95a3a2040b0bed6}{UserHandler::getUsers}}() \{}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00073}00073     \textcolor{keywordflow}{return} \_users;}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00074}00074 \}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00075}00075 }
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00076}00076 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00081}00081 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00082}\mbox{\hyperlink{class_user_handler_abc8548e9a986b34e225c0a127dd4fbfb}{00082}} uint8\_t \mbox{\hyperlink{class_user_handler_abc8548e9a986b34e225c0a127dd4fbfb}{UserHandler::getNumberOfUsers}}() \{}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00083}00083     \textcolor{keywordflow}{return} \_numberUsers;}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00084}00084 \}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00085}00085 }
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00086}00086 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00093}00093 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00094}\mbox{\hyperlink{class_user_handler_a4f44b5bbcb227ad8f3d4c0857f0d715a}{00094}} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_user_handler_a4f44b5bbcb227ad8f3d4c0857f0d715a}{UserHandler::checkPermission}}(uint8\_t permissionLevel, ESP8266WebServer *\mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}) \{}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00095}00095     \textcolor{keywordtype}{bool} isLoggedIn = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00096}00096     \textcolor{keywordtype}{bool} hasPermission = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00097}00097     uint8\_t userIndex = 0;}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00098}00098     }
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00099}00099     \textcolor{keywordflow}{if} (permissionLevel == PERMISSION\_LVL\_ALL) \{}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00100}00100         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00101}00101     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00102}00102         \textcolor{keywordflow}{for} (uint8\_t i = 0; i < \_numberUsers; i += 3) \{}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00103}00103             \textcolor{keywordflow}{if} (\mbox{\hyperlink{hackable_esp_device_8ino_aa72803246b81e36ff710193eefb8ef69}{server}}-\/>authenticate(\_users[i].c\_str(), \_users[i+1].c\_str())) \{}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00104}00104                 userIndex = i;}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00105}00105                 isLoggedIn = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00106}00106                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00107}00107             \}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00108}00108         \}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00109}00109 }
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00110}00110         \textcolor{keywordflow}{if} (isLoggedIn \&\& atoi(\_users[userIndex+2].c\_str()) >= permissionLevel) \{}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00111}00111             \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00112}00112         \}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00113}00113     \}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00114}00114     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00115}00115 \}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00116}00116 }
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00117}00117 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00123}00123 \textcolor{comment}{/**************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00124}00124 String* UserHandler::\_parseLine(String line) \{}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00125}00125     \textcolor{keyword}{static} String userInfo[3];}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00126}00126   }
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00127}00127     uint8\_t indexForUsername = line.indexOf(\textcolor{stringliteral}{"{}:"{}});                             \textcolor{comment}{//gets loc of first "{}:"{}}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00128}00128     uint8\_t indexForPassword = line.indexOf(\textcolor{stringliteral}{"{}:"{}}, indexForUsername+1);         \textcolor{comment}{//gets loc of second "{}:"{}}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00129}00129   }
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00130}00130     userInfo[0] = line.substring(0, indexForUsername);                        \textcolor{comment}{//Selects xxxx from xxxx:yyyy:zzzz, username}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00131}00131     userInfo[1] = line.substring(indexForUsername+1, indexForPassword);       \textcolor{comment}{//Selects yyyy from xxxx:yyyy:zzzz, password}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00132}00132     userInfo[2] = line.substring(indexForPassword+1);                         \textcolor{comment}{//Selects zzzz from xxxx:yyyy:zzzz, usertype}}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00133}00133     \textcolor{keywordflow}{return} userInfo;}
+\DoxyCodeLine{\Hypertarget{user_handler_8cpp_source_l00134}00134 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,61 @@
+\hypertarget{_a_e_s__config_8h_source}{}\doxysection{AES\+\_\+config.\+h}
+\label{_a_e_s__config_8h_source}\index{hackableEspDevice/AES\_config.h@{hackableEspDevice/AES\_config.h}}
+\mbox{\hyperlink{_a_e_s__config_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00001}00001 \textcolor{comment}{/* code was modified by george spanos <spaniakos@gmail.com>}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00002}00002 \textcolor{comment}{ * 16/12/14}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00003}00003 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00005}00005 \textcolor{preprocessor}{\#ifndef \_\_AES\_CONFIG\_H\_\_}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00006}00006 \textcolor{preprocessor}{\#define \_\_AES\_CONFIG\_H\_\_}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00008}00008 \textcolor{preprocessor}{\#if  (defined(\_\_linux) || defined(linux)) \&\& !(defined(\_\_ARDUINO\_X86\_\_) || defined(\_\_arm\_\_))}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00010}00010 \textcolor{preprocessor}{  \#define AES\_LINUX}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00012}00012 \textcolor{preprocessor}{  \#include <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00013}00013 \textcolor{preprocessor}{  \#include <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00014}00014 \textcolor{preprocessor}{  \#include <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00015}00015 \textcolor{preprocessor}{  \#include <string.h>}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00016}00016 \textcolor{preprocessor}{  \#include <sys/time.h>}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00017}00017 \textcolor{preprocessor}{  \#include <unistd.h>}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00018}00018 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00019}00019 \textcolor{preprocessor}{  \#include <Arduino.h>}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00020}00020 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00022}00022 \textcolor{preprocessor}{\#include <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00023}00023 \textcolor{preprocessor}{\#include <string.h>}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00025}00025 \textcolor{preprocessor}{\#if defined(\_\_ARDUINO\_X86\_\_) || defined(\_\_arm\_\_) || (defined (\_\_linux) || defined (linux))}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00026}00026 \textcolor{preprocessor}{    \#undef PROGMEM}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00027}00027 \textcolor{preprocessor}{    \#define PROGMEM \_\_attribute\_\_(( section("{}.progmem.data"{}}) ))}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00028}00028 \textcolor{preprocessor}{    \#define pgm\_read\_byte(p) (*(p))}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00029}00029     \textcolor{keyword}{typedef} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} byte;}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00030}00030 \textcolor{preprocessor}{    \#define printf\_P printf}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00031}00031 \textcolor{preprocessor}{        \#ifndef PSTR}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00032}00032 \textcolor{preprocessor}{      \#define PSTR(x) (x)}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00033}00033 \textcolor{preprocessor}{        \#endif}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00034}00034 \textcolor{preprocessor}{\#elif defined ( ESP8266 )}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00035}00035 \textcolor{preprocessor}{    \#include <pgmspace.h>}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00036}00036 \textcolor{preprocessor}{        \#ifndef PSTR}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00037}00037 \textcolor{preprocessor}{          \#define PSTR(x) (x)}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00038}00038 \textcolor{preprocessor}{        \#endif}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00039}00039 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00040}00040 \textcolor{preprocessor}{    \#if (defined(\_\_AVR\_\_))}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00041}00041 \textcolor{preprocessor}{        \#include <avr/pgmspace.h>}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00042}00042 \textcolor{preprocessor}{    \#else}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00043}00043 \textcolor{preprocessor}{        \#include <pgmspace.h>}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00044}00044 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00045}00045 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00047}\mbox{\hyperlink{_a_e_s__config_8h_a397e692f15f1a68ad71f333267f94f89}{00047}} \textcolor{preprocessor}{\#define N\_ROW                   4}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00048}\mbox{\hyperlink{_a_e_s__config_8h_aa1ca982cd5aa9c974edfddab55fb994b}{00048}} \textcolor{preprocessor}{\#define N\_COL                   4}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00049}\mbox{\hyperlink{_a_e_s__config_8h_a64c8b1a34c03210cc4c214735bb4f186}{00049}} \textcolor{preprocessor}{\#define N\_BLOCK   (N\_ROW * N\_COL)}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00050}\mbox{\hyperlink{_a_e_s__config_8h_af8b900ecc3a113f2aed001ac9e1cb11e}{00050}} \textcolor{preprocessor}{\#define N\_MAX\_ROUNDS           14}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00051}\mbox{\hyperlink{_a_e_s__config_8h_ad95a6be09387647ced94dadafc76267e}{00051}} \textcolor{preprocessor}{\#define KEY\_SCHEDULE\_BYTES ((N\_MAX\_ROUNDS + 1) * N\_BLOCK)}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00052}\mbox{\hyperlink{_a_e_s__config_8h_aa90cac659d18e8ef6294c7ae337f6b58}{00052}} \textcolor{preprocessor}{\#define SUCCESS (0)}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00053}\mbox{\hyperlink{_a_e_s__config_8h_a6d58f9ac447476b4e084d7ca383f5183}{00053}} \textcolor{preprocessor}{\#define FAILURE (-\/1)}}
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{_a_e_s__config_8h_source_l00055}00055 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
