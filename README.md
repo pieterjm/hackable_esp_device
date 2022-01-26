@@ -33,8 +33,9 @@ There are multiple ways to upload the program files to the board. The two ways l
 4. Navigate to the `hackableEspDevice` folder.
 5. Open `hackableEspDevice.ino`.
 6. Upload the files in the `data` folder (see the tutorial).
-7. Upload the program to the device.
-8. Connect to the `Configure Smartlight Wifi` AP to configure the wifi.
+7. Select the LOLIN(WeMos) D1 R1 (or WeMos D1 R1).
+8. Upload the program to the device.
+9. Connect to the `Configure Smartlight Wifi` AP to configure the wifi.
 
    <b>ESP8266 Sketch Data Upload</b>
 
