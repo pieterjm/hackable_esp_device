@@ -272,8 +272,8 @@ void SerialCommandExecuter::_printHelp(String command) {
     } else if (command == COMMAND_OBJDUMP) {
         Serial.println("Usage: objdump -d {filename}            Prints disassembled code of an executable file");
     } else if (command == COMMAND_GPG) {
-        Serial.println("Usage: gpg --encrypt {key} {line}       Prints disassembled code of an executable file");
-        Serial.println("Usage: gpg --decrypt {key} {line}       Prints disassembled code of an executable file");
+        Serial.println("Usage: gpg --encrypt {key} {line}       Encrypts a line of text");
+        Serial.println("Usage: gpg --decrypt {key} {line}       Decrypts a line of text");
     } else {
         Serial.println(ERROR_CMD_NOT_FOUND);
     }

@@ -63,7 +63,7 @@ void setup() {
     userHandler.updateUsers();
     cliExecuter.setUsers(userHandler.getUsers(), userHandler.getNumberOfUsers()); //Send users to the command executer for the 'users' command
     
-    Serial.println("Serial commands available. Typ 'help' for help.");
+    Serial.println("Serial commands available. Type 'help' for help.");
 }
 
 /**************************************************************************/
