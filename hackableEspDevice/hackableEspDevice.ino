@@ -39,7 +39,7 @@ File fsUploadFile;                                                          //A 
 /**************************************************************************/
 void setup() {
     Serial.begin(115200);                                                   //Serial port for debugging purposes
-
+    analogWriteResolution(10);
     /* Initialize SPIFFS */
     if (!SPIFFS.begin()) {
         Serial.println("An Error has occurred while mounting SPIFFS");
