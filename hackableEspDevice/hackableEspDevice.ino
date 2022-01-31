@@ -39,7 +39,8 @@ File fsUploadFile;                                                          //A 
 /**************************************************************************/
 void setup() {
     Serial.begin(115200);                                                   //Serial port for debugging purposes
-    analogWriteResolution(10);
+    analogWriteResolution(10);                                              //Set PWM resolution to 10 bits
+    
     /* Initialize SPIFFS */
     if (!SPIFFS.begin()) {
         Serial.println("An Error has occurred while mounting SPIFFS");
