@@ -43,7 +43,7 @@ void setup() {
     
     /* Initialize SPIFFS */
     if (!SPIFFS.begin()) {
-        Serial.println("An Error has occurred while mounting SPIFFS");
+        Serial.println("An error has occurred while mounting SPIFFS");
         return;
     }
     
@@ -59,7 +59,7 @@ void setup() {
     analogWrite(LED_BUILTIN, 1023);
 
     initializeHostname();
-    setupWifi();    
+    setupWifi();
     initializeServer();
     userHandler.updateUsers();
     cliExecuter.setUsers(userHandler.getUsers(), userHandler.getNumberOfUsers()); //Send users to the command executer for the 'users' command
