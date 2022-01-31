@@ -8,7 +8,7 @@ def control(state, addr):
 
     try:
         # Trainee work {{
-        urllib.request.urlopen('http://' + str(addr) + "/set_power?state=" + state)
+        urllib.request.urlopen('http://' + str(addr) + "/set_power?state=" + state, timeout=5)
         contents = print('http://' + str(addr) + "/set_power?state=" + state)
         # Trainee work }}
 
