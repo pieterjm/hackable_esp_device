@@ -1,3 +1,5 @@
+![Hackable IoT LED Controller](/images/Hackable-IoT-LED-Controller-showcase.png)
+
 # Hackable ESP8266 device
 Firmware for ESP8266 based device (D1 Mini board) with designed vulnerabilities to practice ethical hacking. The software is tested on the following boards:
 
