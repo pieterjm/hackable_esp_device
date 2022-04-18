@@ -4,11 +4,10 @@
 <head>
     <title>Smart lights system</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" media="screen and (max-device-width: 699px)" href="styles_mobile.css">
     <link rel="stylesheet" href="style_switch.css" />
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+        
     <meta charset="utf-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
@@ -60,18 +59,16 @@
     <script src="base.js"></script>
     <script>
         let title;
+        let uri = window.localStorage.getItem('uri');
         if (location.href.includes('q=')) {
-            var uri = decodeURIComponent(location.href)
-            var qs = uri.split('&time=')[0].split('?q=')[1]
-            if (qs.length > 24) {
-                alert("Error!\n Length exceeds 24, keep it short!")
-            } else {
-                title = qs;
-                window.localStorage.setItem('title', title);
-            }
-        } 
-        if (!title) {
-            title = window.localStorage.getItem('title');
+            uri = decodeURIComponent(location.href);
+        }
+        const qs = uri.split('&time=')[0].split('?q=')[1]
+        if (qs.length > 24) {
+            alert("Error!\n Length exceeds 24, keep it short!")
+        } else {
+            title = qs;
+            window.localStorage.setItem('uri', uri);
         }
         if (title) {
             document.title = title;
@@ -80,7 +77,4 @@
         }
     </script>
 </body>
-<!--End of the body-->
-
 </html>
-<!--End of the html page-->

@@ -173,11 +173,6 @@ void initializeServer() {
     server.on("/styles.css", HTTP_GET, []() {
         handleFileRequest("/styles.css", PERMISSION_LVL_ALL);
     });
-    
-    /* Load styles_mobile.css file, styling for mobile version */
-    server.on("/styles_mobile.css", HTTP_GET, []() {
-        handleFileRequest("/styles_mobile.css", PERMISSION_LVL_ALL);
-    });
 
     /* Load style_switch.css file, styling for the on/off switch */
     server.on("/style_switch.css", HTTP_GET, []() {
@@ -197,11 +192,6 @@ void initializeServer() {
     /* Load base.js file, JavaScript for site */
     server.on("/base.js", HTTP_GET, []() {
         handleFileRequest("/base.js", PERMISSION_LVL_ALL);
-    });
-
-    /* Load switch.js file, JavaScript for on/off switch */
-    server.on("/switch.js", HTTP_GET, []() {
-        handleFileRequest("/switch.js", PERMISSION_LVL_ALL);
     });
     /*
     * End of file loading
