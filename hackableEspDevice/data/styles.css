@@ -73,6 +73,30 @@ body {
     font-weight: bold;
 }
 
+.form-button {
+    padding: 12px;
+    border-radius: 25px;
+    border-color: #000000;
+    font-weight: 800;
+    margin-left: 16px;
+}
+
+.form-button:hover {
+    cursor: pointer;
+    background: #000000;
+    color: #ffffff;
+}
+
+.form-container {
+    width: 790px;
+    background-color: rgba(192, 192, 192, 0.2);
+    border-radius: 25px;
+    overflow: hidden;
+    padding: 72px 55px 90px 55px;
+    margin-bottom: 50px;
+    margin-top: 0;
+}
+
 .form {
     width: 100%;
 }
@@ -239,4 +263,10 @@ h2, h3 {
     Text-indent: 10px;
     Padding: 0px 10px 0px 10px;
     text-align: center;
+}
+
+@media only screen and (max-width: 699px) {
+    body {
+        font-size: medium;
+    }
 }

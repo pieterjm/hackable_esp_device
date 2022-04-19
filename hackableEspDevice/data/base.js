@@ -1,16 +1,26 @@
 // Get elements
-let btn;
-let checkbox;
-let rect;
-let circ1;
-let circ2;
-
 let on_off;
 
 main();
 function main() {
     loadState();
     loadBrightness();
+}
+    
+window['main-form'].onsubmit = function (e) {
+    e.preventDefault()
+    var inputName = window['name-field'].value
+    if (!inputName.length) {
+        alert("Error!\n It's empty")
+        return;
+    }
+
+    if (inputName.length > 24) {
+        alert("Error!\n Length exceeds 24, keep it short!")
+        return;
+    }
+
+    window.location.search = "?q=" + encodeURIComponent(inputName) + '&time=' + new Date().getTime()
 }
 
 function loadState() {
