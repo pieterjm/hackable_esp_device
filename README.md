@@ -31,17 +31,16 @@ There are multiple ways to upload the program files to the board. The two ways l
 
 1. Install the Arduino IDE, this can be found in the [Microsoft store](https://www.microsoft.com/en-us/p/arduino-ide/9nblggh4rsd8) or on their [website](https://www.arduino.cc/en/software).
 2. [Add the esp8266 libraries to Arduino IDE](https://www.nonscio.com/blog/installing-esp8266-libraries-to-the-arduino-ide).
-
 3. Go to Tools > Board: ”xxxx xxxx” and you will see a new option for ESP8266 Boards, select the `LOLIN(WEMOS) D1 R2 & mini`.
-
-4. Download [SPIFF](https://github.com/esp8266/arduino-esp8266fs-plugin/releases/tag/0.5.0), unpack the zip file and place the `esp8266fs.jar` in `This PC > Documents > Arduino > Tools > ESP8266FS > tool > esp8266fs.jar`, you will need to create some of the folders, just make sure the arduino folder already existed.
-5. Reboot Arduino IDE and now you can find the option ESP8266 Data Upload under the tools bar.
-6. In Arduino IDE go to File > Open and in the hackable ESP folder from the github you go to hackable_esp_device-main > hackableEspDevice and open the `hackableEspDevice.ino` file.
-7. In Arduino IDE go to Tools > Port and select the COM port that the ESP is connected with. You can find this in Device Manager under Ports (COM & LPT).
-8. Now first upload the data by clicking on Tools > `ESP8266 Sketch Data upload`.
-9. Now you can upload the code by clicking the arrow on the top left corner.
-9. The Esp has now been flashed with the needed code. Use a device with a Wi-Fi adapter to connect with the new access point. 
-10. A website will open up where you can connect to an existing Wi-Fi network. Connect with one of the networks and check which IP the ESP has gotten. And now you can start hacking!
+4. Download [WiFiManager](https://github.com/tzapu/WiFiManager), then go to `Sketch > Include Library > Add .ZIP library...` and select the WiFiManager ZIP.
+5. Download [SPIFF](https://github.com/esp8266/arduino-esp8266fs-plugin/releases/tag/0.5.0), unpack the zip file and place the `esp8266fs.jar` in `This PC > Documents > Arduino > Tools > ESP8266FS > tool > esp8266fs.jar`, you will need to create some of the folders, just make sure the arduino folder already existed.
+6. Reboot Arduino IDE and now you can find the option ESP8266 Data Upload under the tools bar.
+7. In Arduino IDE go to File > Open and in the hackable ESP folder from the github you go to hackable_esp_device-main > hackableEspDevice and open the `hackableEspDevice.ino` file.
+8. In Arduino IDE go to Tools > Port and select the COM port that the ESP is connected with. You can find this in Device Manager under Ports (COM & LPT).
+9. Now first upload the data by clicking on Tools > `ESP8266 Sketch Data upload`.
+10. Now you can upload the code by clicking the arrow on the top left corner.
+11. The Esp has now been flashed with the needed code. Use a device with a Wi-Fi adapter to connect with the new access point. 
+12. A website will open up where you can connect to an existing Wi-Fi network. Connect with one of the networks and check which IP the ESP has gotten. And now you can start hacking!
 
 #### <b>Option 2: Visual Studio Code + Platformio</b>
 1. Install the [Platformio](https://platformio.org/install/ide?install=vscode) plugin.
@@ -126,10 +125,17 @@ There is technical documentation available if you want to contribute to this pro
 
 ## Authors
 
-* **Luke de Munk** - *Head author* - [LinkedIn](https://www.linkedin.com/in/luke-de-munk/)
-* **Thijs Takken** - *Head author* - [LinkedIn](https://www.linkedin.com/in/thijstakken)
-* **Christina Kostine** - *Head author* - [LinkedIn](https://www.linkedin.com/in/christine-kostine)
-* **Twenne Elffers** - *Head author* - [LinkedIn](https://www.linkedin.com/in/twenne-elffers/)
+### Hogeschool van Amsterdam
+* **Christina Kostine** - [LinkedIn](https://www.linkedin.com/in/christine-kostine)
+* **Luke de Munk** - [LinkedIn](https://www.linkedin.com/in/luke-de-munk/)
+* **Thijs Takken** - [LinkedIn](https://www.linkedin.com/in/thijstakken)
+* **Twenne Elffers** - [LinkedIn](https://www.linkedin.com/in/twenne-elffers/)
+
+### Hanzehogeschool Groningen
+* **Bastiaan Prummel** - [LinkedIn](https://www.linkedin.com/in/bastiaan-prummel/)
+* **Geert Fischer** - [LinkedIn](https://www.linkedin.com/in/geert-fischer-0a8b6b1b5/)
+* **Jan Douwe Bos** - [LinkedIn](https://www.linkedin.com/in/jd-bos-798374182/)
+* **Stephan Noordhof** - [LinkedIn](https://www.linkedin.com/in/stephan-noordhof-b6953b196/)
 
 <!-- ## License
 
